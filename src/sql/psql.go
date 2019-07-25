@@ -11,6 +11,7 @@ type SQL interface {
 	Add(*module.PostArticle)
 	Update(*module.Article)
 	Query(uint) *module.Article
+	QueryDir(uint) []module.Article
 }
 
 type client struct {
@@ -21,7 +22,16 @@ type client struct {
 func (p *client) Query(id uint) *module.Article {
 	var result = &module.Article{}
 	p.db.First(result, id)
+	p.increaseAccess(result)
 	return result
+}
+
+// // QueryDir 查询目录
+func (p *client) QueryDir(page uint) []module.Article {
+	const limit uint = 3
+	var dir []module.Article
+	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, kind, cover, summary").Find(&dir)
+	return dir
 }
 
 // Delete 删除文章
@@ -37,6 +47,13 @@ func (p *client) Add(article *module.PostArticle) {
 // Update修改文章,只更新修改的字段
 func (p *client) Update(article *module.Article) {
 	p.db.Model(&module.Article{}).Updates(article)
+}
+
+func (p *client) increaseAccess(article *module.Article) {
+	if article.Title != "" {
+		article.Views++
+		p.db.Model(article).UpdateColumn("views", article.Views)
+	}
 }
 
 var clientInstance *client

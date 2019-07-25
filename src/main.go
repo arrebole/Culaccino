@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/arrebole/culaccino/src/config"
+	"github.com/arrebole/culaccino/src/middleware"
 	"github.com/arrebole/culaccino/src/route"
 )
 
@@ -15,17 +16,20 @@ func main() {
 	// api
 	api := server.Group("/api")
 	{
-		api.GET("/table/:page", route.Table)
+		api.GET("/table/:id", route.Table)
 		api.GET("/contents/:id", route.Contents)
 		api.GET("/login", route.Login)
 
-		api.POST("/add/text", route.Add)
-		api.PUT("/update/:id", route.Update)
-		api.DELETE("/delete/:id", route.Delete)
+		api.POST("/add/text", middleware.IsAdmin, route.Add)
+		api.PUT("/update/:id", middleware.IsAdmin, route.Update)
+		api.DELETE("/delete/:id", middleware.IsAdmin, route.Delete)
 	}
 
 	// 静态文件
-	server.NoRoute(static.Serve("/", static.LocalFile("./public", true)))
+	server.Use(static.Serve("/", static.LocalFile("./public", true)))
+	server.NoRoute(func(c *gin.Context) {
+		c.File("./public/index.html")
+	})
 
 	// 启动服务器
 	server.Run(config.Cofig.Server.ListenPort)

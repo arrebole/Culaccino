@@ -1,10 +1,18 @@
 package route
 
 import (
+	"github.com/arrebole/culaccino/src/module"
+	"github.com/arrebole/culaccino/src/sql"
+	"github.com/arrebole/culaccino/src/util"
 	"github.com/gin-gonic/gin"
 )
 
 // Update 更新数据api
-func Update(c *gin.Context) {
-
+func Update(ctx *gin.Context) {
+	if article, err := util.Pares(ctx); err == nil {
+		sql.New().Update(module.ToArticle(article))
+		ctx.JSON(200, module.Success())
+		return
+	}
+	ctx.JSON(200, module.Fail())
 }
