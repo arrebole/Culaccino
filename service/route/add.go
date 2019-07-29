@@ -1,0 +1,18 @@
+package route
+
+import (
+	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/sql"
+	"github.com/arrebole/culaccino/service/util"
+	"github.com/gin-gonic/gin"
+)
+
+// Add 添加内容api
+func Add(ctx *gin.Context) {
+	if article, err := util.Pares(ctx); err == nil {
+		sql.New().Add(article)
+		ctx.JSON(200, module.Success())
+		return
+	}
+	ctx.JSON(200, module.Fail())
+}

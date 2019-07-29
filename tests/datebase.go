@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/arrebole/culaccino/src/sql"
+	"github.com/arrebole/culaccino/service/sql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

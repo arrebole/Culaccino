@@ -1,10 +1,6 @@
 {
     "sql": {
-        "host": "78.141.215.61",
-        "port": "5432",
-        "user": "postgres",
-        "password": "326093153",
-        "dbName": "tests"
+        "dbName": "./data/tests.db"
     },
     "server": {
         "listenPort": ":3000"

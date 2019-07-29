@@ -3,7 +3,7 @@
 ### This use
 
 + gin
-+ gorm + postgresql
++ gorm + sqlite3
 + vue+ scss + typescript
 
 ### API
