@@ -14,6 +14,7 @@ func Pares(ctx *gin.Context) (*module.PostArticle, error) {
 	if err := ctx.BindJSON(article); err != nil {
 		return nil, errors.New("pares article fail")
 	}
+
 	return article, nil
 }
 

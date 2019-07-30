@@ -19,3 +19,10 @@ func Table(ctx *gin.Context) {
 
 	ctx.JSON(200, module.Fail())
 }
+
+// TableAll 所有目录
+func TableAll(ctx *gin.Context) {
+	data := sql.New().QueryDirAll()
+	ctx.JSON(200, module.RepData(nil, data))
+
+}

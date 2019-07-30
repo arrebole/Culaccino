@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"os"
+
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/gin-gonic/gin"
 )
@@ -8,7 +10,7 @@ import (
 // IsAdmin 中间件
 func IsAdmin(ctx *gin.Context) {
 	token, err := ctx.Cookie("user_session")
-	if err != nil || token != module.NewToken() {
+	if os.Getenv("mode") != "dev" && (err != nil || token != module.NewToken()) {
 		ctx.JSON(200, module.Fail())
 		ctx.Abort()
 		return

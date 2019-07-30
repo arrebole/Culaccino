@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Table from './views/Table.vue'
+import Admin from './views/Admin.vue'
 import Create from './views/Create.vue'
 import Update from './views/Update.vue'
 import Home from './views/Home.vue'
@@ -26,7 +26,7 @@ export default new Router({
     {
       path: '/admin',
       name: "Admin",
-      component: Table
+      component: Admin
     },
     {
       path: '/admin/create',
@@ -34,7 +34,7 @@ export default new Router({
       component: Create
     },
     {
-      path: '/admin/update',
+      path: '/admin/update/:id',
       name: "Update",
       component: Update
     },

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 import "normalize.css"
-import "./lib/iconfont.css"
+import "./assets/iconfont/iconfont.css"
 
 new Vue({
   router,

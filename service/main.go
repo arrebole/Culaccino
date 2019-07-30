@@ -20,9 +20,10 @@ func main() {
 		api.GET("/contents/:id", route.Contents)
 		api.GET("/login", route.Login)
 
-		api.POST("/add/text", middleware.IsAdmin, route.Add)
-		api.PUT("/update/:id", middleware.IsAdmin, route.Update)
-		api.DELETE("/delete/:id", middleware.IsAdmin, route.Delete)
+		api.GET("/admin/table/all", middleware.IsAdmin, route.TableAll)
+		api.POST("/admin/add/text", middleware.IsAdmin, route.Add)
+		api.PUT("/admin/update/:id", middleware.IsAdmin, route.Update)
+		api.DELETE("/admin/delete/:id", middleware.IsAdmin, route.Delete)
 	}
 
 	// 静态文件

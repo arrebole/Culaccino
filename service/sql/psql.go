@@ -1,6 +1,8 @@
 package sql
 
 import (
+	"time"
+
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/jinzhu/gorm"
 )
@@ -12,6 +14,7 @@ type SQL interface {
 	Update(*module.Article)
 	Query(uint) *module.Article
 	QueryDir(uint) []module.Article
+	QueryDirAll() []module.Article
 }
 
 type client struct {
@@ -34,14 +37,21 @@ func (p *client) QueryDir(page uint) []module.Article {
 	return dir
 }
 
+// // QueryDirAll 查询目录
+func (p *client) QueryDirAll() []module.Article {
+	var dir []module.Article
+	p.db.Select("id, title, author, kind, cover, summary").Find(&dir)
+	return dir
+}
+
 // Delete 删除文章
 func (p *client) Delete(id uint) {
-	p.db.Where("id = ?", id).Delete(&module.Article{})
+	p.db.Where("id = ?", id).Delete(&module.Article{}).Update("DeletedAt", time.Now())
 }
 
 // Add 添加文章
 func (p *client) Add(article *module.PostArticle) {
-	p.db.Create(module.ToArticle(article))
+	p.db.Create(module.ToArticle(article)).Update("CreatedAt", time.Now())
 }
 
 // Update修改文章,只更新修改的字段
@@ -49,6 +59,7 @@ func (p *client) Update(article *module.Article) {
 	p.db.Model(&module.Article{}).Updates(article)
 }
 
+// 增加文章浏览量
 func (p *client) increaseAccess(article *module.Article) {
 	if article.Title != "" {
 		article.Views++

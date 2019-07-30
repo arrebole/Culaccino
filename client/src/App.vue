@@ -1,56 +1,27 @@
 <template>
   <div id="app">
-    <header>
-      <nav>
-        <div>
-          <span class="iconfont icon-menu"></span>
-        </div>
-
-        <div class="nav-bread">
-          <span>
-            
-          </span>
-        </div>
-      </nav>
-    </header>
-
-    <article>
-      <router-view />
-    </article>
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-
-export default Vue.extend({
-  data() {
-    return {
-      path: window.location.pathname
-    };
-  },
-
-  computed: {
-    // 监听路由变化
-    routeList(): string[] {
-      return this.path
-    }
-  }
-});
+export default Vue.extend({});
 </script>
 
 <style lang="scss">
-#app > header {
-  display: flex;
-  align-items: center;
-  height: 60px;
-  background-color: rgb(103, 175, 209);
+.list-enter-active,
+.list-leave-active {
+  transition: all 1.5s;
 }
-header > nav > div {
-  font-size: 26px;
-  line-height: 0;
-  display: inline-block;
-  padding: 0 10px;
-  color: rgb(241, 250, 250);
+.list-enter {
+  /* .list-leave-active for below version 2.1.8 */
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-leave-to {
+  //opacity: 0;
+  //transform: translateX(-30px);
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 </style>

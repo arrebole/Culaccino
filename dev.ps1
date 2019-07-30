@@ -1,25 +1,21 @@
 
 function goBuild {
-    param ($out)
-    Start-Process -FilePath "go.exe" -ArgumentList "build -o $out ./service/main.go" -NoNewWindow;
+    #go build -o "./bin/service.exe"  "./service/main.go"
+    Start-Process -FilePath "go.exe" -ArgumentList "build -o ./bin/service.exe ./service/main.go" -NoNewWindow -Wait;
 }
 
 function startServer {
-    param($exe)
-    Start-Process -FilePath $exe 
+    $env:mode = "dev";
+    Start-Process -FilePath "./bin/service.exe" -WorkingDirectory "./" 
     
 }
 
 function startFE {
-    param ($OptionalParameters)
-    Set-Location "./client";
-    Start-Process -FilePath "yarn" -ArgumentList "run serve";
-    Set-Location "../";
+    Start-Process -FilePath "yarn" -ArgumentList "run serve" -WorkingDirectory "./client";
 }
 
 
-$service = "./bin/service.exe";
-goBuild -out $service;
-startServer -exe $service; startFE;
+
+goBuild; startServer; startFE;
 
 
