@@ -1,5 +1,6 @@
 export default interface IResp {
     code: string
+    power:string
     token: string
     main: IArticle
     dir: IArticle[]

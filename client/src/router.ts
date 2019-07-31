@@ -6,7 +6,7 @@ import Create from './views/Create.vue'
 import Update from './views/Update.vue'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
-
+import middware from "./middleware/isAdmin"
 Vue.use(Router)
 
 export default new Router({
@@ -21,22 +21,26 @@ export default new Router({
     {
       path:'/login',
       name:'Login',
-      component: Login
+      component: Login,
+      beforeEnter: middware.hadPower
     },
     {
       path: '/admin',
       name: "Admin",
-      component: Admin
+      component: Admin,
+      beforeEnter: middware.noPower
     },
     {
       path: '/admin/create',
       name: "Create",
-      component: Create
+      component: Create,
+      beforeEnter: middware.noPower
     },
     {
       path: '/admin/update/:id',
       name: "Update",
-      component: Update
+      component: Update,
+      beforeEnter: middware.noPower
     },
     {
       path: '/*',

@@ -6,6 +6,13 @@ func makeCode(code string) *Signal {
 	}
 }
 
+// Power 权限
+func Power() *Signal {
+	result := makeCode("success")
+	result.Power = "admin"
+	return result
+}
+
 // LoginOk 返回登陆成功
 func LoginOk() *Signal {
 	result := makeCode("success")

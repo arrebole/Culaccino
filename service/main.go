@@ -20,6 +20,7 @@ func main() {
 		api.GET("/contents/:id", route.Contents)
 		api.GET("/login", route.Login)
 
+		api.GET("/token", route.Token)
 		api.GET("/admin/table/all", middleware.IsAdmin, route.TableAll)
 		api.POST("/admin/add/text", middleware.IsAdmin, route.Add)
 		api.PUT("/admin/update/:id", middleware.IsAdmin, route.Update)

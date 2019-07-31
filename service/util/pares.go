@@ -33,3 +33,12 @@ func QueryUser(ctx *gin.Context) (name string, pwd string) {
 	password := ctx.Query("password")
 	return userName, password
 }
+
+// ParesToken 解析url中的token
+func ParesToken(ctx *gin.Context) (string, error) {
+	token := ctx.Query("token")
+	if token == "" {
+		return "", errors.New("no token")
+	}
+	return token, nil
+}
