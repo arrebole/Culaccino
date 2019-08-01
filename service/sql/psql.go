@@ -33,14 +33,14 @@ func (p *client) Query(id uint) *module.Article {
 func (p *client) QueryDir(page uint) []module.Article {
 	const limit uint = 3
 	var dir []module.Article
-	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, kind, cover, summary").Find(&dir)
+	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, target, cover, summary,views").Find(&dir)
 	return dir
 }
 
 // // QueryDirAll 查询目录
 func (p *client) QueryDirAll() []module.Article {
 	var dir []module.Article
-	p.db.Select("id, title, author, kind, cover, summary").Find(&dir)
+	p.db.Select("id, title, author, target, cover, summary,views").Find(&dir)
 	return dir
 }
 

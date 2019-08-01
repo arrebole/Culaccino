@@ -19,7 +19,7 @@
         <div class="table-item">{{ item.title }}</div>
         <div class="table-item">{{ item.views }}</div>
         <div class="contrl-contents">
-          <router-link :to="{ name: 'Update', params: { id: item.ID } }"
+          <router-link :to="{ name: 'Update', params: { articleID: item.ID } }"
             >修改</router-link
           >/
           <span @click="deleteAt(item.ID)">删除</span>

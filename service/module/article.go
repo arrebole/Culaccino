@@ -21,7 +21,7 @@ type PostArticle struct {
 type Table struct {
 	Title   string `json:"title"`
 	Author  string `json:"author"`
-	Kind    string `json:"kind"`
+	Target  string `json:"target"`
 	Cover   string `json:"cover"`
 	Summary string `json:"summary"`
 }

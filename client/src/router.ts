@@ -37,7 +37,7 @@ export default new Router({
       beforeEnter: middware.noPower
     },
     {
-      path: '/admin/update/:id',
+      path: '/admin/update/:articleID',
       name: "Update",
       component: Update,
       beforeEnter: middware.noPower

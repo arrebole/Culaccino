@@ -1,20 +1,24 @@
-import IResp from '@/types/resp';
+import IResp, { IArticle, IArticleBase } from '@/types/resp';
 
 
 export default {
     getAllTable,
     delArticle,
+    getArticle,
+    updateArticle,
+    createArticle,
     login,
     token
 }
 
-function createFetch(url: string, method: string) {
+function createFetch(url: string, method: string, data?: string) {
     return fetch(url, {
         method,
         credentials: "include",
         headers: {
             'content-type': 'application/json'
         },
+        body: data
     }).then(response => response.json())
 }
 
@@ -34,4 +38,15 @@ function getAllTable(): Promise<IResp> {
 
 function delArticle(id: number): Promise<IResp> {
     return createFetch(`/api/admin/delete/${id}`, "DELETE");
+}
+function getArticle(id: number): Promise<IResp> {
+    return createFetch(`/api/contents/${id}`, "GET");
+}
+
+function createArticle(aArticle: IArticleBase): Promise<IResp> {
+    return createFetch(`/api/admin/add/text`, "POST", JSON.stringify(aArticle));
+}
+
+function updateArticle(id: number, aArticle: IArticleBase): Promise<IResp> {
+    return createFetch(`/api/admin/update/${id}`, "PUT", JSON.stringify(aArticle));
 }
