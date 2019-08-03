@@ -17,10 +17,15 @@ import Header from "../components/Header.vue";
 import Editor from "../components/Editor.vue";
 import Footer from "../components/Footer.vue";
 import api from "../api/index";
+import IResp, { IArticleBase, IArticle } from "../types/resp";
+
+interface Idata {
+  article: IArticle | null;
+}
 
 export default Vue.extend({
   name: "Update",
-  data() {
+  data(): Idata {
     return {
       article: null
     };
@@ -30,7 +35,8 @@ export default Vue.extend({
   },
   methods: {
     async getData() {
-      let res = await api.getArticle(this.$route.params.articleID);
+      const id: number = parseInt(this.$route.params.articleID);
+      let res: IResp = await api.getArticle(id);
       this.article = res.articles;
     }
   },

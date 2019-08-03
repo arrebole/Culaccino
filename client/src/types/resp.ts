@@ -6,6 +6,10 @@ export default interface IResp {
     dir: IArticle[]
 }
 
+export interface githubApi{
+  text: string
+}
+
 export interface IArticle extends IArticleBase {
     CreatedAt: string
     UpdatedAt: string

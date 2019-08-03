@@ -2,26 +2,40 @@ import IResp, { IArticle, IArticleBase } from '@/types/resp';
 
 
 export default {
+    githubRenderAPI,
     getAllTable,
     delArticle,
     getArticle,
     updateArticle,
     createArticle,
+    getTable,
     login,
-    token
+    token,
 }
 
 function createFetch(url: string, method: string, data?: string) {
     return fetch(url, {
         method,
-        credentials: "include",
+        mode: 'cors',
+        credentials: "same-origin",
         headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: data
     }).then(response => response.json())
 }
 
+function githubRenderAPI(aText: { text: string }): Promise<string> {
+    return fetch('https://api.github.com/markdown', {
+        method: "POST",
+        mode: 'cors',
+        credentials: "same-origin",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(aText)
+    }).then(res => res.text())
+}
 
 function token(aToken: string): Promise<IResp> {
     return createFetch(`/api/token?token=${aToken}`, "GET");
@@ -30,6 +44,10 @@ function token(aToken: string): Promise<IResp> {
 
 function login(user: { userName: string, password: string }): Promise<IResp> {
     return createFetch(`/api/login?userName=${user.userName}&password=${user.password}`, "GET");
+}
+
+function getTable(page: number): Promise<IResp> {
+    return createFetch(`/api/table/${page}`, "GET");
 }
 
 function getAllTable(): Promise<IResp> {

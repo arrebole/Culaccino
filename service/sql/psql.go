@@ -11,7 +11,7 @@ import (
 type SQL interface {
 	Delete(uint)
 	Add(*module.PostArticle)
-	Update(*module.Article)
+	Update(uint, *module.Article)
 	Query(uint) *module.Article
 	QueryDir(uint) []module.Article
 	QueryDirAll() []module.Article
@@ -51,12 +51,14 @@ func (p *client) Delete(id uint) {
 
 // Add 添加文章
 func (p *client) Add(article *module.PostArticle) {
-	p.db.Create(module.ToArticle(article)).Update("CreatedAt", time.Now())
+	aNewArticle := module.ToArticle(article)
+	aNewArticle.CreatedAt = time.Now()
+	p.db.Create(aNewArticle)
 }
 
 // Update修改文章,只更新修改的字段
-func (p *client) Update(article *module.Article) {
-	p.db.Model(&module.Article{}).Updates(article)
+func (p *client) Update(id uint, article *module.Article) {
+	p.db.Model(&module.Article{}).Where("id = ?", id).Updates(article)
 }
 
 // 增加文章浏览量

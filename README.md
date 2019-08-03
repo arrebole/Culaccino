@@ -6,7 +6,8 @@
 + gin
 + gorm + sqlite3
 + vue+ scss + typescript
-
++ marked + github-markdown-css
++ github markdown Render api
 ### API
 
 | method | url                     | 功能          |

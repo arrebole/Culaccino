@@ -5,7 +5,7 @@
       <div class="breadcrumb">
         <template v-for="(pathName, index) in breadcrumbData">
           <span :key="pathName + 'span'" v-if="index != 0" class="header-font">/</span>
-          <router-link class="breadcrumb-item button header-font" :to="{ name: pathName }" :key="pathName">{{ pathName }}</router-link>
+          <a class="breadcrumb-item button header-font" :key="pathName">{{ pathName }}</a>
         </template>
       </div>
     </nav>
@@ -28,7 +28,7 @@ export default Vue.extend({
   },
   computed: {
     breadcrumbData(): string[] {
-      let result: string[] = this.path.split("/").filter(s => s != "");
+      let result: string[] = this.path.split("/").filter(s => s != "" && s >'9');
       if (result.length == 0) result.push("home");
       return result.map(e => this.firstUpperCase(e));
     }

@@ -7,6 +7,7 @@ import mavonEditor from 'mavon-editor'
 import "normalize.css"
 import "./assets/iconfont/iconfont.css"
 import 'mavon-editor/dist/css/index.css'
+import "github-markdown-css"
 
 Vue.use(mavonEditor)
 

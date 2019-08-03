@@ -21,7 +21,11 @@
         <span>提交</span>
       </button>
     </div>
-    <mavon-editor id="markdown-editor" v-model="contents" />
+    <mavon-editor
+      id="markdown-editor"
+      :toolbars="markdownOption"
+      v-model="contents"
+    />
   </div>
 </template>
 
@@ -39,13 +43,15 @@ export default Vue.extend({
       title: "",
       target: "",
       summary: "",
-      contents: ""
+      contents: "",
+      markdownOption: {
+        bold: true // 粗体
+      }
     };
   },
   created() {},
   watch: {
     article() {
-      this.ID = this.article.ID;
       this.author = this.article.author;
       this.title = this.article.title;
       this.target = this.article.target;
@@ -56,26 +62,30 @@ export default Vue.extend({
   computed: {},
   methods: {
     async submit() {
-      if (this.handle == "create") {
-        console.log(JSON.stringify(this.createArticle()));
-        let res: IResp = await api.createArticle(this.createArticle());
-        if (res.code == "success") alert("成功");
-      } else if (this.handle == "update") {
-        let res: IResp = await api.updateArticle(
-          this.article.ID,
-          this.createArticle()
-        );
-        if (res.code == "success") alert("成功");
-      }
+      if (this.handle == "create") this.apiCreate();
+      else if (this.handle == "update") this.apiUpdate();
     },
-    createArticle(): IArticleBase {
+    async apiCreate() {
+      let md = await api.githubRenderAPI({ text: this.contents });
+      let res: IResp = await api.createArticle(await this.createArticle(md));
+      if (res.code == "success") alert("成功");
+    },
+    async apiUpdate() {
+      let md = await api.githubRenderAPI({ text: this.contents });
+      let res: IResp = await api.updateArticle(
+        this.article.ID,
+        this.createArticle(md)
+      );
+      if (res.code == "success") alert("成功");
+    },
+    createArticle(contents: string): IArticleBase {
       return {
         title: this.title,
         author: this.author,
         target: this.target,
         cover: "",
         summary: this.summary,
-        contents: this.contents
+        contents
       };
     }
   }
