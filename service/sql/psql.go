@@ -31,7 +31,7 @@ func (p *client) Query(id uint) *module.Article {
 
 // // QueryDir 查询目录
 func (p *client) QueryDir(page uint) []module.Article {
-	const limit uint = 3
+	const limit uint = 6
 	var dir []module.Article
 	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, target, cover, summary,views").Find(&dir)
 	return dir

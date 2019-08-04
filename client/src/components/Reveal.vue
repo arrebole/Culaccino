@@ -1,7 +1,7 @@
 <template>
   <div class="reveal">
     <div class="reveal-header">
-      <router-link :to="{ name: 'Detail', params: { id: ID } }">
+      <router-link :to="{ name: 'Article', params: { id: ID } }">
           {{ title }}</router-link>
     </div>
     <div class="reveal-contents">
