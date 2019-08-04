@@ -4,6 +4,7 @@ export default interface IResp {
     token: string
     articles: IArticle
     dir: IArticle[]
+    remaining:number
 }
 
 export interface githubApi{
@@ -18,14 +19,11 @@ export interface IArticle extends IArticleBase {
 }
 
 export interface IArticleBase {
-
     title: string
     author: string
     target: string
     cover: string
     summary: string
-
-
     contents: string
 }
 

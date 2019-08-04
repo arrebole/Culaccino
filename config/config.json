@@ -1,6 +1,6 @@
 {
     "sql": {
-        "dbName": "./data/tests.db"
+        "dbName": "./data/culaccino.db"
     },
     "server": {
         "listenPort": ":3000"

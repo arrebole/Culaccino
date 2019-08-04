@@ -12,8 +12,11 @@ var db = sql.New()
 // Table 目录索引api
 func Table(ctx *gin.Context) {
 	if id, err := util.ParesID(ctx); err == nil {
-		data := sql.New().QueryDir(id)
-		ctx.JSON(200, module.RepData(nil, data))
+		const limit = 5
+		data, remaining := sql.New().QueryDir(limit, int(id))
+		rep := module.RepData(nil, data)
+		rep.Remaining = remaining
+		ctx.JSON(200, rep)
 		return
 	}
 

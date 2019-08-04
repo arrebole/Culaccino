@@ -33,15 +33,18 @@ import IResp, { IArticle } from "../types/resp";
 
 interface Idata {
   page: number;
-  final: boolean;
+  allPage:number
+  loading: boolean;
   dir: IArticle[] | null;
 }
 
 export default Vue.extend({
+  name:"Home",
   data(): Idata {
     return {
       page: 0,
-      final: false,
+      allPage:Number.MAX_VALUE,
+      loading: false,
       dir: null
     };
   },
@@ -50,20 +53,27 @@ export default Vue.extend({
   },
   methods: {
     async getDir() {
+      this.loading = true;
       let res: IResp = await api.getTable(this.page);
-      if (res.dir.length == 0) this.final = true;
-      else this.dir = res.dir;
+      this.loading = false;
+      if (res.remaining == 0) {
+        this.allPage = this.page
+      }
+      this.dir = res.dir;
     },
     tranTime(str: string) {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
     },
-    isRepage(n: number) :boolean{
-      return this.page + n < 0 || (this.final && n > 0);
+    isRepage(n: number): boolean {
+      if (n <= 0) return !!(this.page + n >= 0);
+      return !!(this.allPage > this.page)
+
     },
     rePage(n: number) {
-      if (this.isRepage(n)) return;
-      this.page += n;
-      this.getDir();
+      if (this.isRepage(n)) {
+        this.page += n;
+        this.getDir();
+      }
     }
   },
   components: {
@@ -81,7 +91,7 @@ article {
   flex-direction: column;
   min-height: 80px;
   background: rgb(248, 248, 248);
-  min-height: 820px;
+  min-height: 800px;
   padding-top: 20px;
 }
 .pagination {

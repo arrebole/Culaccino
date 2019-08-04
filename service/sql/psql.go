@@ -13,7 +13,7 @@ type SQL interface {
 	Add(*module.PostArticle)
 	Update(uint, *module.Article)
 	Query(uint) *module.Article
-	QueryDir(uint) []module.Article
+	QueryDir(int, int) ([]module.Article, int)
 	QueryDirAll() []module.Article
 }
 
@@ -30,11 +30,20 @@ func (p *client) Query(id uint) *module.Article {
 }
 
 // // QueryDir 查询目录
-func (p *client) QueryDir(page uint) []module.Article {
-	const limit uint = 6
+func (p *client) QueryDir(limit int, page int) ([]module.Article, int) {
 	var dir []module.Article
+	var count int
+	p.db.Model(&module.Article{}).Count(&count)
 	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, target, cover, summary,views").Find(&dir)
-	return dir
+	return dir, remaining(count, limit, page)
+}
+
+func remaining(all int, limit int, page int) int {
+	var result = all - limit*(page+1)
+	if result < 0 {
+		result = 0
+	}
+	return result
 }
 
 // // QueryDirAll 查询目录
