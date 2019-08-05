@@ -24,6 +24,9 @@
           <router-link tag="li" :to="{ name: 'Home' }">
             <span class="iconfont icon-home menu-icon"></span>首页
           </router-link>
+          <router-link tag="li" :to="{ name: 'Create' }">
+            <span class="iconfont icon-admin menu-icon"></span>发布
+          </router-link>
           <router-link tag="li" :to="{ name: 'Admin' }">
             <span class="iconfont icon-admin menu-icon"></span>管理
           </router-link>

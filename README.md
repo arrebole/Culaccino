@@ -1,13 +1,18 @@
 # simple blog
-开发中
+
+version: 0.2.0 (开发中)
 
 ### This use
 
 + gin
 + gorm + sqlite3
-+ vue+ scss + typescript
-+ marked + github-markdown-css
++ vue + scss + typescript + github-markdown-css
 + github markdown Render api
+
+```bash
+chmod +x ./start.h && ./start.h
+```
+
 ### API
 
 | method | url                     | 功能          |

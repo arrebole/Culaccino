@@ -1,0 +1,1 @@
+go build -o "./bin/service.out" "./service/main.go";
