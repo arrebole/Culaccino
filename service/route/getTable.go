@@ -1,8 +1,6 @@
 package route
 
 import (
-	"fmt"
-
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/arrebole/culaccino/service/util"
@@ -16,7 +14,6 @@ func Table(ctx *gin.Context) {
 	if id, err := util.ParesID(ctx); err == nil {
 		const limit = 5
 		data, remaining := sql.New().QueryDir(limit, int(id))
-		fmt.Println(data)
 		rep := module.RepData(nil, data)
 		rep.Remaining = remaining
 		ctx.JSON(200, rep)
