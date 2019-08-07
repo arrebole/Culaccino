@@ -1,10 +1,15 @@
-FROM postgres
-LABEL authorMail "c.y.concurrent@gmail.com"
+FROM golang
 
-ENV POSTGRES_PASSWORD=e8y28diq9hx POSTGRES_USER=postgres
+LABEL authorMail "concurrent.exec@gmail.com"
 
-RUN apt update && apt upgrade
+RUN apt update && apt upgrade; mkdir -p /var/www/Culaccino
 
-VOLUME "/var/lib/postgresql/data/pgdata" "/var/lib/postgresql/data"
+WORKDIR /var/www/Culaccino
+ENV GIN_MODE = "release"
 
-EXPOSE 5432 5432
+COPY ./ /var/www/Culaccino
+VOLUME "./cuaccino.db" "/var/www/Culaccino/data/culaccino.db"
+
+CMD [ "./bin/service.out" ]
+
+EXPOSE 3000 3000
