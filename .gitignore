@@ -2,6 +2,9 @@
 /client/node_modules
 /dist
 
+# sqlite database
+*.db
+
 # local env files
 .env.local
 .env.*.local

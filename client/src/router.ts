@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Admin from './views/Admin.vue'
-import Create from './views/Create.vue'
-import Update from './views/Update.vue'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Detail from './views/Detail.vue'
 import middware from "./middleware/isAdmin"
+//把组件按组分块
+const Admin = () => import(/* webpackChunkName: "admin" */ './views/Admin.vue')
+const Create = () => import(/* webpackChunkName: "create" */ './views/Create.vue')
+const Update = () => import(/* webpackChunkName: "update" */ './views/Update.vue')
+
 Vue.use(Router)
 
 export default new Router({

@@ -6,6 +6,13 @@ func makeCode(code string) *Signal {
 	}
 }
 
+// Count 返回查询数量请求
+func Count(c int) *Signal {
+	result := makeCode("success")
+	result.Count = c
+	return result
+}
+
 // Power 权限
 func Power() *Signal {
 	result := makeCode("success")

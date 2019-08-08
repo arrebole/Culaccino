@@ -13,10 +13,8 @@ var db = sql.New()
 func Table(ctx *gin.Context) {
 	if id, err := util.ParesID(ctx); err == nil {
 		const limit = 5
-		data, remaining := sql.New().QueryDir(limit, int(id))
-		rep := module.RepData(nil, data)
-		rep.Remaining = remaining
-		ctx.JSON(200, rep)
+		data := sql.New().QueryDir(limit, int(id))
+		ctx.JSON(200, module.RepData(nil, data))
 		return
 	}
 

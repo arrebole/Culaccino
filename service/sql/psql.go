@@ -7,11 +7,12 @@ import (
 
 // SQL ...
 type SQL interface {
+	Count() int
 	Delete(uint)
 	Add(*module.PostArticle)
 	Update(uint, *module.Article)
 	Query(uint) *module.Article
-	QueryDir(int, int) ([]module.Article, int)
+	QueryDir(int, int) []module.Article
 	QueryDirAll() []module.Article
 }
 
@@ -28,23 +29,27 @@ func (p *client) Query(id uint) *module.Article {
 }
 
 // // QueryDir 查询目录
-func (p *client) QueryDir(limit int, page int) ([]module.Article, int) {
+func (p *client) QueryDir(limit int, page int) []module.Article {
 	var dir []module.Article
-	var count int
-	p.db.Model(&module.Article{}).Count(&count)
-	p.db.Limit(limit).Offset(limit * page).Select("id, title, author, target, cover, summary, views, updated_at, created_at").Find(&dir)
-	return dir, remaining(count, limit, page)
+	var searchItems = "id, title, author, target, cover, summary, views, updated_at, created_at"
+	p.db.Limit(limit).Offset(limit * page).Order("id desc").Select(searchItems).Find(&dir)
+	return dir
 }
 
-func remaining(all int, limit int, page int) int {
-	var result = all - limit*(page+1)
-	if result < 0 {
-		result = 0
-	}
+// Count 查询文章总量
+func (p *client) Count() int {
+	var result int
+	p.db.Model(&module.Article{}).Count(&result)
 	return result
 }
 
-// // QueryDirAll 查询目录
+// 在QueryDir中用于计算剩余的数目
+func (p *client) remaining(limit int, page int) int {
+	remain := p.Count() - limit*(page+1)
+	return max(remain, 0)
+}
+
+// QueryDirAll 查询目录
 func (p *client) QueryDirAll() []module.Article {
 	var dir []module.Article
 	p.db.Select("id, title, author, target, cover, summary, views,updated_at, created_at").Find(&dir)

@@ -13,9 +13,14 @@
         :summary="item.summary"
       ></Reveal>
       <section class="pagination">
-        <div @click="rePage(-1)">上一页</div>
-        <div>{{ page + 1 }}</div>
-        <div @click="rePage(1)">下一页</div>
+        <el-pagination
+          :page-size="5"
+          layout="prev, pager, next"
+          :total="count"
+          @current-change="currentChange"
+          @size-change="sizeChange"
+        >
+        </el-pagination>
       </section>
     </article>
     <Footer />
@@ -32,48 +37,44 @@ import api from "../api/index";
 import IResp, { IArticle } from "../types/resp";
 
 interface Idata {
-  page: number;
-  allPage:number
+  currPage: number;
+  count: number;
   loading: boolean;
   dir: IArticle[] | null;
 }
 
 export default Vue.extend({
-  name:"Home",
+  name: "Home",
   data(): Idata {
     return {
-      page: 0,
-      allPage:Number.MAX_VALUE,
+      currPage: 0,
+      count: 0,
       loading: false,
       dir: null
     };
   },
   created() {
-    this.getDir();
+    this.getCount();
+    this.getDir(this.currPage);
   },
+  computed: {},
   methods: {
-    async getDir() {
+    async getCount() {
+      let res = await api.count();
+      this.count = res.count;
+    },
+    async getDir(page: number) {
       this.loading = true;
-      let res: IResp = await api.getTable(this.page);
+      let res: IResp = await api.getTable(page);
       this.loading = false;
-      if (res.remaining == 0) {
-        this.allPage = this.page
-      }
       this.dir = res.dir;
     },
+    currentChange(val: number) {
+      this.getDir(val - 1);
+    },
+    sizeChange(val: number) {},
     tranTime(str: string) {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
-    },
-    isRepage(n: number): boolean {
-      if (n <= 0) return !!(this.page + n >= 0);
-      return !!(this.allPage > this.page)
-
-    },
-    rePage(n: number) {
-      if (this.isRepage(n)) {
-        this.page += n;
-        this.getDir();
-      }
     }
   },
   components: {
@@ -90,22 +91,11 @@ article {
   align-items: center;
   flex-direction: column;
   min-height: 80px;
-  background: rgb(248, 248, 248);
+  background: rgb(255, 255, 255);
   min-height: 800px;
   padding-top: 20px;
 }
 .pagination {
-  display: flex;
-  max-width: 900px;
-  width: 80%;
-  height: 40px;
-  justify-content: space-between;
-  color: rgb(115, 48, 192);
-  div {
-    cursor: pointer;
-    &:hover {
-      color: rgb(255, 115, 0);
-    }
-  }
+  margin: 20px;
 }
 </style>

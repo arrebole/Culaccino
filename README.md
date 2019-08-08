@@ -17,6 +17,7 @@ chmod +x ./start.h && ./start.h
 
 | method | url                     | 功能          |
 | ------ | -----------------       | -----------  |
+| GET    | /api/count              | 获取文章总数   |
 | GET    | /api/table/:page        | 获取索引      |
 | GET    | /api/contents/:id       | 获取详细内容  |
 | GET    | /api/login              | 登录         |

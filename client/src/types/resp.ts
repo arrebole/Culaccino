@@ -4,7 +4,7 @@ export default interface IResp {
     token: string
     articles: IArticle
     dir: IArticle[]
-    remaining:number
+    count: number
 }
 
 export interface githubApi{

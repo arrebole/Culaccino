@@ -16,6 +16,7 @@ func main() {
 	// api
 	api := server.Group("/api")
 	{
+		api.GET("/count", route.Count)
 		api.GET("/table/:id", route.Table)
 		api.GET("/contents/:id", route.Contents)
 		api.GET("/login", route.Login)

@@ -3,6 +3,7 @@ import IResp, { IArticle, IArticleBase } from '@/types/resp';
 
 export default {
     githubRenderAPI,
+    count,
     getAllTable,
     delArticle,
     getArticle,
@@ -40,7 +41,9 @@ function githubRenderAPI(aText: { text: string }): Promise<string> {
 function token(aToken: string): Promise<IResp> {
     return createFetch(`/api/token?token=${aToken}`, "GET");
 }
-
+function count():Promise<IResp>{
+    return createFetch("/api/count","GET");
+}
 
 function login(user: { userName: string, password: string }): Promise<IResp> {
     return createFetch(`/api/login?userName=${user.userName}&password=${user.password}`, "GET");
