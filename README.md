@@ -1,6 +1,6 @@
 # simple blog
 
-version: 0.2.0 (开发中)
+version: 0.3.0 (开发中)
 
 ### This use
 
@@ -12,6 +12,15 @@ version: 0.2.0 (开发中)
 ```bash
 chmod +x ./build.sh && ./build.sh
 chmod +x ./start.h && ./start.h
+```
+```bash
+docker build -t culaccino/blog .
+
+docker run -d \
+-p 3000:3000 \
+--name blog \
+-v ~/Service/culaccion.db:/var/www/Cuaccino/culaccion.db
+
 ```
 
 ### API

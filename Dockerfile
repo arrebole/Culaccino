@@ -2,11 +2,9 @@ FROM golang
 
 LABEL authorMail "concurrent.exec@gmail.com"
 
-ENV GIN_MODE = "release"
+ENV GIN_MODE="release"
 
-RUN apt update \ 
-    && apt upgrade \
-    && mkdir -p /var/www/Culaccino
+RUN mkdir -p /var/www/Culaccino
 
 COPY ./ /var/www/Culaccino
 WORKDIR /var/www/Culaccino
