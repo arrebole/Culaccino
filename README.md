@@ -10,6 +10,7 @@ version: 0.2.0 (开发中)
 + github markdown Render api
 
 ```bash
+chmod +x ./build.sh && ./build.sh
 chmod +x ./start.h && ./start.h
 ```
 
