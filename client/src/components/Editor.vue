@@ -14,6 +14,10 @@
         <input type="text" v-model="target" placeholder="标签" />
       </div>
       <div>
+        <label>cover</label>
+        <input type="text" v-model="cover" placeholder="封面" />
+      </div>
+      <div>
         <label>Summer</label>
         <input type="text" v-model="summary" placeholder="摘要" />
       </div>
@@ -44,6 +48,7 @@ export default Vue.extend({
       target: "",
       summary: "",
       contents: "",
+      cover:"",
       markdownOption: {
         bold: true // 粗体
       }
@@ -57,6 +62,7 @@ export default Vue.extend({
       this.target = this.article.target;
       this.summary = this.article.summary;
       this.contents = this.article.contents;
+      this.cover = this.article.cover;
     }
   },
   computed: {},
@@ -83,7 +89,7 @@ export default Vue.extend({
         title: this.title,
         author: this.author,
         target: this.target,
-        cover: "",
+        cover: this.cover,
         summary: this.summary,
         contents
       };
