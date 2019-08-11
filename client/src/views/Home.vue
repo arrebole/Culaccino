@@ -6,13 +6,8 @@
         <Reveal
           v-for="(item, index) in dir"
           :key="index"
-          :ID="item.ID"
           :date="tranTime(item.CreatedAt)"
-          :views="item.views"
-          :author="item.author"
-          :title="item.title"
-          :summary="item.summary"
-          :cover = "item.cover"
+          :article="item"
 
         ></Reveal>
         <section class="pagination">
