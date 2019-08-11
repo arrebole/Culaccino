@@ -4,10 +4,9 @@ version: 0.4.0 (开发中)
 
 ### This use
 
-+ gin
-+ gorm + sqlite3
-+ vue + scss + typescript + github-markdown-css
-+ github markdown Render api
++ gin + gorm + sqlite3
++ vue + scss + typescript
++ github-markdown-css + marked + highlight.js
 
 ```bash
 chmod +x ./build.sh && ./build.sh

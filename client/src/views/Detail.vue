@@ -1,11 +1,12 @@
 <template>
   <div>
     <Header />
-    <article>
+    <article v-loading="loading">
       <!-- <section></section> -->
       <section class="cent">
-        <Contents :md="article" class="markdown-body"></Contents>
+        <Contents :contents="contents" class="markdown-body"></Contents>
       </section>
+
     </article>
     <Footer />
   </div>
@@ -22,17 +23,21 @@ import IResp from "../types/resp";
 export default Vue.extend({
   data() {
     return {
-      article: ""
+      contents: "",
+      loading: true
     };
   },
   created() {
     this.getData();
   },
+  
   methods: {
     async getData() {
       const id = parseInt(this.$route.params.id);
+      this.loading = true
       const res: IResp = await api.getArticle(id);
-      this.article = res.articles.contents;
+      this.contents = res.articles.contents;
+      this.loading = false;
     }
   },
   components: {
@@ -46,6 +51,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 article {
   min-height: 820px;
+  background-color: #fff;
 }
 .cent {
   padding: 10px;

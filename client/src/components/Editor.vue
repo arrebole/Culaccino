@@ -68,26 +68,24 @@ export default Vue.extend({
       else if (this.handle == "update") this.apiUpdate();
     },
     async apiCreate() {
-      let md = await api.githubRenderAPI({ text: this.contents });
-      let res: IResp = await api.createArticle(await this.createArticle(md));
+      let res: IResp = await api.createArticle(this.createArticle());
       if (res.code == "success") alert("成功");
     },
     async apiUpdate() {
-      let md = await api.githubRenderAPI({ text: this.contents });
       let res: IResp = await api.updateArticle(
         this.article.ID,
-        this.createArticle(md)
+        this.createArticle()
       );
       if (res.code == "success") alert("成功");
     },
-    createArticle(contents: string): IArticleBase {
+    createArticle(): IArticleBase {
       return {
         title: this.title,
         author: this.author,
         target: this.target,
         cover: this.cover,
         summary: this.summary,
-        contents
+        contents:this.contents,
       };
     }
   }
