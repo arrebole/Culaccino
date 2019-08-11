@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="footer_text">©2019 - <strong>Councurrent.Exec</strong></div>
+    <div class="footer_text">©2019 - <strong>Councurrent.Exec@gmail</strong></div>
   </footer>
 </template>
 

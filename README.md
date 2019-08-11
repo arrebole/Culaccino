@@ -1,6 +1,6 @@
 # simple blog
 
-version: 0.3.0 (开发中)
+version: 0.4.0 (开发中)
 
 ### This use
 

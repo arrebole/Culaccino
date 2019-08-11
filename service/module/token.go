@@ -31,7 +31,7 @@ func newSection() Section {
 	return Section{
 		Token:  randSeq(16),
 		Create: time.Now(),
-		MaxAge: time.Minute * 20,
+		MaxAge: time.Minute * 40,
 	}
 }
 

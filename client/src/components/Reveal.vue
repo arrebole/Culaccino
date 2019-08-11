@@ -1,15 +1,15 @@
 <template>
   <div class="reveal">
     <div class="reveal-header">
-      <router-link tag="h1" :to="{ name: 'Article', params: { id: ID } }">
+      <router-link
+        class="reveal-header-title"
+        tag="h1"
+        :to="{ name: 'Article', params: { id: ID } }"
+      >
         {{ title }}</router-link
       >
     </div>
-    <img
-      width="100%"
-      height="400"
-      :src="cover"
-    />
+    <img class="reveal-cover" :src="cover" />
 
     <div class="reveal-contents">
       <p>{{ summary }}</p>
@@ -28,7 +28,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: ["title", "summary", "views", "date", "author", "ID","cover"]
+  props: ["title", "summary", "views", "date", "author", "ID", "cover"]
 });
 </script>
 
@@ -47,13 +47,11 @@ export default Vue.extend({
 .reveal-header {
   padding: 10px;
   font-family: "Microsoft Yahei", Helvetica, Arial, sans-serif;
-  
   h1 {
     color: rgb(24, 24, 24);
     text-decoration: none;
     text-align: center;
-    margin: 10px 0;
-    cursor:pointer;
+    cursor: pointer;
     &:hover {
       color: rgb(72, 95, 194);
     }
@@ -90,5 +88,34 @@ export default Vue.extend({
 .reveal-footer-info-time {
   padding: 0 5px;
   color: rgb(71, 71, 71);
+}
+
+@media screen and (min-width: 996px) {
+  .reveal-header-title{
+    margin: 10px 0;
+  }
+  .reveal-cover {
+    width: 100%;
+    height: 400px;
+  }
+}
+
+@media screen and (max-width: 996px) and(min-width: 544px) {
+  .reveal-header-title {
+    margin: 0;
+  }
+  .reveal-cover {
+    width: 100%;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 544px) {
+  .reveal-header-title {
+    margin: 0;
+  }
+  .reveal-cover {
+    width: 100%;
+    height: 260px;
+  }
 }
 </style>

@@ -27,7 +27,6 @@
     </div>
     <mavon-editor
       id="markdown-editor"
-      :toolbars="markdownOption"
       v-model="contents"
     />
   </div>
@@ -49,9 +48,6 @@ export default Vue.extend({
       summary: "",
       contents: "",
       cover:"",
-      markdownOption: {
-        bold: true // 粗体
-      }
     };
   },
   created() {},
