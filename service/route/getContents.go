@@ -1,15 +1,15 @@
 package route
 
 import (
+	"github.com/arreble/culaccino/service/pareser"
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/arrebole/culaccino/service/sql"
-	"github.com/arrebole/culaccino/service/util"
 	"github.com/gin-gonic/gin"
 )
 
-// Contents 目录索引api
+// Contents 具体内容
 func Contents(ctx *gin.Context) {
-	if id, err := util.ParesID(ctx); err == nil {
+	if id, err := pareser.New(ctx).ParamsID(); err == nil {
 		data := sql.New().Query(id)
 		ctx.JSON(200, module.RepData(data, nil))
 		return

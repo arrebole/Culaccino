@@ -1,19 +1,20 @@
 package route
 
 import (
+	"fmt"
+
+	"github.com/arreble/culaccino/service/pareser"
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/arrebole/culaccino/service/sql"
-	"github.com/arrebole/culaccino/service/util"
 	"github.com/gin-gonic/gin"
 )
 
-var db = sql.New()
-
 // Table 目录索引api
 func Table(ctx *gin.Context) {
-	if id, err := util.ParesID(ctx); err == nil {
+	if page, err := pareser.New(ctx).ParamsPage(); err == nil {
 		const limit = 5
-		data := sql.New().QueryDir(limit, int(id))
+		fmt.Println(page)
+		data := sql.New().QueryDir(limit, page)
 		ctx.JSON(200, module.RepData(nil, data))
 		return
 	}
@@ -25,5 +26,4 @@ func Table(ctx *gin.Context) {
 func TableAll(ctx *gin.Context) {
 	data := sql.New().QueryDirAll()
 	ctx.JSON(200, module.RepData(nil, data))
-
 }
