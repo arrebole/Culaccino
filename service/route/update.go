@@ -2,8 +2,8 @@ package route
 
 import (
 	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/pareser"
 	"github.com/arrebole/culaccino/service/sql"
-	"github.com/arreble/culaccino/service/pareser"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +12,7 @@ func Update(ctx *gin.Context) {
 	var (
 		id          uint
 		postArticle *module.PostArticle
-		pares = pareser.New(ctx)
+		pares       = pareser.New(ctx)
 	)
 
 	id, err1 := pares.ParamsID()
