@@ -14,8 +14,6 @@ function startFE {
     Start-Process -FilePath "yarn" -ArgumentList "run serve" -WorkingDirectory "./client";
 }
 
-
-
 goBuild; startServer; startFE;
 
 

@@ -4,9 +4,8 @@
     <article v-loading="loading">
       <!-- <section></section> -->
       <section class="cent">
-        <Contents :contents="contents" class="markdown-body"></Contents>
+        <Contents :contents="article.contents" class="markdown-body"></Contents>
       </section>
-
     </article>
     <Footer />
   </div>
@@ -19,26 +18,31 @@ import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 import Contents from "../components/Contents.vue";
 import api from "../api/index";
-import IResp from "../types/resp";
+import IResp, { IArticle, Article } from "../types/resp";
+
 export default Vue.extend({
-  data() {
+  data(): { article: IArticle } {
     return {
-      contents: "",
-      loading: true
+      article: new Article()
     };
   },
   created() {
     this.getData();
   },
-  
+  computed:{
+    paramsID(){
+      return parseInt(this.$route.params.id)
+    },
+    loading(){
+      if(this.article.ID < 0 ) return true
+      return false
+    }
+  },
   methods: {
     async getData() {
-      const id = parseInt(this.$route.params.id);
-      this.loading = true
-      const res: IResp = await api.getArticle(id);
-      this.contents = res.articles.contents;
-      this.loading = false;
-    }
+      const res: IResp = await api.getArticle(this.paramsID);
+      this.article = res.article;
+    },
   },
   components: {
     Header,

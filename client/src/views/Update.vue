@@ -37,7 +37,7 @@ export default Vue.extend({
     async getData() {
       const id: number = parseInt(this.$route.params.articleID);
       let res: IResp = await api.getArticle(id);
-      this.article = res.articles;
+      this.article = res.article;
     }
   },
   components: {

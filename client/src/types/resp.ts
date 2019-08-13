@@ -2,13 +2,34 @@ export default interface IResp {
     code: string
     power: string
     token: string
-    articles: IArticle
+    article: IArticle
     dir: IArticle[]
     count: number
 }
 
-export interface githubApi{
-  text: string
+export class Article{
+    constructor(){
+        this.ID = -1
+        this.title = ""
+        this.CreatedAt = ""
+        this.UpdatedAt = ""
+        this.views = 0
+        this.author = ""
+        this.contents = ""
+        this.cover = ""
+        this.summary = ""
+        this.target = ""
+    }
+    CreatedAt: string
+    UpdatedAt: string
+    ID: number
+    views: number
+    title: string
+    author: string
+    target: string
+    cover: string
+    summary: string
+    contents: string
 }
 
 export interface IArticle extends IArticleBase {

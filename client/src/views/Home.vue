@@ -2,25 +2,22 @@
   <div class="home">
     <Header />
     <article v-loading="loading">
-
-        <Reveal
-          v-for="(item, index) in dir"
-          :key="index"
-          :date="tranTime(item.CreatedAt)"
-          :article="item"
-
-        ></Reveal>
-        <section class="pagination">
-          <el-pagination
-            :page-size="5"
-            layout="prev, pager, next"
-            :total="count"
-            @current-change="currentChange"
-            @size-change="sizeChange"
-          >
-          </el-pagination>
-        </section>
-
+      <Reveal
+        v-for="(item, index) in dir"
+        :key="index"
+        :date="tranTime(item.CreatedAt)"
+        :article="item"
+      ></Reveal>
+      <section class="pagination">
+        <el-pagination
+          :page-size="5"
+          layout="prev, pager, next"
+          :total="count"
+          @current-change="currentChange"
+          @size-change="sizeChange"
+        >
+        </el-pagination>
+      </section>
     </article>
     <Footer />
   </div>
@@ -37,7 +34,6 @@ import IResp, { IArticle } from "../types/resp";
 
 interface Idata {
   currPage: number;
-  loading:boolean;
   count: number;
   dir: IArticle[] | null;
 }
@@ -46,32 +42,38 @@ export default Vue.extend({
   name: "Home",
   data(): Idata {
     return {
-      loading:true,
       currPage: 0,
       count: 0,
       dir: null
     };
   },
   created() {
-    this.getCount();
-    this.getDir(this.currPage);
+    this.getData();
   },
-  computed: {},
+  computed: {
+    loading() {
+      if (!this.dir) return true;
+      else return false;
+    }
+  },
   methods: {
-    async getCount() {
-      let res = await api.count();
-      this.count = res.count;
+    async getData() {
+      this.dir = null
+      this.count = await this.getCount();
+      this.dir = await this.getDir(this.currPage);
     },
-    async getDir(page: number) {
-      this.loading = true;
-      let res: IResp = await api.getTable(page);
-      this.loading = false;
-      this.dir = res.dir;
+    getCount() {
+      return api.count().then(res => res.count);
+    },
+    getDir(page: number) {
+      return api.getTable(page).then(res => res.dir);
     },
     currentChange(val: number) {
-      this.getDir(val - 1);
+      this.currPage = val - 1;
+      this.getData();
     },
     sizeChange(val: number) {},
+
     tranTime(str: string) {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
     }
