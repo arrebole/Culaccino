@@ -1,6 +1,8 @@
 # simple blog
 
-version: 0.4.0 (开发中)
+> version: 0.5.0 (开发中)
+
+预览: https://gkdark.xyz
 
 ### This use
 
