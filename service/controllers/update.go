@@ -9,19 +9,20 @@ import (
 
 // Update 更新数据api
 func Update(ctx *gin.Context) {
-	var (
-		id          uint
-		postArticle *module.PostArticle
-		pares       = pareser.New(ctx)
-	)
+	var pares = pareser.New(ctx)
 
-	id, err1 := pares.ParamsID()
-	postArticle, err2 := pares.BodyArticle()
-
-	if err1 == nil && err2 == nil {
-		sql.New().Update(id, module.ToArticle(postArticle))
-		ctx.JSON(200, module.Success())
+	id, err := pares.ParamsID()
+	if err != nil {
+		ctx.JSON(200, module.Fail())
 		return
 	}
-	ctx.JSON(200, module.Fail())
+
+	postArticle, err := pares.BodyArticle()
+	if err != nil {
+		ctx.JSON(200, module.Fail())
+		return
+	}
+
+	sql.New().Update(id, module.ToArticle(postArticle))
+	ctx.JSON(200, module.Success())
 }

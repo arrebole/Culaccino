@@ -1,8 +1,8 @@
 package route
 
 import (
-	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/arrebole/culaccino/service/controllers"
+	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +14,6 @@ func New() *gin.Engine {
 	// api
 	api := router.Group("/api")
 	{
-		api.GET("/count", controllers.Count)
 		api.GET("/table/:page", controllers.Table)
 		api.GET("/contents/:id", controllers.Contents)
 

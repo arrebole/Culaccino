@@ -28,10 +28,21 @@ func LoginOk() *Signal {
 }
 
 // RepData 返回查询数据
-func RepData(articles *Article, dir []Article) *Signal {
+func RepData(data ...interface{}) *Signal {
 	result := makeCode("success")
-	result.Main = articles
-	result.Dir = dir
+
+	for _, value := range data {
+		switch value.(type) {
+		case *Article:
+			result.Main = value.(*Article)
+		case []Article:
+			result.Dir = value.([]Article)
+		case int:
+			result.Count = value.(int)
+		default:
+			panic("data error\n")
+		}
+	}
 	return result
 }
 

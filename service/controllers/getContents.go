@@ -11,7 +11,7 @@ import (
 func Contents(ctx *gin.Context) {
 	if id, err := pareser.New(ctx).ParamsID(); err == nil {
 		data := sql.New().Query(id)
-		ctx.JSON(200, module.RepData(data, nil))
+		ctx.JSON(200, module.RepData(data))
 		return
 	}
 	ctx.JSON(200, module.Fail())

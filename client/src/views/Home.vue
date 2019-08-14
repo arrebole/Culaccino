@@ -58,15 +58,13 @@ export default Vue.extend({
   },
   methods: {
     async getData() {
-      this.dir = null
-      this.count = await this.getCount();
-      this.dir = await this.getDir(this.currPage);
+      this.dir = null;
+      const res = await api.getTable(this.currPage);
+      this.setData(res.dir, res.count);
     },
-    getCount() {
-      return api.count().then(res => res.count);
-    },
-    getDir(page: number) {
-      return api.getTable(page).then(res => res.dir);
+    setData(dir: IArticle[], count: number) {
+      this.dir = dir;
+      this.count = count;
     },
     currentChange(val: number) {
       this.currPage = val - 1;

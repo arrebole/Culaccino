@@ -13,7 +13,8 @@ const limit = 5
 func Table(ctx *gin.Context) {
 	if page, err := pareser.New(ctx).ParamsPage(); err == nil {
 		data := sql.New().QueryDir(limit, page)
-		ctx.JSON(200, module.RepData(nil, data))
+		count := sql.New().Count()
+		ctx.JSON(200, module.RepData(data, count))
 		return
 	}
 
@@ -23,5 +24,6 @@ func Table(ctx *gin.Context) {
 // TableAll 所有目录
 func TableAll(ctx *gin.Context) {
 	data := sql.New().QueryDirAll()
-	ctx.JSON(200, module.RepData(nil, data))
+	count := sql.New().Count()
+	ctx.JSON(200, module.RepData(data, count))
 }
