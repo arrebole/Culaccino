@@ -5,7 +5,7 @@ function goBuild {
 }
 
 function startServer {
-    $env:mode = "dev";
+    $env:mode = "debug";
     Start-Process -FilePath "./bin/service.exe" -WorkingDirectory "./" 
     
 }

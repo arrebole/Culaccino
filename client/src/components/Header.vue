@@ -72,6 +72,7 @@ header {
   box-shadow: 0px 0px 5px rgb(82, 82, 82);
   margin-bottom: 3px;
   padding: 0 16px;
+  z-index: 2000;
 }
 
 header > nav {
@@ -106,6 +107,7 @@ header > nav {
 .menu {
   color: rgb(255, 255, 255);
   background-color: #24292e;
+  z-index: 2000;
   ul {
     list-style: none;
     padding: 0;

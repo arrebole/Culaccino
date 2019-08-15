@@ -10,7 +10,7 @@ import (
 // Auth 认证中间件
 func Auth(ctx *gin.Context) {
 	token, err := ctx.Cookie("user_session")
-	if os.Getenv("mode") != "dev" && (err != nil || token != module.NewToken()) {
+	if os.Getenv("mode") != "debug" && (err != nil || token != module.NewToken()) {
 		ctx.JSON(200, module.Fail())
 		ctx.Abort()
 		return
