@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
-import Archives from './views/Archive.vue'
+import Archives from './views/Archives.vue'
 import auth from "./middleware/auth"
 //把组件按组分块
 const Admin = () => import(/* webpackChunkName: "admin" */ './views/Admin.vue')
