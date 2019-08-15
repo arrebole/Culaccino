@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"path"
 	"path/filepath"
 	"strings"
@@ -29,8 +28,7 @@ func dbName() string {
 
 // DBDownLoad ...
 func DBDownLoad(ctx *gin.Context) {
-	fmt.Println(dbName())
-	ctx.FileAttachment(dbPath(), dbName())
+	ctx.FileAttachment(dbFilePath(), dbName())
 }
 
 // DBUpload ...
