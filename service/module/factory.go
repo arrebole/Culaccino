@@ -33,10 +33,10 @@ func RepData(data ...interface{}) *Signal {
 
 	for _, value := range data {
 		switch value.(type) {
-		case *Article:
-			result.Main = value.(*Article)
-		case []Article:
-			result.Dir = value.([]Article)
+		case *Archive:
+			result.Main = value.(*Archive)
+		case []Archive:
+			result.Dir = value.([]Archive)
 		case int:
 			result.Count = value.(int)
 		default:
@@ -56,10 +56,10 @@ func Fail() *Signal {
 	return makeCode("fail")
 }
 
-// ToArticle 将用户提交的article 转化成数据库的article格式
-func ToArticle(data *PostArticle) *Article {
-	var result = &Article{
-		PostArticle: *data,
+// ToArchive 将用户提交的article 转化成数据库的article格式
+func ToArchive(data *PostArchive) *Archive {
+	var result = &Archive{
+		PostArchive: *data,
 		Views:       0,
 	}
 	return result

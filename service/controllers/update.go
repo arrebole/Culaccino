@@ -17,12 +17,12 @@ func Update(ctx *gin.Context) {
 		return
 	}
 
-	postArticle, err := pares.BodyArticle()
+	postArchive, err := pares.BodyArchive()
 	if err != nil {
 		ctx.JSON(200, module.Fail())
 		return
 	}
 
-	sql.New().Update(id, module.ToArticle(postArticle))
+	sql.New().Update(id, module.ToArchive(postArchive))
 	ctx.JSON(200, module.Success())
 }

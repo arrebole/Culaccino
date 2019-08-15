@@ -6,8 +6,8 @@ import (
 )
 
 func initDB(db *gorm.DB) *gorm.DB {
-	if !db.HasTable(&module.Article{}) {
-		db.CreateTable(&module.Article{})
+	if !db.HasTable(&module.Archive{}) {
+		db.CreateTable(&module.Archive{})
 	}
 	return db
 }

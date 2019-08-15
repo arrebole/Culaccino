@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import IResp, { IArticle } from "../types/resp";
+import IResp, { IArchive } from "../types/resp";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 import Table from "../components/Table.vue";
 import api from "../api/index";
 
 interface Data {
-  dir: IArticle[];
+  dir: IArchive[];
 }
 
 export default Vue.extend({
@@ -37,7 +37,7 @@ export default Vue.extend({
       this.dir = res.dir.reverse();
     },
     async deleteAt(id: number) {
-      let res: IResp = await api.delArticle(id);
+      let res: IResp = await api.delArchive(id);
       window.location.reload();
     }
   },

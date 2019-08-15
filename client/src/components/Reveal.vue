@@ -4,22 +4,22 @@
       <router-link
         class="reveal-header-title"
         tag="h1"
-        :to="{ name: 'Article', params: { id: article.ID } }"
+        :to="{ name: 'Archives', params: { id: archive.ID } }"
       >
-        {{ article.title }}</router-link
+        {{ archive.title }}</router-link
       >
     </div>
     <div class="cover-container cover-container-auto">
-      <img class="reveal-cover" :src="article.cover" />
+      <img class="reveal-cover" :src="archive.cover" />
     </div>
 
     <div class="reveal-contents">
-      <p>{{ article.summary }}</p>
+      <p>{{ archive.summary }}</p>
     </div>
     <div class="reveal-footer">
-      <div>{{ article.target }}</div>
+      <div>{{ archive.target }}</div>
       <div class="reveal-footer-info">
-        <span class="iconfont icon-liulan"></span><span>{{ article.views }}</span>
+        <span class="iconfont icon-liulan"></span><span>{{ archive.views }}</span>
         <span class="iconfont icon-icon-test1"></span>
         <span class="reveal-footer-info-time">{{ date }} </span>
       </div>
@@ -30,7 +30,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: ["article","date"]
+  props: ["archive","date"]
 });
 </script>
 

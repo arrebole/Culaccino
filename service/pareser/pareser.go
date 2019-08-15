@@ -18,9 +18,9 @@ func New(ctx *gin.Context) *Pareser {
 	return &Pareser{ctx: ctx}
 }
 
-// BodyArticle ...
-func (p *Pareser) BodyArticle() (*module.PostArticle, error) {
-	var article = &module.PostArticle{}
+// BodyArchive ...
+func (p *Pareser) BodyArchive() (*module.PostArchive, error) {
+	var article = &module.PostArchive{}
 	if err := p.ctx.BindJSON(article); err != nil {
 		return nil, errors.New("[Pareser]: pares post article fail")
 	}

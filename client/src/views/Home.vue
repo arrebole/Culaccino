@@ -6,7 +6,7 @@
         v-for="(item, index) in dir"
         :key="index"
         :date="tranTime(item.CreatedAt)"
-        :article="item"
+        :archive="item"
       ></Reveal>
       <section class="pagination">
         <el-pagination
@@ -30,12 +30,12 @@ import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 import Reveal from "../components/Reveal.vue";
 import api from "../api/index";
-import IResp, { IArticle } from "../types/resp";
+import IResp, { IArchive } from "../types/resp";
 
 interface Idata {
   currPage: number;
   count: number;
-  dir: IArticle[] | null;
+  dir: IArchive[] | null;
 }
 
 export default Vue.extend({
@@ -62,7 +62,7 @@ export default Vue.extend({
       const res = await api.getTable(this.currPage);
       this.setData(res.dir, res.count);
     },
-    setData(dir: IArticle[], count: number) {
+    setData(dir: IArchive[], count: number) {
       this.dir = dir;
       this.count = count;
     },

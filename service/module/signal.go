@@ -5,7 +5,7 @@ type Signal struct {
 	Code  string    `json:"code"`
 	Power string    `json:"power"`
 	Token string    `json:"token"`
-	Main  *Article  `json:"article"`
+	Main  *Archive  `json:"archive"`
 	Count int       `json:"count"`
-	Dir   []Article `json:"dir"`
+	Dir   []Archive `json:"dir"`
 }

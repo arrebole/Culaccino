@@ -3,7 +3,7 @@
     <Header />
     <article>
       <section>
-        <Editor handle="update" :article="article"></Editor>
+        <Editor handle="update" :archive="archive"></Editor>
       </section>
     </article>
     <Footer />
@@ -17,17 +17,17 @@ import Header from "../components/Header.vue";
 import Editor from "../components/Editor.vue";
 import Footer from "../components/Footer.vue";
 import api from "../api/index";
-import IResp, { IArticleBase, IArticle } from "../types/resp";
+import IResp, { IArchive, IArchiveBase } from "../types/resp";
 
 interface Idata {
-  article: IArticle | null;
+  archive: IArchive | null;
 }
 
 export default Vue.extend({
   name: "Update",
   data(): Idata {
     return {
-      article: null
+      archive: null
     };
   },
   created() {
@@ -36,8 +36,8 @@ export default Vue.extend({
   methods: {
     async getData() {
       const id: number = parseInt(this.$route.params.articleID);
-      let res: IResp = await api.getArticle(id);
-      this.article = res.article;
+      let res: IResp = await api.getArchive(id);
+      this.archive = res.archive;
     }
   },
   components: {

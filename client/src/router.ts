@@ -3,8 +3,8 @@ import Router from 'vue-router'
 
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
-import Detail from './views/Detail.vue'
-import middware from "./middleware/isAdmin"
+import Archives from './views/Archive.vue'
+import auth from "./middleware/auth"
 //把组件按组分块
 const Admin = () => import(/* webpackChunkName: "admin" */ './views/Admin.vue')
 const Create = () => import(/* webpackChunkName: "create" */ './views/Create.vue')
@@ -22,34 +22,34 @@ export default new Router({
       component: Home
     },
     {
-      path: '/article/:id',
-      name: "Article",
-      component: Detail,
+      path: '/archives/:id',
+      name: "Archives",
+      component: Archives,
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
-      beforeEnter: middware.hadPower
+      beforeEnter: auth.hadPower
     },
     {
       path: '/admin',
       name: "Admin",
       component: Admin,
-      beforeEnter: middware.noPower
+      beforeEnter: auth.noPower
     },
     {
       path: '/admin/create',
       name: "Create",
       component: Create,
-      beforeEnter: middware.noPower
+      beforeEnter: auth.noPower
     },
 
     {
-      path: '/admin/update/:articleID',
+      path: '/admin/update/:id',
       name: "Update",
       component: Update,
-      beforeEnter: middware.noPower
+      beforeEnter: auth.noPower
     },
     {
       path: '/*',

@@ -2,13 +2,13 @@ export default interface IResp {
     code: string
     power: string
     token: string
-    article: IArticle
-    dir: IArticle[]
+    archive: IArchive
+    dir: IArchive[]
     count: number
 }
 
-export class Article{
-    constructor(){
+export class Archive {
+    constructor() {
         this.ID = -1
         this.title = ""
         this.CreatedAt = ""
@@ -32,14 +32,31 @@ export class Article{
     contents: string
 }
 
-export interface IArticle extends IArticleBase {
+export interface IArchive extends IArchiveBase {
     CreatedAt: string
     UpdatedAt: string
     ID: number
     views: number
 }
 
-export interface IArticleBase {
+export class ArchiveBase implements IArchiveBase {
+    constructor() {
+        this.title = ""
+        this.author = ""
+        this.target = ""
+        this.cover = ""
+        this.summary = ""
+        this.contents = ""
+    }
+    title: string
+    author: string
+    target: string
+    cover: string
+    summary: string
+    contents: string
+}
+
+export interface IArchiveBase {
     title: string
     author: string
     target: string

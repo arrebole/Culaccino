@@ -1,92 +1,64 @@
 <template>
   <div id="editor">
-    <div class="article-info">
+    <div class="archive-info">
       <div>
         <label>Author</label>
-        <input type="text" v-model="author" placeholder="作者" />
+        <input type="text" v-model="cache.author" placeholder="作者" />
       </div>
       <div>
         <label>Title</label>
-        <input type="text" v-model="title" placeholder="标题" />
+        <input type="text" v-model="cache.title" placeholder="标题" />
       </div>
       <div>
         <label>target</label>
-        <input type="text" v-model="target" placeholder="标签" />
+        <input type="text" v-model="cache.target" placeholder="标签" />
       </div>
       <div>
         <label>cover</label>
-        <input type="text" v-model="cover" placeholder="封面" />
+        <input type="text" v-model="cache.cover" placeholder="封面" />
       </div>
       <div>
         <label>Summer</label>
-        <input type="text" v-model="summary" placeholder="摘要" />
+        <input type="text" v-model="cache.summary" placeholder="摘要" />
       </div>
       <button type="submit" @click="submit" class="btn">
         <span>提交</span>
       </button>
     </div>
-    <mavon-editor
-      id="markdown-editor"
-      v-model="contents"
-    />
+    <mavon-editor id="markdown-editor" v-model="cache.contents" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import api from "../api/index";
-import IResp, { IArticleBase } from "../types/resp";
+import IResp, { IArchiveBase, IArchive, Archive,ArchiveBase } from "../types/resp";
 
 export default Vue.extend({
-  props: ["handle", "article"],
-  data() {
+  props: ["handle", "archive"],
+  data(): { cache: IArchiveBase } {
     return {
-      ID: 0,
-      author: "",
-      title: "",
-      target: "",
-      summary: "",
-      contents: "",
-      cover:"",
+      cache: new ArchiveBase()
     };
   },
   created() {},
   watch: {
-    article() {
-      this.author = this.article.author;
-      this.title = this.article.title;
-      this.target = this.article.target;
-      this.summary = this.article.summary;
-      this.contents = this.article.contents;
-      this.cover = this.article.cover;
+    archive() {
+      Object.assign(this.cache,this.archive)
     }
   },
-  computed: {},
   methods: {
     async submit() {
       if (this.handle == "create") this.apiCreate();
       else if (this.handle == "update") this.apiUpdate();
     },
     async apiCreate() {
-      let res: IResp = await api.createArticle(this.createArticle());
+      let res: IResp = await api.createArchive(this.archive);
       if (res.code == "success") alert("成功");
     },
     async apiUpdate() {
-      let res: IResp = await api.updateArticle(
-        this.article.ID,
-        this.createArticle()
-      );
+      let res: IResp = await api.updateArchive(this.$route.params.id, this.cache);
       if (res.code == "success") alert("成功");
-    },
-    createArticle(): IArticleBase {
-      return {
-        title: this.title,
-        author: this.author,
-        target: this.target,
-        cover: this.cover,
-        summary: this.summary,
-        contents:this.contents,
-      };
     }
   }
 });
@@ -102,7 +74,7 @@ export default Vue.extend({
 #markdown-editor {
   flex: 1;
 }
-.article-info {
+.archive-info {
   padding: 10px;
   margin-bottom: 20px;
   div {
