@@ -53,7 +53,7 @@ export default Vue.extend({
       else if (this.handle == "update") this.apiUpdate();
     },
     async apiCreate() {
-      let res: IResp = await api.createArchive(this.archive);
+      let res: IResp = await api.createArchive(this.cache);
       if (res.code == "success") alert("成功");
     },
     async apiUpdate() {
