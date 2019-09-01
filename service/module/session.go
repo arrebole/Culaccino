@@ -1,7 +1,6 @@
 package module
 
 import (
-	"math/rand"
 	"time"
 )
 
@@ -10,9 +9,9 @@ var local *Session
 func init() {
 	local = &Session{
 		CreateAt: time.Now(),
-		MaxAge:   time.Minute * 40,
+		MaxAge:   time.Hour * 3,
 	}
-	local.ChangeToken()
+	local.changeToken()
 }
 
 // Session 储存会话
@@ -27,22 +26,19 @@ func (p *Session) IsOverTime() bool {
 	return (time.Now().Sub(p.CreateAt) > p.MaxAge)
 }
 
-// ChangeToken ...
-func (p *Session) ChangeToken() *Session {
-	rand.Seed(time.Now().Unix())
-	var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	randRune := make([]rune, 16)
-	for i := range randRune {
-		randRune[i] = letters[rand.Intn(len(letters))]
-	}
-	p.Token = string(randRune)
-	return p
+func (p *Session) refreshTime() {
+	p.CreateAt = time.Now()
+}
+
+func (p *Session) changeToken() {
+	p.Token = randString(16)
 }
 
 // NewSession 根据是否超时创建 token
 func NewSession() *Session {
 	if local.IsOverTime() {
-		local.ChangeToken()
+		local.changeToken()
+		local.refreshTime()
 	}
 	return local
 }

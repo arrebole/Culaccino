@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 	"regexp"
 
 	"github.com/arrebole/culaccino/service/module"
@@ -58,4 +60,20 @@ func getFileFromBody(ctx *gin.Context) (*module.File, error) {
 		Data:   fileByte,
 	}
 	return result, nil
+}
+
+func init() {
+	rootPath, _ := filepath.Abs("./")
+	dirPath := filepath.Join(rootPath, "wwwroot", "static")
+	if !pathExist(dirPath) {
+		os.Mkdir(dirPath, os.ModePerm)
+	}
+
+}
+func pathExist(path string) bool {
+	_, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return true
 }

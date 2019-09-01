@@ -23,6 +23,6 @@ func ArchiveUpdate(ctx *gin.Context) {
 		return
 	}
 
-	sql.New().Update(id, module.ToArchive(postArchive))
+	sql.New().ArchiveUpdate(id, module.ToArchive(postArchive))
 	ctx.JSON(200, module.ResponseSuccess())
 }

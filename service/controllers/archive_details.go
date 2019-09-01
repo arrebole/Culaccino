@@ -10,7 +10,7 @@ import (
 // ArchivesDetails 具体内容
 func ArchivesDetails(ctx *gin.Context) {
 	if id, err := pareser.New(ctx).ParamsID(); err == nil {
-		ctx.JSON(200, module.ResponseData(sql.New().Query(id)))
+		ctx.JSON(200, module.ResponseData(sql.New().ArchiveQuery(id)))
 		return
 	}
 	ctx.JSON(200, module.ResponseFail())

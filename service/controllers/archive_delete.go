@@ -10,7 +10,7 @@ import (
 // ArchiveDelete 删除内容api
 func ArchiveDelete(ctx *gin.Context) {
 	if id, err := pareser.New(ctx).ParamsID(); err == nil {
-		sql.New().Delete(id)
+		sql.New().ArchiveDelete(id)
 		ctx.JSON(200, module.ResponseSuccess())
 		return
 	}

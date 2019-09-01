@@ -8,6 +8,6 @@ import (
 
 // ArchiveAll 所有目录
 func ArchiveAll(ctx *gin.Context) {
-	total := sql.New().Count().Total
-	ctx.JSON(200, module.ResponseData(sql.New().QueryDir(0, total)))
+	total := sql.New().ArchiveCount().Total
+	ctx.JSON(200, module.ResponseData(sql.New().ArchiveQueryDir(0, total)))
 }

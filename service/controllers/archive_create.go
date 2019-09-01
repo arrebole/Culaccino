@@ -10,7 +10,7 @@ import (
 // ArchiveCreate 添加内容api
 func ArchiveCreate(ctx *gin.Context) {
 	if article, err := pareser.New(ctx).BodyArchive(); err == nil {
-		sql.New().Add(article)
+		sql.New().ArchiveCreate(article)
 		ctx.JSON(200, module.ResponseSuccess())
 		return
 	}
