@@ -11,7 +11,7 @@ function startServer {
 }
 
 function startFE {
-    Start-Process -FilePath "yarn" -ArgumentList "run serve" -WorkingDirectory "./client";
+    Start-Process -FilePath "yarn" -ArgumentList "run serve" -WorkingDirectory "./web-app";
 }
 
 goBuild; startServer; startFE;

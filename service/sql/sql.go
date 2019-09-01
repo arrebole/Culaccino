@@ -8,13 +8,12 @@ import (
 // SQL ...
 type SQL interface {
 	Close()
-	Count() int
+	Count() *module.Count
 	Delete(uint)
 	Add(*module.PostArchive)
 	Update(uint, *module.Archive)
 	Query(uint) *module.Archive
-	QueryDir(int, int) []module.Archive
-	QueryDirAll() []module.Archive
+	QueryDir(int, int) ([]module.Archive, *module.Count)
 }
 
 type client struct {
@@ -30,31 +29,26 @@ func (p *client) Query(id uint) *module.Archive {
 }
 
 // // QueryDir 查询目录
-func (p *client) QueryDir(limit int, page int) []module.Archive {
+func (p *client) QueryDir(page int, per int) ([]module.Archive, *module.Count) {
 	var dir []module.Archive
 	var searchItems = "id, title, author, target, cover, summary, views, updated_at, created_at"
-	p.db.Limit(limit).Offset(limit * page).Order("id desc").Select(searchItems).Find(&dir)
-	return dir
+	p.db.Limit(per).Offset(page * per).Order("id desc").Select(searchItems).Find(&dir)
+	return dir, p.remain(page, per)
 }
 
-// Count 查询文章总量
-func (p *client) Count() int {
-	var result int
-	p.db.Model(&module.Archive{}).Count(&result)
-	return result
+// Count 查询文章总量和剩余
+func (p *client) Count() *module.Count {
+	return p.remain(0, 0)
 }
 
-// 在QueryDir中用于计算剩余的数目
-func (p *client) remaining(limit int, page int) int {
-	remain := p.Count() - limit*(page+1)
-	return max(remain, 0)
-}
-
-// QueryDirAll 查询目录
-func (p *client) QueryDirAll() []module.Archive {
-	var dir []module.Archive
-	p.db.Select("id, title, author, target, cover, summary, views,updated_at, created_at").Find(&dir)
-	return dir
+// 在QueryDir中用于计算剩余的数目 per 每页显示数量
+func (p *client) remain(curr int, per int) *module.Count {
+	var total int
+	p.db.Model(&module.Archive{}).Count(&total)
+	return &module.Count{
+		Total:  total,
+		Remain: max(total-(curr+1)*per, 0),
+	}
 }
 
 // Delete 删除文章

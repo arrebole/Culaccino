@@ -1,8 +1,6 @@
 package middleware
 
 import (
-	"os"
-
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/gin-gonic/gin"
 )
@@ -10,8 +8,8 @@ import (
 // Auth 认证中间件
 func Auth(ctx *gin.Context) {
 	token, err := ctx.Cookie("user_session")
-	if os.Getenv("mode") != "debug" && (err != nil || token != module.NewToken()) {
-		ctx.JSON(200, module.Fail())
+	if err != nil || token != module.NewSession().Token {
+		ctx.JSON(200, module.ResponseFail())
 		ctx.Abort()
 		return
 	}

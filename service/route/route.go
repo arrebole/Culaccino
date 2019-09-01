@@ -14,23 +14,22 @@ func New() *gin.Engine {
 	// api
 	api := router.Group("/api")
 	{
-		api.GET("/table/:page", controllers.Table)
-		api.GET("/archives/:id", controllers.Archives)
+		api.GET("/session/login", controllers.SessionLogin)
+		api.GET("/session/exist", controllers.SessionExist)
 
-		api.GET("/login", controllers.Login)
+		api.POST("/static/upload", middleware.Auth, controllers.StaticUpload)
 
-		api.GET("/token", controllers.Token)
-		api.GET("/admin/table", middleware.Auth, controllers.TableAll)
-		api.POST("/admin/add", middleware.Auth, controllers.Add)
-		api.PUT("/admin/update/:id", middleware.Auth, controllers.Update)
-		api.DELETE("/admin/delete/:id", middleware.Auth, controllers.Delete)
+		api.POST("/archive/create", middleware.Auth, controllers.ArchiveCreate)
+		api.PUT("/archive/update/:id", middleware.Auth, controllers.ArchiveUpdate)
+		api.DELETE("/archive/delete/:id", middleware.Auth, controllers.ArchiveDelete)
+		api.GET("/archive/details/:id", controllers.ArchivesDetails)
+		api.GET("/archive/all", middleware.Auth, controllers.ArchiveAll)
+		api.GET("/archive/dashboard/:page", controllers.ArchiveDashboard)
 
-		api.GET("/admin/database/download", middleware.Auth, controllers.DBDownLoad)
-		api.POST("/admin/database/upload", middleware.Auth, controllers.DBUpload)
 	}
 
 	// 静态文件
-	router.Use(static.Serve("/", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/", static.LocalFile("./wwwroot/", true)))
 	router.NoRoute(func(c *gin.Context) {
 		c.File("./public/index.html")
 	})
