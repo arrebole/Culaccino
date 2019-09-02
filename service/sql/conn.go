@@ -5,13 +5,9 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func sqlConfig() string {
-	return config.Cofig.SQL.DBName
-}
-
 // 生成数据库链接对象
 func connSQL() *gorm.DB {
-	db, err := gorm.Open("sqlite3", sqlConfig())
+	db, err := gorm.Open("sqlite3", config.DBName)
 	if err != nil {
 		panic("failed to connect database")
 	}

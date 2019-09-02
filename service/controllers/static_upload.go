@@ -4,10 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"os"
-	"path/filepath"
 	"regexp"
 
+	"github.com/arrebole/culaccino/service/config"
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +20,7 @@ func StaticUpload(ctx *gin.Context) {
 		return
 	}
 
-	file.SetRoot("./wwwroot/static")
+	file.SetRoot(config.UploadDir)
 	err = file.SaveFile()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -60,20 +59,4 @@ func getFileFromBody(ctx *gin.Context) (*module.File, error) {
 		Data:   fileByte,
 	}
 	return result, nil
-}
-
-func init() {
-	rootPath, _ := filepath.Abs("./")
-	dirPath := filepath.Join(rootPath, "wwwroot", "static")
-	if !pathExist(dirPath) {
-		os.Mkdir(dirPath, os.ModePerm)
-	}
-
-}
-func pathExist(path string) bool {
-	_, err := os.Stat(path)
-	if err != nil {
-		return false
-	}
-	return true
 }

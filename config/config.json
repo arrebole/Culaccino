@@ -1,16 +1,8 @@
 {
-    "sql": {
-        "dbName": "./data/culaccino.db"
-    },
-    "server": {
-        "listenPort": ":3000"
-    },
-    "admin": [
-        {
-            "userName": "root",
-            "password": "xxxxxx"
-        }
-    ]
+    "dbName": "./data/culaccino.db",
+    "root_dir":"./wwwroot",
+    "upload_dir":"./wwwwroot/static",
+    "listenPort": ":3000"
 }
 
 

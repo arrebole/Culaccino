@@ -9,5 +9,5 @@ import (
 
 func main() {
 	server := route.New()
-	server.Run(config.Cofig.Server.ListenPort)
+	server.Run(config.ListenPort)
 }
