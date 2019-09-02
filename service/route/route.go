@@ -2,7 +2,6 @@ package route
 
 import (
 	"github.com/arrebole/culaccino/service/controllers"
-	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -17,13 +16,13 @@ func New() *gin.Engine {
 		api.GET("/session/login", controllers.SessionLogin)
 		api.GET("/session/exist", controllers.SessionExist)
 
-		api.POST("/static/upload", middleware.Auth, controllers.StaticUpload)
+		api.POST("/static/upload", controllers.StaticUpload)
 
 		api.GET("/archive/details/:id", controllers.ArchivesDetails)
-		api.POST("/archive/create", middleware.Auth, controllers.ArchiveCreate)
-		api.PUT("/archive/update/:id", middleware.Auth, controllers.ArchiveUpdate)
-		api.DELETE("/archive/delete/:id", middleware.Auth, controllers.ArchiveDelete)
-		api.GET("/archive/owner", middleware.Auth, controllers.ArchiveOwner)
+		api.POST("/archive/create", controllers.ArchiveCreate)
+		api.PUT("/archive/update/:id", controllers.ArchiveUpdate)
+		api.DELETE("/archive/delete/:id", controllers.ArchiveDelete)
+		api.GET("/archive/owner", controllers.ArchiveOwner)
 		api.GET("/archive/dashboard/:page", controllers.ArchiveDashboard)
 
 	}
