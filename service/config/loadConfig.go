@@ -23,9 +23,10 @@ func init() {
 }
 
 func export(config *Config) {
-	DBName = config.DBName
-	RootDir = config.RootDir
-	UploadDir = config.UploadDir
+
+	DBName, _ = filepath.Abs(config.DBName)
+	RootDir, _ = filepath.Abs(config.RootDir)
+	UploadDir, _ = filepath.Abs(config.UploadDir)
 	ListenPort = config.ListenPort
 }
 

@@ -12,13 +12,14 @@ apt-get install -y docker-ce
 # 创建docker网络
 docker network create culaccino
 # 构建镜像
-docker build -t arrebole/culaccino:latest .
+docker build -t arrebole/culaccino:latest arrebole/culaccino:v1.0 .
 mkdir -p $(pwd)/wwwroot/static
 # 启动容器
 docker run \
 --net culaccino \
 --name culaccino \
 -p 8080:3000 \
+-e PASSWORD root@password \
 -v $(pwd)/data:/var/www/cuaccino/data \
 -v $(pwd)/wwwroot/static:/var/www/culaccino/wwwroot/static \
 -d arrebole/culaccino
