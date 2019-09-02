@@ -1,19 +1,12 @@
 package sql
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"os"
+
+	"github.com/arrebole/culaccino/service/share"
 )
 
-func defaultPassWord() string {
-	passwd := os.Getenv("PASSWORD")
-	if passwd == "" {
-		passwd = "root@culaccino"
-	}
-	return password(passwd)
-}
-
+// 返回两个数中的最大值
 func max(a int, b int) int {
 	if a > b {
 		return a
@@ -21,12 +14,16 @@ func max(a int, b int) int {
 	return b
 }
 
-func password(passwd string) string {
-	return hash(hash(passwd))
+// 获取环境变量中的默认密码
+func defaultPassWord() string {
+	passwd := os.Getenv("PASSWORD")
+	if passwd == "" {
+		passwd = "root@culaccino"
+	}
+	return PassWord(passwd)
 }
 
-func hash(str string) string {
-	sha := sha256.New()
-	sha.Write([]byte(str))
-	return hex.EncodeToString(sha.Sum(nil))
+// PassWord 两次hash计算产生密码
+func PassWord(passwd string) string {
+	return share.HashHexStr(share.HashHexStr(passwd))
 }

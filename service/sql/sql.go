@@ -2,6 +2,7 @@ package sql
 
 import (
 	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/session"
 	"github.com/jinzhu/gorm"
 )
 
@@ -9,17 +10,18 @@ import (
 type SQL interface {
 	ArchiveCount() *module.Count
 	ArchiveDelete(uint)
-	ArchiveCreate(*module.PostArchive)
+	ArchiveCreate(*module.PostArchive, *session.Session)
 	ArchiveUpdate(uint, *module.Archive)
-	ArchiveQuery(uint) *module.Archive
-	ArchiveQueryDir(int, int) ([]module.Archive, *module.Count)
-	UserExist(username string, password string) bool
+	ArchiveDir(int, int) ([]module.Archive, *module.Count)
+	ArchiveQueryByID(uint) *module.Archive
+	ArchiveQueryByAuthorID(uint) ([]module.Archive, *module.Count)
+	UserBaseInfo(username string, password string) *session.UserInfo
 }
 
-var clientInstance *client
+var _instance *client
 
 func init() {
-	clientInstance = &client{
+	_instance = &client{
 		db: initDB(connSQL()),
 	}
 }
@@ -30,5 +32,5 @@ type client struct {
 
 // New 创建一个数据库客户端
 func New() SQL {
-	return clientInstance
+	return _instance
 }

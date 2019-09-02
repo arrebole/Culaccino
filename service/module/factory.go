@@ -1,18 +1,20 @@
 package module
 
+import "github.com/arrebole/culaccino/service/session"
+
 // ResponseSuccess 返回成功json
-func ResponseSuccess() *Response {
-	return (&Response{}).SetSuccess()
+func ResponseSuccess(data ...interface{}) *Response {
+	return setResponseData(data...).SetSuccess()
 }
 
 // ResponseFail 返回失败json
-func ResponseFail() *Response {
-	return (&Response{}).SetFail()
+func ResponseFail(data ...interface{}) *Response {
+	return setResponseData(data...).SetFail()
 }
 
 // ResponseData 返回查询数据
-func ResponseData(data ...interface{}) *Response {
-	result := (&Response{}).SetSuccess()
+func setResponseData(data ...interface{}) *Response {
+	result := &Response{}
 
 	for _, value := range data {
 		switch value.(type) {
@@ -22,8 +24,8 @@ func ResponseData(data ...interface{}) *Response {
 			result.Dir = value.([]Archive)
 		case *Count:
 			result.Count = value.(*Count)
-		case *Session:
-			result.Token = value.(*Session).Token
+		case session.Token:
+			result.Token = string(value.(session.Token))
 		case Islogin:
 			result.Islogin = value.(Islogin)
 		case *File:

@@ -19,11 +19,11 @@ func New() *gin.Engine {
 
 		api.POST("/static/upload", middleware.Auth, controllers.StaticUpload)
 
+		api.GET("/archive/details/:id", controllers.ArchivesDetails)
 		api.POST("/archive/create", middleware.Auth, controllers.ArchiveCreate)
 		api.PUT("/archive/update/:id", middleware.Auth, controllers.ArchiveUpdate)
 		api.DELETE("/archive/delete/:id", middleware.Auth, controllers.ArchiveDelete)
-		api.GET("/archive/details/:id", controllers.ArchivesDetails)
-		api.GET("/archive/all", middleware.Auth, controllers.ArchiveAll)
+		api.GET("/archive/owner", middleware.Auth, controllers.ArchiveOwner)
 		api.GET("/archive/dashboard/:page", controllers.ArchiveDashboard)
 
 	}

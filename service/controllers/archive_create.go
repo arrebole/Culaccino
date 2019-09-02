@@ -1,18 +1,33 @@
 package controllers
 
 import (
+	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/arrebole/culaccino/service/module"
-	"github.com/arrebole/culaccino/service/pareser"
+	"github.com/arrebole/culaccino/service/session"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
 // ArchiveCreate 添加内容api
 func ArchiveCreate(ctx *gin.Context) {
-	if article, err := pareser.New(ctx).BodyArchive(); err == nil {
-		sql.New().ArchiveCreate(article)
-		ctx.JSON(200, module.ResponseSuccess())
+	article, err := middleware.Parsers(ctx).BodyArchive()
+	if err != nil {
+		ctx.JSON(200, module.ResponseFail())
 		return
 	}
-	ctx.JSON(200, module.ResponseFail())
+
+	cookie, err := ctx.Cookie("user_session")
+	if err != nil {
+		ctx.JSON(200, module.ResponseFail())
+		return
+	}
+
+	session, err := session.New().Get(cookie)
+	if err != nil {
+		ctx.JSON(200, module.ResponseFail())
+		return
+	}
+
+	sql.New().ArchiveCreate(article, &session)
+	ctx.JSON(200, module.ResponseSuccess())
 }

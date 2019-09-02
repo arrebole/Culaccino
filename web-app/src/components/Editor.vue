@@ -7,7 +7,7 @@
       </div>
       <div>
         <label>Area</label>
-        <input type="text" v-model="cache.target" placeholder="分区" />
+        <input type="text" v-model="cache.area" placeholder="分区" />
       </div>
       <div>
         <label>Summer</label>

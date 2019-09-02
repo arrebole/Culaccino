@@ -2,7 +2,7 @@ import IResp, { IArchiveBase, IArchive } from '@/types/resp';
 
 
 export default {
-    getArchiveAll,
+    getArchiveOwner,
     delArchive,
     getArchive,
     updateArchive,
@@ -47,8 +47,8 @@ function getDashboard(page: number, per_page: number): Promise<IResp> {
     return createFetch("GET", `/api/archive/dashboard/${page}`);
 }
 
-function getArchiveAll(): Promise<IResp> {
-    return createFetch("GET", "/api/archive/all");
+function getArchiveOwner(): Promise<IResp> {
+    return createFetch("GET", "/api/archive/owner");
 }
 
 function delArchive(id: number): Promise<IResp> {

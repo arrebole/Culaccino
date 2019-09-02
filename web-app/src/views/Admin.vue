@@ -33,7 +33,7 @@ export default Vue.extend({
   },
   methods: {
     async fethData() {
-      let res: IResp = await api.getArchiveAll();
+      let res: IResp = await api.getArchiveOwner();
       this.dir = res.data.dir.reverse();
     },
     async deleteAt(id: number) {

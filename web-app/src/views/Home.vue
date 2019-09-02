@@ -2,11 +2,13 @@
   <div class="home">
     <Header />
     <article v-loading="loading">
+      
       <Reveal
         v-for="(item, index) in dir"
         :key="index"
         :archive="item"
-      ></Reveal>
+      />
+
       <section class="pagination">
         <el-pagination
           layout="prev, pager, next"

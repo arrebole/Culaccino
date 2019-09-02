@@ -1,22 +1,37 @@
 package sql
 
-import "github.com/arrebole/culaccino/service/module"
+import (
+	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/session"
+)
 
 var (
 	dashboardKeys      = "id, title, author, target, area, cover, summary, views, updated_at, created_at"
-	touristDetailskeys = "id, title, author, target, area, cover, summary,contents, views, updated_at, created_at"
+	touristDetailskeys = "id,author_id, title, author, target, area, cover, summary,contents, views, updated_at, created_at"
 )
 
-// Query 查询
-func (p *client) ArchiveQuery(id uint) *module.Archive {
+// ArchiveQueryByID 查询
+func (p *client) ArchiveQueryByID(id uint) *module.Archive {
 	var result = &module.Archive{}
 	p.db.Select(touristDetailskeys).First(result, id)
 	p.increaseAccess(result)
 	return result
 }
 
+// TODO 分页处理
+// ArchiveQueryByAuthorID 通过作者id查找
+func (p *client) ArchiveQueryByAuthorID(id uint) ([]module.Archive, *module.Count) {
+	var result []module.Archive
+
+	p.db.Select(touristDetailskeys).Where("author_id = ?", id).Find(&result)
+	return result, &module.Count{
+		Total:  len(result),
+		Remain: 0,
+	}
+}
+
 // // QueryDir 查询目录
-func (p *client) ArchiveQueryDir(page int, per int) ([]module.Archive, *module.Count) {
+func (p *client) ArchiveDir(page int, per int) ([]module.Archive, *module.Count) {
 	var dir []module.Archive
 	p.db.Limit(per).Offset(page * per).Order("id desc").Select(dashboardKeys).Find(&dir)
 	return dir, p.remain(page, per)
@@ -43,9 +58,11 @@ func (p *client) ArchiveDelete(id uint) {
 }
 
 // Add 添加文章
-func (p *client) ArchiveCreate(Archive *module.PostArchive) {
-	aNewArchive := module.ToArchive(Archive)
-	p.db.Create(aNewArchive)
+func (p *client) ArchiveCreate(Archive *module.PostArchive, session *session.Session) {
+	aArchive := module.ToArchive(Archive)
+	aArchive.Author = session.Uname
+	aArchive.AuthorID = session.UID
+	p.db.Create(aArchive)
 }
 
 // Update修改文章,只更新修改的字段

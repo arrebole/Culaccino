@@ -21,7 +21,7 @@
         <span class="iconfont icon-liulan"></span>
         <span>{{ archive.views }}</span>
         <span class="iconfont icon-icon-test1"></span>
-        <span class="reveal-footer-info-time">{{ tranTime(archive.create_at) }}</span>
+        <span class="reveal-footer-info-time">{{ tranTime(archive.CreatedAt) }}</span>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@ import Vue from "vue";
 export default Vue.extend({
   props: ["archive"],
   methods: {
-    tranTime(str: string) {
+    tranTime(str: string):string {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
     }
   }
