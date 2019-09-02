@@ -15,7 +15,7 @@ func initDB(db *gorm.DB) *gorm.DB {
 		// 添加默认用户
 		db.Create(&module.User{
 			Username: "root",
-			Password: hash(hash("root@culaccino")),
+			Password: defaultPassWord(),
 		})
 	}
 	return db

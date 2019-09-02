@@ -1,3 +1,4 @@
+$env:PASSWORD = "dev"
 
 function goBuild {
     #go build -o "./bin/service.exe"  "./service/main.go"
