@@ -43,7 +43,7 @@ export default Vue.extend({
   margin: 15px;
   background-color: #fff;
   box-shadow: 1px 1px 3px rgb(201, 201, 201);
-  border: 1px solid rgb(177, 177, 177);
+  border: 1px solid #d1d5da;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .reveal-header {
@@ -95,10 +95,10 @@ export default Vue.extend({
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
-  //box-shadow: 0px 0px 5px rgb(190, 190, 190);
 }
 .reveal-cover {
   width: 100%;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 996px) {

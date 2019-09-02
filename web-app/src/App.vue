@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <keep-alive include="Home">
+    <transition name="fade">
       <router-view />
-    </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -12,9 +12,10 @@ export default Vue.extend({});
 </script>
 
 <style lang="scss">
-
-html, body{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
 
 .list-enter-active,

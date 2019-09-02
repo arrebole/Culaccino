@@ -10,13 +10,13 @@
       ></Reveal>
       <section class="pagination">
         <el-pagination
-          :page-size="per_page"
           layout="prev, pager, next"
+          :page-size="per_page"
           :total="total"
+          :current-page="currentPage"
           @current-change="currentChange"
           @size-change="sizeChange"
-        >
-        </el-pagination>
+        ></el-pagination>
       </section>
     </article>
     <Footer />
@@ -32,44 +32,50 @@ import Reveal from "../components/Reveal.vue";
 import api from "../api/index";
 import IResp, { IArchive } from "../types/resp";
 
-interface Idata {
-  currPage: number;
+interface Data {
   total: number;
-  per_page:number;
-  dir: IArchive[] | null;
+  per_page: number; //每页显示数量
+  dir: IArchive[];
 }
 
 export default Vue.extend({
   name: "Home",
-  data(): Idata {
+  data(): Data {
     return {
-      currPage: 0,
-      per_page:5,
+      per_page: 5,
       total: 0,
-      dir: null
+      dir: []
     };
   },
   created() {
     this.getData();
   },
+  watch: {
+    '$route.query': 'getData'
+  },
   computed: {
-    loading() {
+    loading(): boolean {
       if (!this.dir) return true;
       else return false;
+    },
+    currentPage(): number {
+      if (this.$route.query.page && typeof this.$route.query.page == "string") {
+        return parseInt(this.$route.query.page);
+      }
+      return 1;
     }
   },
   methods: {
     async getData() {
-      this.dir = null;
-      this.setData(await api.getDashboard(this.currPage, this.per_page));
+      this.dir = [];
+      this.setData(await api.getDashboard(this.currentPage - 1, this.per_page));
     },
-    setData({data}: IResp) {
+    setData({ data }: IResp) {
       this.dir = data.dir;
       this.total = data.count.total;
     },
     currentChange(val: number) {
-      this.currPage = val - 1;
-      this.getData();
+      this.$router.push({ name: "Home", query: { page: `${val}` } });
     },
     sizeChange(val: number) {},
 

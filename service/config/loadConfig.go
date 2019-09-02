@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-// Cofig 导出的配置文件
+// 导出的配置文件
 var (
 	DBName     string
 	RootDir    string
@@ -16,9 +16,9 @@ var (
 )
 
 func init() {
-	var _config *Config
-	json.Unmarshal(loadConfig(), _config)
-	export(_config)
+	var config = &Config{}
+	json.Unmarshal(loadConfig(), config)
+	export(config)
 	mkDir(UploadDir)
 }
 
@@ -31,9 +31,9 @@ func export(config *Config) {
 
 // 初始化上传文件夹
 func mkDir(path string) {
-	uploadPath, err := filepath.Abs(path)
-	if err != nil {
-		os.Mkdir(uploadPath, os.ModePerm)
+	uploadPath, _ := filepath.Abs(path)
+	if err := os.Mkdir(uploadPath, os.ModePerm); err != nil && !os.IsExist(err) {
+		panic(err.Error())
 	}
 }
 
@@ -41,7 +41,7 @@ func mkDir(path string) {
 func loadConfig() []byte {
 	content, err := ioutil.ReadFile(configPath())
 	if err != nil {
-		panic("can not load config file :" + configPath())
+		panic(err.Error())
 	}
 	return content
 }
@@ -49,5 +49,5 @@ func loadConfig() []byte {
 // 返回配置文件路径
 func configPath() string {
 	currentPath, _ := filepath.Abs("./")
-	return filepath.Join(currentPath, "./config/config.json")
+	return filepath.Join(currentPath, "config/config.json")
 }

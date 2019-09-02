@@ -3,8 +3,9 @@
     <Header />
     <article v-loading="loading">
       <!-- <section></section> -->
-      <section class="cent">
-        <Contents :contents="archive.contents" class="markdown-body"></Contents>
+      <section class="pagehead"></section>
+      <section class="repository-content">
+        <Contents :contents="archive.contents"></Contents>
       </section>
     </article>
     <Footer />
@@ -29,20 +30,20 @@ export default Vue.extend({
   created() {
     this.getData();
   },
-  computed:{
-    paramsID(){
-      return parseInt(this.$route.params.id)
+  computed: {
+    paramsID() {
+      return parseInt(this.$route.params.id);
     },
-    loading(){
-      if(this.archive.ID < 0 ) return true
-      return false
+    loading() {
+      if (this.archive.ID < 0) return true;
+      return false;
     }
   },
   methods: {
     async getData() {
       const res: IResp = await api.getArchive(this.paramsID);
       this.archive = res.data.archive;
-    },
+    }
   },
   components: {
     Header,
@@ -57,18 +58,26 @@ article {
   min-height: 820px;
   background-color: #fff;
 }
-.cent {
-  padding: 10px;
-}
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 45px;
+.repository-content{
+  max-width: 1012px;
+  widows: 90%;
+  margin: auto;
+  padding: 16px;
 }
 
+@media (min-width: 767px) {
+  .pagehead {
+    height: 108px;
+    background-color: #fafbfc;
+    border-bottom: 1px solid #e1e4e8;
+  }
+}
 @media (max-width: 767px) {
+  .pagehead {
+    height: 58px;
+    background-color: #fafbfc;
+    border-bottom: 1px solid #e1e4e8;
+  }
   .markdown-body {
     padding: 15px;
   }

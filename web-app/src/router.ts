@@ -22,6 +22,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/dashboard',
+      name: "Dashboard",
+      component: Home
+    },
+    {
       path: '/archive/:id',
       name: "Archive",
       component: Archive,

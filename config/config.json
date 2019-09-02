@@ -1,8 +1,9 @@
 {
-    "dbName": "./data/culaccino.db",
+    "port": ":3000",
+    "dbname": "./data/culaccino.db",
     "root_dir":"./wwwroot",
-    "upload_dir":"./wwwwroot/static",
-    "listenPort": ":3000"
+    "upload_dir":"./wwwroot/static"
+    
 }
 
 
