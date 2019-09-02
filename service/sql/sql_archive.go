@@ -2,10 +2,15 @@ package sql
 
 import "github.com/arrebole/culaccino/service/module"
 
+var (
+	dashboardKeys      = "id, title, author, target, area, cover, summary, views, updated_at, created_at"
+	touristDetailskeys = "id, title, author, target, area, cover, summary,contents, views, updated_at, created_at"
+)
+
 // Query 查询
 func (p *client) ArchiveQuery(id uint) *module.Archive {
 	var result = &module.Archive{}
-	p.db.First(result, id)
+	p.db.Select(touristDetailskeys).First(result, id)
 	p.increaseAccess(result)
 	return result
 }
@@ -13,8 +18,7 @@ func (p *client) ArchiveQuery(id uint) *module.Archive {
 // // QueryDir 查询目录
 func (p *client) ArchiveQueryDir(page int, per int) ([]module.Archive, *module.Count) {
 	var dir []module.Archive
-	var searchItems = "id, title, author, target, cover, summary, views, updated_at, created_at"
-	p.db.Limit(per).Offset(page * per).Order("id desc").Select(searchItems).Find(&dir)
+	p.db.Limit(per).Offset(page * per).Order("id desc").Select(dashboardKeys).Find(&dir)
 	return dir, p.remain(page, per)
 }
 

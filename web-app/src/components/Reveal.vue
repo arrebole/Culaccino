@@ -5,10 +5,9 @@
         class="reveal-header-title"
         tag="h1"
         :to="{ name: 'Archive', params: { id: archive.ID } }"
-      >
-        {{ archive.title }}</router-link
-      >
+      >{{ archive.title }}</router-link>
     </div>
+
     <div class="cover-container cover-container-auto">
       <img class="reveal-cover" :src="archive.cover" />
     </div>
@@ -17,11 +16,12 @@
       <p>{{ archive.summary }}</p>
     </div>
     <div class="reveal-footer">
-      <div>{{ archive.target }}</div>
+      <div>{{ archive.area }}</div>
       <div class="reveal-footer-info">
-        <span class="iconfont icon-liulan"></span><span>{{ archive.views }}</span>
+        <span class="iconfont icon-liulan"></span>
+        <span>{{ archive.views }}</span>
         <span class="iconfont icon-icon-test1"></span>
-        <span class="reveal-footer-info-time">{{ date }} </span>
+        <span class="reveal-footer-info-time">{{ tranTime(archive.create_at) }}</span>
       </div>
     </div>
   </div>
@@ -30,7 +30,12 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: ["archive","date"]
+  props: ["archive"],
+  methods: {
+    tranTime(str: string) {
+      return new Date(str).toLocaleDateString().replace(/\//g, "-");
+    }
+  }
 });
 </script>
 
@@ -116,6 +121,5 @@ export default Vue.extend({
   .reveal-header-title {
     margin: 0;
   }
-
 }
 </style>

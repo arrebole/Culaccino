@@ -2,16 +2,12 @@
   <div id="editor">
     <div class="archive-editor-nav">
       <div>
-        <label>Author</label>
-        <input type="text" v-model="cache.author" placeholder="作者" />
-      </div>
-      <div>
         <label>Title</label>
         <input type="text" v-model="cache.title" placeholder="标题" />
       </div>
       <div>
-        <label>target</label>
-        <input type="text" v-model="cache.target" placeholder="标签" />
+        <label>Area</label>
+        <input type="text" v-model="cache.target" placeholder="分区" />
       </div>
       <div>
         <label>Summer</label>

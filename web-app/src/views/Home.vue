@@ -5,7 +5,6 @@
       <Reveal
         v-for="(item, index) in dir"
         :key="index"
-        :date="tranTime(item.CreatedAt)"
         :archive="item"
       ></Reveal>
       <section class="pagination">
@@ -78,10 +77,6 @@ export default Vue.extend({
       this.$router.push({ name: "Home", query: { page: `${val}` } });
     },
     sizeChange(val: number) {},
-
-    tranTime(str: string) {
-      return new Date(str).toLocaleDateString().replace(/\//g, "-");
-    }
   },
   components: {
     Header,
