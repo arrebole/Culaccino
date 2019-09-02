@@ -10,15 +10,15 @@ apt-get install -y docker-ce
 # 删除全部容器
 docker rm -f $(docker ps -aq)
 # 创建docker网络
-docker network create futanaicha
+docker network create culaccino
 # 构建镜像
-docker build -t arrebole/Culaccino:v0.8 .
+docker build -t arrebole/culaccino:v0.8 .
 mkdir -p $(pwd)/wwwroot/static
 # 启动容器
 docker run \
 --net net \
 --name culaccino \
 -p 8080:3000 \
--v $(pwd)/data:/var/www/Cuaccino/data \
--v $(pwd)/wwwroot/static:/var/www/Culaccino/wwwroot/static \
--d arrebole/Culaccino
+-v $(pwd)/data:/var/www/cuaccino/data \
+-v $(pwd)/wwwroot/static:/var/www/culaccino/wwwroot/static \
+-d arrebole/culaccino

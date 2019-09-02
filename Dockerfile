@@ -4,13 +4,12 @@ LABEL authorMail "concurrent.exec@gmail.com"
 
 ENV GIN_MODE="release"
 
-RUN mkdir -p /var/www/Culaccino
+RUN mkdir -p /var/www/culaccino
 
-COPY ./ /var/www/Culaccino
-WORKDIR /var/www/Culaccino
+COPY ./ /var/www/culaccino
+WORKDIR /var/www/culaccino
 
-RUN chmod +x ./build.sh \
-    && ./build.sh 
+RUN go build -o ./bin/service.out ./service/main.go
 
 CMD [ "./bin/service.out" ]
 
