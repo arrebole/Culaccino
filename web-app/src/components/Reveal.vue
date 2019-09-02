@@ -108,17 +108,20 @@ export default Vue.extend({
 
 @media screen and (min-width: 996px) {
   .reveal-header-title {
+    font-size: 1.8rem;
     margin: 10px 0;
   }
 }
 
 @media screen and (max-width: 996px) and(min-width: 544px) {
   .reveal-header-title {
+    font-size: 1.6rem;
     margin: 0;
   }
 }
 @media screen and (max-width: 544px) {
   .reveal-header-title {
+    font-size: 1.2rem;
     margin: 0;
   }
 }

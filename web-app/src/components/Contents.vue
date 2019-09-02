@@ -63,4 +63,7 @@ export default Vue.extend({
 .markdown-body {
   padding: 32px;
 }
+@media screen {
+  
+}
 </style>

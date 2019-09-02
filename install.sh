@@ -8,15 +8,15 @@ apt-get update
 # 更新docker
 apt-get install -y docker-ce
 # 删除全部容器
-docker rm -f $(docker ps -aq)
+#docker rm -f $(docker ps -aq)
 # 创建docker网络
 docker network create culaccino
 # 构建镜像
-docker build -t arrebole/culaccino:v0.8 .
+docker build -t arrebole/culaccino:latest .
 mkdir -p $(pwd)/wwwroot/static
 # 启动容器
 docker run \
---net net \
+--net culaccino \
 --name culaccino \
 -p 8080:3000 \
 -v $(pwd)/data:/var/www/cuaccino/data \
