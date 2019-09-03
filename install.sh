@@ -20,6 +20,6 @@ docker run \
 --name culaccino \
 -p 8080:3000 \
 -e PASSWORD root@password \
--v $(pwd)/data:/var/www/cuaccino/data \
+-v $(pwd)/database:/var/www/cuaccino/data \
 -v $(pwd)/wwwroot/static:/var/www/culaccino/wwwroot/static \
 -d arrebole/culaccino
