@@ -1,0 +1,1 @@
+cd web-app && yarn install
