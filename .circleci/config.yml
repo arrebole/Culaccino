@@ -6,4 +6,5 @@
       
       steps:
         - checkout # check out the code in the project directory
+        - run: echo "$(pwd)"
         - run: echo "hello world" # run the `echo` command
