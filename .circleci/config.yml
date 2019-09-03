@@ -14,11 +14,11 @@
         - run:
             name: Install yarn
             command: |
-              touch ~/.bashrc
               curl -o- -L https://yarnpkg.com/install.sh | bash
         - run:
             name: yarn install
             command: |
+              export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
               bash scripts/yarn_install.sh
         - run: 
             name: Build web-app
