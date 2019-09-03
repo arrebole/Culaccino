@@ -2,11 +2,16 @@
   <div>
     <Header />
     <article v-loading="loading">
-      <!-- <section></section> -->
-      <section class="pagehead"></section>
-      <section class="repository-content">
-        <Contents :contents="archive.contents"></Contents>
+
+      <section class="repository-header">
+        <RepoHeader :repo="archive"></RepoHeader>
       </section>
+
+
+      <section class="repository-content">
+        <RepoContents :repo="archive"></RepoContents>
+      </section>
+
     </article>
     <Footer />
   </div>
@@ -17,7 +22,8 @@
 import Vue from "vue";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import Contents from "../components/Contents.vue";
+import RepoContents from "../components/RepoContents.vue";
+import RepoHeader from "../components/RepoHeader.vue";
 import api from "../api/index";
 import IResp, { IArchive, Archive } from "../types/resp";
 
@@ -48,7 +54,8 @@ export default Vue.extend({
   components: {
     Header,
     Footer,
-    Contents
+    RepoHeader,
+    RepoContents
   }
 });
 </script>
@@ -57,29 +64,11 @@ export default Vue.extend({
 article {
   min-height: 820px;
   background-color: #fff;
+  padding-bottom: 30px;
 }
 .repository-content{
-  max-width: 1012px;
-  widows: 90%;
-  margin: auto;
-  padding: 16px;
-}
-
-@media (min-width: 767px) {
-  .pagehead {
-    height: 108px;
-    background-color: #fafbfc;
-    border-bottom: 1px solid #e1e4e8;
-  }
-}
-@media (max-width: 767px) {
-  .pagehead {
-    height: 58px;
-    background-color: #fafbfc;
-    border-bottom: 1px solid #e1e4e8;
-  }
-  .markdown-body {
-    padding: 15px;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

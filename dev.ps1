@@ -7,7 +7,7 @@ function goBuild {
 
 function startServer {
     $env:mode = "debug";
-    Start-Process -FilePath "./bin/service.exe" -WorkingDirectory "./" 
+    Start-Process -FilePath "./bin/service.exe" -WorkingDirectory "./" -NoNewWindow 
     
 }
 
@@ -15,6 +15,6 @@ function startFE {
     Start-Process -FilePath "yarn" -ArgumentList "run serve" -WorkingDirectory "./web-app";
 }
 
-goBuild; startServer; startFE;
+goBuild;  startFE; startServer;
 
 
