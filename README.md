@@ -4,8 +4,12 @@
 预览: https://gkdark.xyz
 
 TODO:
-+ 评论功能
-+ 多用户注册管理
++ 美化编辑页面 ⌛
++ gin迁移至fasthttp ⌛
++ sqlite迁移至redis ⌛
++ 将文章升级成仓库 ⌛
++ 评论功能 ⌛
++ 多用户注册管理 ⌛
 
 ### This use
 
