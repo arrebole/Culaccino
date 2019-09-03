@@ -14,7 +14,8 @@ TODO:
 + github-markdown-css + marked + highlight.js
 
 ```bash
-chmod +x ./install.sh && ./install.sh
+docker build -t arrebole/culaccino .
+docker run  -p 8080:80 -d arrebole/culaccino
 ```
 
 ### API
