@@ -20,8 +20,8 @@ steps:
   displayName: 'Install Yarn'
 
 - script: |
-    cd ./wab-app
+    cd ./web-app
     yarn install
     yarn run build
-  displayName: 'npm install and build'
+  displayName: 'yarn install and build'
 
