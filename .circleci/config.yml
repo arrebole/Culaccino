@@ -10,7 +10,7 @@
         - run:
             name: Install nodejs
             command: |
-              apt update && apt install nodejs -y
+              sudo apt update && sudo apt install nodejs -y
         - run:
             name: Install yarn
             command: |
