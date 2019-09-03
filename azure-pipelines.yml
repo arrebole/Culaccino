@@ -13,7 +13,7 @@ variables:
   GOROOT: '/usr/local/go' # Go installation path
   GOBIN:  '$(GOPATH)/bin' # Go binaries path
   GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
-  WORKRROOT: $(system.defaultWorkingDirectory)
+  WORKROOT: '$(system.defaultWorkingDirectory)'
 
 steps:
 - task: NodeTool@0
@@ -23,6 +23,9 @@ steps:
 
 - script: |
     curl -o- -L https://yarnpkg.com/install.sh | bash
+  displayName: 'Install yarn'
+
+- script: |
     cd ./web-app
     yarn install
     yarn run build
@@ -35,5 +38,5 @@ steps:
 
 - script: |
     echo $(pwd)
-    go build -o '$WORKRROOT/bin/service.out' '$WORKRROOT/service/main.go'
+    go build -o '$WORKROOT/bin/service.out' '$WORKROOT/service/main.go'
   displayName: 'Go build service'
