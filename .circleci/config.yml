@@ -14,6 +14,7 @@
         - run:
             name: Install yarn
             command: |
+              touch ~/.bashrc
               curl -o- -L https://yarnpkg.com/install.sh | bash
         - run:
             name: yarn install
