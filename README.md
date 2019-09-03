@@ -14,7 +14,7 @@ TODO:
 + github-markdown-css + marked + highlight.js
 
 ```bash
-docker build -t arrebole/culaccino .
+docker build -t arrebole/culaccino:latest .
 docker run  -p 8080:80 -d arrebole/culaccino
 ```
 
