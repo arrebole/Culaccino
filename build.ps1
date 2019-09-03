@@ -1,1 +1,0 @@
-Start-Process -FilePath "yarn" -ArgumentList "run build" -WorkingDirectory "./web-app" -NoNewWindow;
