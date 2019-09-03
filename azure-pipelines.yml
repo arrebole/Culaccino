@@ -9,6 +9,12 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:  
+  GOROOT: '/usr/local/go' # Go installation path
+  GOBIN:  '$(GOPATH)/bin' # Go binaries path
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
+  WORKRROOT: $(system.defaultWorkingDirectory)
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -17,11 +23,17 @@ steps:
 
 - script: |
     curl -o- -L https://yarnpkg.com/install.sh | bash
-  displayName: 'Install Yarn'
-
-- script: |
     cd ./web-app
     yarn install
     yarn run build
   displayName: 'yarn install and build'
 
+- task: GoTool@0
+  inputs:
+    version: '1.12.9'
+  displayName: 'Install Go'
+
+- script: |
+    echo $(pwd)
+    go build -o '$WORKRROOT/bin/service.out' '$WORKRROOT/service/main.go'
+  displayName: 'Go build service'
