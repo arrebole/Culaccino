@@ -16,7 +16,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    curl -o- -L https://yarnpkg.com/install.sh | bash
+  displayName: 'Install Yarn'
+
+- script: |
     cd ./wab-app
-    npm install
-    npm run build
+    yarn install
+    yarn run build
   displayName: 'npm install and build'
+
