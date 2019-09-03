@@ -1,8 +1,11 @@
-# simple blog
+# blog
 
 > version: 0.8.0 (开发中)
-
 预览: https://gkdark.xyz
+
+TODO:
++ 评论功能
++ 多用户注册管理
 
 ### This use
 
