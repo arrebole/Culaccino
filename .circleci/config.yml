@@ -3,31 +3,27 @@
     build:
       docker: 
         - image: circleci/golang:latest
+      working_directory: ~/repo
       
       steps:
-        - checkout # check out the code in the project directory
-        
+        -checkout # check out the code in the project directory
         - run:
           name: Install nodejs
           command: |
             apt update && apt install nodejs -y
-
         - run:
           name: Install yarn
           command: |
             curl -o- -L https://yarnpkg.com/install.sh | bash
-
         - run:
           name: yarn install
           command: |
             bash scripts/yarn_install.sh
-
         - run: 
           name: Build web-app
           command: |
             bash scripts/build_webapp.sh
-        
-        -run:
+        - run:
           name: Build service
           command: |
             bash scripts/build_service.sh
