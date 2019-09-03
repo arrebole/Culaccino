@@ -2,7 +2,7 @@
   jobs:
     build:
       docker: 
-        - image: circleci/golang:latest
+        - image: golang:latest
       working_directory: ~/repo
       
       steps:
