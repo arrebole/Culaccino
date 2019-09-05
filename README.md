@@ -26,11 +26,8 @@ docker run  -p 8080:80 -d arrebole/culaccino
 
 | method | url                     | 功能          |
 | ------ | -----------------       | -----------  |
-| GET    | /api/archive/dashboard/:page        | 获取索引      |
-| GET    | /api/archives/details/:id       | 获取详细内容  |
-| GET    | /api/session/login              | 登录         |
-| GET    | /api/archive/all        | 获取所有索引  |
-| POST   | /api/archive/create          | 添加文章     |
-| PUT    | /api/archive/update/:id   | 更新文章     |
-| DELETE | /api/archive/delete/:id   | 删除文章     |
+| POST   | /api/new                 | 创建内容|
+| GET    | /api/export        | 获取内容      |
+| PUT    | /api/commit         | 修改内容 |
+| DELETE | /api/delete         | 删除内容|
 
