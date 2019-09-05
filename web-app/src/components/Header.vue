@@ -120,9 +120,6 @@ export default Vue.extend({
         .filter(s => s != "" && s > "9");
       result.unshift("home");
       return result;
-    },
-    islogin() {
-      return false;
     }
   }
 });

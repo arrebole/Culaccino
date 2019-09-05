@@ -3,8 +3,10 @@
     <Header />
     <article>
       <section class="login-form">
-        <form  @submit.prevent="login">
-          <div class="login-header"><h4>Sign in</h4></div>
+        <form @submit.prevent="login">
+          <div class="login-header">
+            <h4>Sign in</h4>
+          </div>
 
           <div class="login-body">
             <div class="form-group">
@@ -12,7 +14,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-model="userName"
+                v-model="loginPostForm.userName"
                 placeholder="Enter your username..."
                 autocomplete="off"
               />
@@ -22,7 +24,7 @@
               <input
                 type="password"
                 class="form-control"
-                v-model="password"
+                v-model="loginPostForm.password"
                 placeholder="Enter your Password..."
                 autocomplete="off"
               />
@@ -45,29 +47,29 @@ import api from "../../api/index";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import IResp from "../../types/resp";
-import {getCookie,setCookie} from "../../util";
+import { getCookie, setCookie } from "../../util";
 
 export default Vue.extend({
   data() {
     return {
-      userName: "",
-      password: "",
-      cookie: ""
+      loginPostForm: {
+        userName: "",
+        password: ""
+      }
     };
   },
-  created(){
-  },
+  created() {},
   methods: {
     async login() {
-      const isOk = await this.$store.dispatch("fetchLogin",this.user());
+      const isOk = await this.$store.dispatch("fetchLogin", this.loginPostForm);
       if (isOk) this.gotoAdmin();
       else alert("登录失败");
     },
-    user(): { userName: string; password: string } {
-      return { userName: this.userName, password: this.password };
-    },
     gotoAdmin() {
-      this.$router.replace({ name: 'ManageRepos', params:{domain: this.userName }})
+      this.$router.replace({
+        name: "ManageRepos",
+        params: { domain: this.loginPostForm.userName }
+      });
     }
   },
   components: {
