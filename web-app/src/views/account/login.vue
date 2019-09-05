@@ -24,7 +24,7 @@
               <input
                 type="password"
                 class="form-control"
-                v-model="loginPostForm.password"
+                v-model="loginPostForm.passWord"
                 placeholder="Enter your Password..."
                 autocomplete="off"
               />
@@ -54,7 +54,7 @@ export default Vue.extend({
     return {
       loginPostForm: {
         userName: "",
-        password: ""
+        passWord: ""
       }
     };
   },

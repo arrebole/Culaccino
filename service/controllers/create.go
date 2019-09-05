@@ -8,11 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RepoCommit 更新数据api
-func RepoCommit(ctx *gin.Context) {
-	domain, symbol := ctx.Param("domain"), ctx.Param("symbol")
+// Create 创建一个新仓库
+func Create() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		repoNew(ctx)
+	}
+}
 
-	postArchive, err := middleware.Parsers(ctx).BodyArchive()
+// repoNew 添加内容api
+func repoNew(ctx *gin.Context) {
+	article, err := middleware.Parsers(ctx).BodyArchive()
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -30,12 +35,6 @@ func RepoCommit(ctx *gin.Context) {
 		return
 	}
 
-	repo := sql.New().GetRepo(domain, symbol)
-	if repo.Author == "" || aSession.UID != repo.AuthorID {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	sql.New().CommitRepo(domain, symbol, module.ToArchive(postArchive))
+	sql.New().NewRepo(article, &aSession)
 	ctx.JSON(200, module.ResponseSuccess())
 }
