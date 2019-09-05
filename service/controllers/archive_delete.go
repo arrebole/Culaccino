@@ -22,7 +22,7 @@ func ArchiveDelete(ctx *gin.Context) {
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -34,7 +34,7 @@ func ArchiveDelete(ctx *gin.Context) {
 		return
 	}
 
-	if session.UID != archive.AuthorID {
+	if aSession.UID != archive.AuthorID {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}

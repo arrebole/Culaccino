@@ -13,7 +13,7 @@ type Token string
 // Store Session Manager interface
 type Store interface {
 	Get(token string) (Session, error)
-	Set(*UserInfo) Token
+	Set(*UserInfo) Session
 }
 
 // Manager ...
@@ -37,13 +37,14 @@ func (p *Manager) Get(token string) (Session, error) {
 }
 
 // Set 从store从存放session，返回user_session
-func (p *Manager) Set(info *UserInfo) Token {
+func (p *Manager) Set(info *UserInfo) Session {
 	sessionID := share.RandString()
 	info.Token = sessionID
 
-	p.storage[sessionID] = &Session{
+	var newSession = &Session{
 		UserInfo: *info,
 		CreateAt: time.Now(),
 	}
-	return Token(sessionID)
+	p.storage[sessionID] = newSession
+	return *newSession
 }

@@ -41,11 +41,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import api from "../api/index";
-import Header from "../components/Header.vue";
-import Footer from "../components/Footer.vue";
-import IResp from "../types/resp";
-import util from "../util";
+import api from "../../api/index";
+import Header from "../../components/Header.vue";
+import Footer from "../../components/Footer.vue";
+import IResp from "../../types/resp";
+import {getCookie,setCookie} from "../../util";
 
 export default Vue.extend({
   data() {
@@ -55,27 +55,19 @@ export default Vue.extend({
       cookie: ""
     };
   },
+  created(){
+  },
   methods: {
     async login() {
-      const isOk = await this.fetchLogin();
-      if (isOk) this.handleCookie();
+      const isOk = await this.$store.dispatch("fetchLogin",this.user());
+      if (isOk) this.gotoAdmin();
       else alert("登录失败");
-    },
-    async fetchLogin(): Promise<boolean> {
-      const res: IResp = await api.sessionLogin(this.user());
-      if (res.message != "success" || res.data.token == null) return false;
-      this.cookie = res.data.token;
-      return true;
     },
     user(): { userName: string; password: string } {
       return { userName: this.userName, password: this.password };
     },
-    handleCookie() {
-      if (util.getCookie() != this.cookie) util.setCookie(this.cookie);
-      this.gotoAdmin();
-    },
     gotoAdmin() {
-      this.$router.replace({ name: 'Admin'})
+      this.$router.replace({ name: 'ManageRepos', params:{domain: this.userName }})
     }
   },
   components: {

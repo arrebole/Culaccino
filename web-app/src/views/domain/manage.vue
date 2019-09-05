@@ -12,11 +12,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import IResp, { IArchive } from "../types/resp";
-import Header from "../components/Header.vue";
-import Footer from "../components/Footer.vue";
-import Table from "../components/Table.vue";
-import api from "../api/index";
+import IResp, { IArchive } from "../../types/resp";
+import Header from "../../components/Header.vue";
+import Footer from "../../components/Footer.vue";
+import Table from "../../components/Table.vue";
+import api from "../../api/index";
 
 interface Data {
   dir: IArchive[];
@@ -33,11 +33,13 @@ export default Vue.extend({
   },
   methods: {
     async fethData() {
-      let res: IResp = await api.getArchiveOwner();
-      this.dir = res.data.dir.reverse();
+      let res: IResp = await api.getReposOwner();
+      if (res.data.dir){
+        this.dir = res.data.dir.reverse();
+      }
     },
     async deleteAt(id: number) {
-      let res: IResp = await api.delArchive(id);
+      let res: IResp = await api.delRepo(id);
       window.location.reload();
     }
   },

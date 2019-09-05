@@ -2,12 +2,15 @@ import IResp, { IArchiveBase, IArchive } from '@/types/resp';
 
 
 export default {
-    getArchiveOwner,
-    delArchive,
-    getArchive,
-    updateArchive,
-    createArchive,
     getDashboard,
+    
+    getReposOwner,
+    getRepo,
+
+    newRepo,
+    delRepo,
+    updateRepo,
+    
     sessionLogin,
     sessionExist,
     staticUpload
@@ -47,21 +50,21 @@ function getDashboard(page: number, per_page: number): Promise<IResp> {
     return createFetch("GET", `/api/archive/dashboard/${page}`);
 }
 
-function getArchiveOwner(): Promise<IResp> {
+function getReposOwner(): Promise<IResp> {
     return createFetch("GET", "/api/archive/owner");
 }
 
-function delArchive(id: number): Promise<IResp> {
+function delRepo(id: number): Promise<IResp> {
     return createFetch("DELETE", `/api/archive/delete/${id}`);
 }
-function getArchive(id: number): Promise<IResp> {
+function getRepo(id: number): Promise<IResp> {
     return createFetch("GET", `/api/archive/details/${id}`);
 }
 
-function createArchive(item: IArchiveBase): Promise<IResp> {
+function newRepo(item: IArchiveBase): Promise<IResp> {
     return createFetch("POST", `/api/archive/create`, { data: JSON.stringify(item) });
 }
 
-function updateArchive(id: number | string, item: IArchiveBase): Promise<IResp> {
+function updateRepo(id: number | string, item: IArchiveBase): Promise<IResp> {
     return createFetch("PUT", `/api/archive/update/${id}`, { data: JSON.stringify(item) });
 }

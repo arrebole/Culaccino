@@ -22,12 +22,12 @@ func ArchiveCreate(ctx *gin.Context) {
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	sql.New().ArchiveCreate(article, &session)
+	sql.New().ArchiveCreate(article, &aSession)
 	ctx.JSON(200, module.ResponseSuccess())
 }

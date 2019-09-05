@@ -15,11 +15,11 @@ func ArchiveOwner(ctx *gin.Context) {
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(sql.New().ArchiveQueryByAuthorID(session.UID)))
+	ctx.JSON(200, module.ResponseSuccess(sql.New().ArchiveQueryByAuthorID(aSession.UID)))
 }

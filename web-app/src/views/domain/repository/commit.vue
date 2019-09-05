@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Header from "../components/Header.vue";
-import Editor from "../components/Editor.vue";
-import Footer from "../components/Footer.vue";
-import api from "../api/index";
-import IResp, { IArchive, IArchiveBase } from "../types/resp";
+import Header from "../../../components/Header.vue";
+import Editor from "../../../components/Editor.vue";
+import Footer from "../../../components/Footer.vue";
+import api from "../../../api/index";
+import IResp, { IArchive, IArchiveBase } from "../../../types/resp";
 
 interface Idata {
   archive: IArchive | null;
@@ -34,9 +34,17 @@ export default Vue.extend({
     this.getData();
   },
   methods: {
+    repoSymble() {
+      if (typeof this.$route.query.id == "number") {
+        return this.$route.query.id;
+      }
+      if (typeof this.$route.query.id == "string") {
+        return parseInt(this.$route.query.id);
+      }
+      return -1;
+    },
     async getData() {
-      const id: number = parseInt(this.$route.params.id);
-      let res: IResp = await api.getArchive(id);
+      let res: IResp = await api.getRepo(this.repoSymble());
       this.archive = res.data.archive;
     }
   },

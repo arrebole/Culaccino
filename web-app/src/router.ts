@@ -1,16 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Home from './views/Home.vue'
-import Login from './views/Login.vue'
-import Archive from './views/Archive.vue'
-import auth from "./middleware/auth"
+import { notAllowedHadLogin, notAllowedNoLogin } from "./middleware/auth"
+
+import Login from './views/account/login.vue'
+import Repos from './views/domain/repository/index.vue'
+import Dashboard from './views/dashboard/index.vue'
 //把组件按组分块
-const Admin = () => import(/* webpackChunkName: "admin" */ './views/Admin.vue')
-const Create = () => import(/* webpackChunkName: "create" */ './views/Create.vue')
-const Update = () => import(/* webpackChunkName: "update" */ './views/Update.vue')
+const ManageRepos = () => import(/* webpackChunkName: "admin" */ './views/domain/manage.vue')
+const NewRepo = () => import(/* webpackChunkName: "newRepo" */ './views/domain/new.vue')
+const Commit = () => import(/* webpackChunkName: "update" */ './views/domain/repository/commit.vue')
 
 Vue.use(Router)
+
 
 export default new Router({
   mode: 'history',
@@ -19,42 +21,36 @@ export default new Router({
     {
       path: '/',
       name: "Home",
-      component: Home
-    },
-    {
-      path: '/dashboard',
-      name: "Dashboard",
-      component: Home
-    },
-    {
-      path: '/archive/:id',
-      name: "Archive",
-      component: Archive,
+      component: Dashboard
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
-      beforeEnter: auth.hadPower
+      beforeEnter: notAllowedHadLogin
     },
     {
-      path: '/admin',
-      name: "Admin",
-      component: Admin,
-      beforeEnter: auth.noPower
+      path: '/new',
+      name: "New",
+      component: NewRepo,
+      beforeEnter: notAllowedNoLogin
     },
     {
-      path: '/admin/create',
-      name: "Create",
-      component: Create,
-      beforeEnter: auth.noPower
+      path: '/:domain',
+      name: "ManageRepos",
+      component: ManageRepos,
+      beforeEnter: notAllowedNoLogin
     },
-
     {
-      path: '/admin/update/:id',
-      name: "Update",
-      component: Update,
-      beforeEnter: auth.noPower
+      path: '/:domain/:repo',
+      name: "Repo",
+      component: Repos,
+    },
+    {
+      path: '/:domain/:repo/commit',
+      name: "Commit",
+      component: Commit,
+      beforeEnter: notAllowedNoLogin
     },
     {
       path: '/*',

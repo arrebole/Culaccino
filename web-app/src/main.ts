@@ -12,6 +12,7 @@ Vue.use(Loading.directive)
 Vue.component(Pagination.name,Pagination)
 Vue.component(Upload.name,Upload)
 
+
 new Vue({
   router,
   store,

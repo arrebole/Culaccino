@@ -2,8 +2,8 @@
   <div id="editor">
     <div class="archive-editor-nav">
       <div>
-        <label>Title</label>
-        <input type="text" v-model="cache.title" placeholder="标题" />
+        <label>Repositly</label>
+        <input type="text" v-model="cache.title" placeholder="仓库名" />
       </div>
       <div>
         <label>Area</label>
@@ -44,6 +44,7 @@ import IResp, {
   Archive,
   ArchiveBase
 } from "../types/resp";
+import { types } from "../store";
 
 export default Vue.extend({
   props: ["handle", "archive"],
@@ -65,12 +66,14 @@ export default Vue.extend({
       else if (this.handle == "update") this.apiUpdate();
     },
     async apiCreate() {
-      let res: IResp = await api.createArchive(this.cache);
+      let res: IResp = await api.newRepo(this.cache);
       if (res.code == 0) alert("成功");
     },
     async apiUpdate() {
-      let res: IResp = await api.updateArchive(
-        this.$route.params.id,
+      const id = this.$route.query.id
+      if (typeof id != "string" || typeof id != "number" ) return;
+      let res: IResp = await api.updateRepo(
+        id,
         this.cache
       );
       if (res.code == 0) alert("成功");
