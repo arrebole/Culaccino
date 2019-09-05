@@ -48,8 +48,8 @@ export default Vue.extend({
     },
     async getData() {
       const res: IResp = await api.getRepo(this.repoSymbol());
-      if (res.code >= 0 && res.data.archive != null) {
-        this.repo = res.data.archive;
+      if (res.code >= 0 && res.data.repo != null) {
+        this.repo = res.data.repo;
       }
       this.loading = false;
     }

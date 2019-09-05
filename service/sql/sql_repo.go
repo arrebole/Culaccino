@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	dashboardKeys      = "id, title, author, target, area, cover, summary, views, updated_at, created_at"
-	touristDetailskeys = "id,author_id, title, author, target, area, cover, summary,contents, views, updated_at, created_at"
+	dashboardKeys      = "id, title, author, tag, area, cover, summary, views, updated_at, created_at"
+	touristDetailskeys = "id,author_id, title, author, tag, area, cover, summary,contents, views, updated_at, created_at"
 )
 
 // TODO 分页处理
@@ -45,7 +45,7 @@ func (p *client) remain(curr int, per int) *module.Count {
 }
 
 // NewRepo 添加文章
-func (p *client) NewRepo(Archive *module.PostArchive, session *session.Session) {
+func (p *client) NewRepo(Archive *module.PostArchive, session *session.User) {
 	aArchive := module.ToArchive(Archive)
 	aArchive.Author = session.Uname
 	aArchive.AuthorID = session.UID

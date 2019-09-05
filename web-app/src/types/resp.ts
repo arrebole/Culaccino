@@ -2,8 +2,8 @@ export default interface IResp {
     code: number
     message: string
     data: {
-        archive: IArchive
-        dir: IArchive[]
+        repo: IArchive
+        repos: IArchive[]
         user: {
             uid: number
             domain: string

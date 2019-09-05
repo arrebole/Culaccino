@@ -1,5 +1,7 @@
 package module
 
+import "github.com/arrebole/culaccino/service/session"
+
 // Response 返回的json类型
 type Response struct {
 	Code    int    `json:"code"`
@@ -9,30 +11,17 @@ type Response struct {
 
 // Data ...
 type Data struct {
-	User     UserInfo  `json:"user"`
-	Archive  *Archive  `json:"archive"`
-	Count    *Count    `json:"count"`
-	Dir      []Archive `json:"dir"`
-	FileInFo *FileInfo `json:"file"`
-}
-
-// UserInfo ...
-type UserInfo struct {
-	UID    uint   `json:"uid"`
-	Domain string `json:"domain"`
-	Token  string `json:"token"`
+	User  session.User `json:"user"`
+	Repo  *Archive     `json:"repo"`
+	Repos []Archive    `json:"repos"`
+	Count *Count       `json:"count"`
+	File  *FileStatus  `json:"file"`
 }
 
 // Count ...
 type Count struct {
 	Total  int `json:"total"`
 	Remain int `json:"remain"`
-}
-
-// FileInfo ...
-type FileInfo struct {
-	Hash string `json:"hash"`
-	URL  string `json:"url"`
 }
 
 func (p *Response) setCode(code int) *Response {

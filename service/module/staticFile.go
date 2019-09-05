@@ -10,23 +10,34 @@ import (
 	"time"
 )
 
+// FileStatus ...
+type FileStatus struct {
+	Hash string `json:"hash"`
+	URL  string `json:"url"`
+}
+
 // File ...
 type File struct {
-	Root   string
-	Data   []byte
-	Hash   string
-	Suffix string
+	Root       string
+	Data       []byte
+	Suffix     string
+	FileStatus *FileStatus
 }
 
 //CheckHash 计算hash值
 func (p *File) CheckHash() string {
-	if p.Hash != "" {
-		return p.Hash
+	if p.FileStatus.Hash != "" {
+		return p.FileStatus.Hash
 	}
 	hash := md5.Sum(p.Data)
 	result := hex.EncodeToString(hash[:])
-	p.Hash = result
-	return result
+	return p.SetHash(result)
+}
+
+// SetHash ...
+func (p *File) SetHash(hash string) string {
+	p.FileStatus.Hash = hash
+	return p.FileStatus.Hash
 }
 
 // SetRoot 设置路径
@@ -58,24 +69,26 @@ func (p *File) FullFileName() string {
 
 // URL 文件的链接
 func (p *File) URL() string {
-	return fmt.Sprintf("/static/%s/%s", p.CheckDate(), p.FileName())
-
+	var url = fmt.Sprintf("/static/%s/%s", p.CheckDate(), p.FileName())
+	p.FileStatus.URL = url
+	return url
 }
 
 // SaveFile ...
-func (p *File) SaveFile() error {
+func (p *File) SaveFile() (*FileStatus, error) {
+	p.FileStatus = &FileStatus{}
 	os.Mkdir(p.SavePath(), os.ModePerm)
 
 	file, err := os.Create(p.FullFileName())
 	if err != nil {
-		return errors.New("create file fail")
+		return nil, errors.New("create file fail")
 	}
 	defer file.Close()
 
 	_, err = file.Write(p.Data)
 	if err != nil {
-		return errors.New("write file fail")
+		return nil, errors.New("write file fail")
 	}
 
-	return nil
+	return p.FileStatus, nil
 }

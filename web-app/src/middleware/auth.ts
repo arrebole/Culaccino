@@ -11,8 +11,6 @@ export async function notAllowedNoLogin(to: Route, from: Route, next: any) {
 // 已经登录不允许进入
 export async function notAllowedHadLogin(to: Route, from: Route, next: any) {
         const status = await localUserStatus()
-        if (status.islogin) {
-            next({ name: "ManageRepos", params: { domain: status.domain } })
-        }
+        if (status.islogin) next({ name: "ManageRepos", params: { domain: status.domain } })
         else next()
 }

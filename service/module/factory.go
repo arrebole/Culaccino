@@ -19,22 +19,20 @@ func setResponseData(data ...interface{}) *Response {
 	for _, value := range data {
 		switch value.(type) {
 		case *Archive:
-			result.Archive = value.(*Archive)
+			result.Repo = value.(*Archive)
+
 		case []Archive:
-			result.Dir = value.([]Archive)
+			result.Repos = value.([]Archive)
+
 		case *Count:
 			result.Count = value.(*Count)
-		case session.Session:
-			userSession := value.(session.Session)
-			result.User.UID = userSession.UID
-			result.User.Domain = userSession.Uname
-			result.User.Token = userSession.Token
-		case *File:
-			f := value.(*File)
-			result.FileInFo = &FileInfo{
-				Hash: f.CheckHash(),
-				URL:  f.URL(),
-			}
+
+		case session.User:
+			result.User = value.(session.User)
+
+		case *FileStatus:
+			result.File = value.(*FileStatus)
+
 		default:
 			panic("data error\n")
 		}

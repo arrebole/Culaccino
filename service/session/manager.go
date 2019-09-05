@@ -12,8 +12,8 @@ type Token string
 
 // Store Session Manager interface
 type Store interface {
-	Get(token string) (Session, error)
-	Set(*UserInfo) Session
+	Get(token string) (User, error)
+	Set(*User) User
 }
 
 // Manager ...
@@ -23,28 +23,28 @@ type Manager struct {
 }
 
 // Get 从session仓库中获取用户信息
-func (p *Manager) Get(token string) (Session, error) {
-	user := p.storage[token]
-	if user == nil {
-		return Session{}, errors.New("no this session")
+func (p *Manager) Get(token string) (User, error) {
+	aSession := p.storage[token]
+	if aSession == nil {
+		return User{}, errors.New("no this session")
 	}
 
-	if user.Expired(p.maxAge) {
+	if aSession.Expired(p.maxAge) {
 		delete(p.storage, token)
-		return Session{}, errors.New("session Expired")
+		return User{}, errors.New("session Expired")
 	}
-	return *user, nil
+	return aSession.User, nil
 }
 
 // Set 从store从存放session，返回user_session
-func (p *Manager) Set(info *UserInfo) Session {
+func (p *Manager) Set(user *User) User {
 	sessionID := share.RandString()
-	info.Token = sessionID
 
+	user.Token = sessionID
 	var newSession = &Session{
-		UserInfo: *info,
+		User:     *user,
 		CreateAt: time.Now(),
 	}
 	p.storage[sessionID] = newSession
-	return *newSession
+	return newSession.User
 }

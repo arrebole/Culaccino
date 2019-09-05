@@ -2,7 +2,7 @@
   <div class="table">
     <Header />
     <article>
-      <Table :data="dir" :deleteAt="deleteAt" />
+      <Table :data="repos" :deleteAt="deleteAt" />
     </article>
     <Footer />
   </div>
@@ -19,13 +19,13 @@ import Table from "../../components/Table.vue";
 import api from "../../api/index";
 
 interface Data {
-  dir: IArchive[];
+  repos: IArchive[];
 }
 
 export default Vue.extend({
   data(): Data {
     return {
-      dir: []
+      repos: []
     };
   },
   created() {
@@ -34,8 +34,8 @@ export default Vue.extend({
   methods: {
     async fethData() {
       let res: IResp = await api.getReposOwner(this.$route.params.domain);
-      if (res.data.dir){
-        this.dir = res.data.dir.reverse();
+      if (res.data.repos){
+        this.repos = res.data.repos.reverse();
       }
     },
     async deleteAt(item:{domain:string,repoName:string}) {

@@ -84,7 +84,6 @@ export default Vue.extend({
       api.staticUpload(item.file).then(res =>{
         if (res.code == 0) this.setURL(res.data.file.url,item.file)
       });
-      
     }
   }
 });
