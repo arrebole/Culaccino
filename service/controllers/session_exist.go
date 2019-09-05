@@ -10,15 +10,14 @@ import (
 func SessionExist(ctx *gin.Context) {
 	cookie, err := ctx.Cookie("user_session")
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail(module.NoLogin))
+		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	_, err = session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail(module.NoLogin))
+		ctx.JSON(200, module.ResponseFail())
 		return
 	}
-
-	ctx.JSON(200, module.ResponseSuccess(module.HadLogin))
+	ctx.JSON(200, module.ResponseSuccess(aSession))
 }

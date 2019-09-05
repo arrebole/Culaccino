@@ -1,23 +1,18 @@
 import { Route } from 'vue-router';
-import util from '@/util';
-import api from "../api/index"
+import { localUserStatus } from "../util"
 
-export default{
-    noPower,
-    hadPower
-}
-
-export async function noPower(to: Route, from: Route, next: any) {
-    if (util.getCookie() == '') next({ name: "Login" })
-    else {
-        let res = await api.sessionExist(util.getCookie());
-        if (!res.data.islogin) next({ name: "Login" })
+// 没有登录不允许进入
+export async function notAllowedNoLogin(to: Route, from: Route, next: any) {
+        const status = await localUserStatus()
+        if (!status.islogin) next({ name: "Login" })
         else next()
-    }
 }
 
-export async function hadPower(to: Route, from: Route, next: any){
-    let res = await api.sessionExist(util.getCookie());
-    if(res.data.islogin) next({name:"Admin"})
-    else next()
+// 已经登录不允许进入
+export async function notAllowedHadLogin(to: Route, from: Route, next: any) {
+        const status = await localUserStatus()
+        if (status.islogin) {
+            next({ name: "ManageRepos", params: { domain: status.domain } })
+        }
+        else next()
 }

@@ -10,13 +10,13 @@ import (
 func Auth(ctx *gin.Context) {
 	token, err := ctx.Cookie("user_session")
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail(module.NoLogin))
+		ctx.JSON(200, module.ResponseFail())
 		ctx.Abort()
 		return
 	}
 	_, err = session.New().Get(token)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail(module.NoLogin))
+		ctx.JSON(200, module.ResponseFail())
 		ctx.Abort()
 		return
 	}

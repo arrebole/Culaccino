@@ -2,12 +2,15 @@ import IResp, { IArchiveBase, IArchive } from '@/types/resp';
 
 
 export default {
-    getArchiveOwner,
-    delArchive,
-    getArchive,
-    updateArchive,
-    createArchive,
     getDashboard,
+    
+    getReposOwner,
+    getRepo,
+
+    newRepo,
+    delRepo,
+    commitRepo,
+    
     sessionLogin,
     sessionExist,
     staticUpload
@@ -44,24 +47,27 @@ function sessionLogin(user: { userName: string, password: string }): Promise<IRe
 }
 
 function getDashboard(page: number, per_page: number): Promise<IResp> {
-    return createFetch("GET", `/api/archive/dashboard/${page}`);
+    return createFetch("GET", `/api/search/dashboard?page=${page}`);
 }
 
-function getArchiveOwner(): Promise<IResp> {
-    return createFetch("GET", "/api/archive/owner");
+function getReposOwner(domain:string): Promise<IResp> {
+    return createFetch("GET", `/api/repo/${domain}`);
 }
 
-function delArchive(id: number): Promise<IResp> {
-    return createFetch("DELETE", `/api/archive/delete/${id}`);
-}
-function getArchive(id: number): Promise<IResp> {
-    return createFetch("GET", `/api/archive/details/${id}`);
+function newRepo(item: IArchiveBase): Promise<IResp> {
+    return createFetch("POST", `/api/new`, { data: JSON.stringify(item) });
 }
 
-function createArchive(item: IArchiveBase): Promise<IResp> {
-    return createFetch("POST", `/api/archive/create`, { data: JSON.stringify(item) });
+function commitRepo(item:{domain:string,repoName:string}, data: IArchiveBase): Promise<IResp> {
+    return createFetch("PUT", `/api/repo/${item.domain}/${item.repoName}`, { data: JSON.stringify(data) });
 }
 
-function updateArchive(id: number | string, item: IArchiveBase): Promise<IResp> {
-    return createFetch("PUT", `/api/archive/update/${id}`, { data: JSON.stringify(item) });
+function delRepo(item:{domain:string,repoName:string}): Promise<IResp> {
+    return createFetch("DELETE", `/api/repo/${item.domain}/${item.repoName}`);
 }
+function getRepo(item:{domain:string,repoName:string}): Promise<IResp> {
+    return createFetch("GET", `/api/repo/${item.domain}/${item.repoName}`);
+}
+
+
+

@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ArchiveDelete 删除内容api
-func ArchiveDelete(ctx *gin.Context) {
-	id, err := middleware.Parsers(ctx).ParamsID()
+// RepoNew 添加内容api
+func RepoNew(ctx *gin.Context) {
+	article, err := middleware.Parsers(ctx).BodyArchive()
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -22,24 +22,12 @@ func ArchiveDelete(ctx *gin.Context) {
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	archive := sql.New().ArchiveQueryByID(id)
-	if archive == nil {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	if session.UID != archive.AuthorID {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	sql.New().ArchiveDelete(id)
+	sql.New().NewRepo(article, &aSession)
 	ctx.JSON(200, module.ResponseSuccess())
-	return
 }

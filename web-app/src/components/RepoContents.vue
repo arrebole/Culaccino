@@ -1,10 +1,16 @@
 <template>
-  <div class="Box">
-    <div class="Box-header">
-      <h3>README.md</h3>
+  <div class="repo-content">
+    <div class="repo-summary">
+      <div>{{ repo.summary }}</div>
     </div>
-    <div class="Box-body">
-      <div class="markdown-body" v-html="markdown"></div>
+
+    <div class="Box">
+      <div class="Box-header">
+        <h3>README.md</h3>
+      </div>
+      <div class="Box-body">
+        <div class="markdown-body" v-html="markdown"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,9 +40,18 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.repo-content {
+  width: 100%;
+}
+
+.repo-summary {
+  display: block;
+  font-size: 1rem;
+  color: #586069;
+  margin-bottom: 20px;
+}
+
 .Box {
-  max-width: 980px;
-  width: 90%;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
@@ -64,7 +79,9 @@ export default Vue.extend({
   border-bottom: 1px solid #e1e4e8;
 }
 .markdown-body {
-  padding: 32px;
+  padding: 25px;
+  font-size: 1rem;
+  //font-size: 16px;
 }
 @media screen {
 }

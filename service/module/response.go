@@ -1,15 +1,5 @@
 package module
 
-// Islogin ...
-type Islogin bool
-
-const (
-	//HadLogin 已经登录
-	HadLogin Islogin = true
-	// NoLogin 未登录
-	NoLogin Islogin = false
-)
-
 // Response 返回的json类型
 type Response struct {
 	Code    int    `json:"code"`
@@ -19,12 +9,18 @@ type Response struct {
 
 // Data ...
 type Data struct {
-	Islogin  Islogin   `json:"islogin"`
-	Token    string    `json:"token"`
+	User     UserInfo  `json:"user"`
 	Archive  *Archive  `json:"archive"`
 	Count    *Count    `json:"count"`
 	Dir      []Archive `json:"dir"`
 	FileInFo *FileInfo `json:"file"`
+}
+
+// UserInfo ...
+type UserInfo struct {
+	UID    uint   `json:"uid"`
+	Domain string `json:"domain"`
+	Token  string `json:"token"`
 }
 
 // Count ...

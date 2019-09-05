@@ -1,14 +1,17 @@
 export default interface IResp {
     code: number
     message: string
-    data:{
-        islogin: boolean
-        token: string
+    data: {
         archive: IArchive
         dir: IArchive[]
-        file:{
-            hash:string
-            url:string
+        user: {
+            uid: number
+            domain: string
+            token: string
+        },
+        file: {
+            hash: string
+            url: string
         }
         count: {
             remain: number
@@ -37,7 +40,7 @@ export class Archive {
     views: number
     title: string
     author: string
-    area:string
+    area: string
     target: string
     cover: string
     summary: string
@@ -71,11 +74,11 @@ export class ArchiveBase implements IArchiveBase {
     }
     title: string
     target: string
-    area:string
+    area: string
     cover: string
     summary: string
     contents: string
-    hide:string
+    hide: string
 }
 
 

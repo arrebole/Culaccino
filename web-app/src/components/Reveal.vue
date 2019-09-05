@@ -4,7 +4,7 @@
       <router-link
         class="reveal-header-title"
         tag="h1"
-        :to="{ name: 'Archive', params: { id: archive.ID } }"
+        :to="{ name: 'Repo', params: { domain: archive.author, repo:archive.title } }"
       >{{ archive.title }}</router-link>
     </div>
 
@@ -32,7 +32,7 @@ import Vue from "vue";
 export default Vue.extend({
   props: ["archive"],
   methods: {
-    tranTime(str: string):string {
+    tranTime(str: string): string {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
     }
   }
@@ -108,7 +108,7 @@ export default Vue.extend({
 
 @media screen and (min-width: 996px) {
   .reveal-header-title {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     margin: 10px 0;
   }
 }

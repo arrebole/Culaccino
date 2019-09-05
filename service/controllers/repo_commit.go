@@ -8,17 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ArchiveUpdate 更新数据api
-func ArchiveUpdate(ctx *gin.Context) {
-	var pares = middleware.Parsers(ctx)
+// RepoCommit 更新数据api
+func RepoCommit(ctx *gin.Context) {
+	domain, symbol := ctx.Param("domain"), ctx.Param("symbol")
 
-	id, err := pares.ParamsID()
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	postArchive, err := pares.BodyArchive()
+	postArchive, err := middleware.Parsers(ctx).BodyArchive()
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -30,23 +24,18 @@ func ArchiveUpdate(ctx *gin.Context) {
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	archive := sql.New().ArchiveQueryByID(id)
-	if archive == nil {
+	repo := sql.New().GetRepo(domain, symbol)
+	if repo.Author == "" || aSession.UID != repo.AuthorID {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	if session.UID != archive.AuthorID {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	sql.New().ArchiveUpdate(id, module.ToArchive(postArchive))
+	sql.New().CommitRepo(domain, symbol, module.ToArchive(postArchive))
 	ctx.JSON(200, module.ResponseSuccess())
 }

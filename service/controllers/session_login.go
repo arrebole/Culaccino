@@ -21,5 +21,6 @@ func SessionLogin(ctx *gin.Context) {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
+
 	ctx.JSON(200, module.ResponseSuccess(session.New().Set(user)))
 }

@@ -7,19 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ArchiveOwner 所有者所有
-func ArchiveOwner(ctx *gin.Context) {
+// RepoDomain 所有者所有
+func RepoDomain(ctx *gin.Context) {
 	cookie, err := ctx.Cookie("user_session")
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	session, err := session.New().Get(cookie)
+	aSession, err := session.New().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(sql.New().ArchiveQueryByAuthorID(session.UID)))
+	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepos(aSession.Uname)))
 }

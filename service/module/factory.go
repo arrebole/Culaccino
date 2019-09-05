@@ -24,10 +24,11 @@ func setResponseData(data ...interface{}) *Response {
 			result.Dir = value.([]Archive)
 		case *Count:
 			result.Count = value.(*Count)
-		case session.Token:
-			result.Token = string(value.(session.Token))
-		case Islogin:
-			result.Islogin = value.(Islogin)
+		case session.Session:
+			userSession := value.(session.Session)
+			result.User.UID = userSession.UID
+			result.User.Domain = userSession.Uname
+			result.User.Token = userSession.Token
 		case *File:
 			f := value.(*File)
 			result.FileInFo = &FileInfo{

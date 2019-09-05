@@ -14,7 +14,10 @@
     </div>
 
     <nav class="repohead-nav">
-      <router-link :to="{ name:'Archive', params:$route.params.id }" class="reponav-item selected">
+      <router-link
+        :to="{ name:'Repo', params:$router.params,query:{id: $route.query.id} }"
+        class="reponav-item selected"
+      >
         <span class="iconfont icon-code icon-fontsize"></span>
         <span>Code</span>
       </router-link>
@@ -25,7 +28,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props:["repo"]
+  props: ["repo"]
 });
 </script>
 
@@ -72,7 +75,7 @@ export default Vue.extend({
 .public {
   margin: 0;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   color: #586069;
