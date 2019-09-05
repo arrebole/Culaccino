@@ -8,8 +8,8 @@ import (
 
 // SQL ...
 type SQL interface {
-	UserBaseInfo(username string, password string) *session.UserInfo
-	NewRepo(*module.PostArchive, *session.Session)
+	UserBaseInfo(username string, password string) *session.User
+	NewRepo(*module.PostArchive, *session.User)
 	GetRepo(domain string, symbol string) *module.Archive
 	CountRepos() *module.Count
 	DelRepo(domain string, symbol string) bool

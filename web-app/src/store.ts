@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api/index'
-import { getCookie,setCookie } from './util'
+import { getCookie, setCookie } from './util'
 
 Vue.use(Vuex)
 
@@ -15,6 +15,7 @@ export default new Vuex.Store({
       uid: -1,
       domain: "",
       token: "",
+      permission: 0
     }
   },
   getters: {
@@ -22,7 +23,7 @@ export default new Vuex.Store({
     getUserStatus(state) {
       return state.user
     },
-    islogin(state){
+    islogin(state) {
       return (state.user.uid > 0)
     }
   },
@@ -31,16 +32,17 @@ export default new Vuex.Store({
       state.user.domain = payload.domain
       state.user.uid = payload.uid
       state.user.token = payload.token
+      state.user.permission = payload.permission
     }
   },
   actions: {
     // 通过cookie获取用户信息
     async fetchUserInfoBycookie(context) {
-      if (getCookie()== "" || context.getters.islogin ) return
+      if (getCookie() == "" || context.getters.islogin) return
       const res = await api.sessionExist(getCookie())
       context.commit(types.SET_USER_INFO, res.data.user)
     },
-    async fetchLogin(context, payload){
+    async fetchLogin(context, payload) {
       const res = await api.sessionLogin(payload)
       if (res.code < 0) return false
       setCookie(res.data.user.token);

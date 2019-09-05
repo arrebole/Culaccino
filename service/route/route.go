@@ -19,7 +19,7 @@ func New() *gin.Engine {
 		api.PUT("/commit", controllers.Commit())
 		api.GET("/session", controllers.Session())
 		api.GET("/export", controllers.Export())
-		//api.GET("/search",controllers.Search)
+		api.DELETE("/delete", controllers.Delete())
 
 	}
 

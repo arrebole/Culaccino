@@ -3,7 +3,7 @@
     <Header />
     <article>
       <section>
-        <Editor handle="update" :archive="archive"></Editor>
+        <Editor handle="update" :archive="repo"></Editor>
       </section>
     </article>
     <Footer />
@@ -20,14 +20,14 @@ import api from "../../../api/index";
 import IResp, { IArchive, IArchiveBase } from "../../../types/resp";
 
 interface Idata {
-  archive: IArchive | null;
+  repo: IArchive | null;
 }
 
 export default Vue.extend({
   name: "Update",
   data(): Idata {
     return {
-      archive: null
+      repo: null
     };
   },
   created() {
@@ -39,7 +39,7 @@ export default Vue.extend({
         domain: this.$route.params.domain,
         repoName: this.$route.params.repo,
       });
-      this.archive = res.data.archive;
+      this.repo = res.data.repo;
     }
   },
   components: {

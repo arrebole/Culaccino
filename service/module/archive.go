@@ -20,7 +20,7 @@ type Archive struct {
 type Table struct {
 	Title   string `json:"title"`
 	Area    string `json:"area"`
-	Target  string `json:"target"`
+	Tag     string `json:"tag"`
 	Cover   string `json:"cover"`
 	Summary string `json:"summary"`
 }

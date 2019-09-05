@@ -25,11 +25,11 @@ func staticUpload(ctx *gin.Context) {
 	}
 
 	file.SetRoot(config.UploadDir)
-	err = file.SaveFile()
+	status, err := file.SaveFile()
 	if err != nil {
 		fmt.Println(err.Error())
 		ctx.JSON(400, module.ResponseFail())
 		return
 	}
-	ctx.JSON(200, module.ResponseSuccess(file))
+	ctx.JSON(200, module.ResponseSuccess(status))
 }

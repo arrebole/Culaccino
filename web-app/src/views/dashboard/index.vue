@@ -72,7 +72,7 @@ export default Vue.extend({
       this.setData(await api.getDashboard(this.currentPage - 1, this.per_page));
     },
     setData({ data }: IResp) {
-      this.dir = data.dir;
+      this.dir = data.repos;
       this.total = data.count.total;
     },
     currentChange(val: number) {
