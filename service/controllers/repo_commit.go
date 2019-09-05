@@ -8,9 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ArchiveCreate 添加内容api
-func ArchiveCreate(ctx *gin.Context) {
-	article, err := middleware.Parsers(ctx).BodyArchive()
+// RepoCommit 更新数据api
+func RepoCommit(ctx *gin.Context) {
+	domain, symbol := ctx.Param("domain"), ctx.Param("symbol")
+
+	postArchive, err := middleware.Parsers(ctx).BodyArchive()
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -28,6 +30,12 @@ func ArchiveCreate(ctx *gin.Context) {
 		return
 	}
 
-	sql.New().ArchiveCreate(article, &aSession)
+	repo := sql.New().GetRepo(domain, symbol)
+	if repo.Author == "" || aSession.UID != repo.AuthorID {
+		ctx.JSON(200, module.ResponseFail())
+		return
+	}
+
+	sql.New().CommitRepo(domain, symbol, module.ToArchive(postArchive))
 	ctx.JSON(200, module.ResponseSuccess())
 }

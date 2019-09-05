@@ -4,7 +4,7 @@
       <router-link
         class="reveal-header-title"
         tag="h1"
-        :to="{ name: 'Repo', params: { domain: archive.author, repo:archive.title },query:{id: archive.ID } }"
+        :to="{ name: 'Repo', params: { domain: archive.author, repo:archive.title } }"
       >{{ archive.title }}</router-link>
     </div>
 

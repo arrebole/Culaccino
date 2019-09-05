@@ -8,14 +8,14 @@ import (
 
 // SQL ...
 type SQL interface {
-	ArchiveCount() *module.Count
-	ArchiveDelete(uint)
-	ArchiveCreate(*module.PostArchive, *session.Session)
-	ArchiveUpdate(uint, *module.Archive)
-	ArchiveDir(int, int) ([]module.Archive, *module.Count)
-	ArchiveQueryByID(uint) *module.Archive
-	ArchiveQueryByAuthorID(uint) ([]module.Archive, *module.Count)
 	UserBaseInfo(username string, password string) *session.UserInfo
+	NewRepo(*module.PostArchive, *session.Session)
+	GetRepo(domain string, symbol string) *module.Archive
+	CountRepos() *module.Count
+	DelRepo(domain string, symbol string) bool
+	GetRepos(domain string) ([]module.Archive, *module.Count)
+	CommitRepo(domain string, symbol string, repo *module.Archive) bool
+	Dashboard(int, int) ([]module.Archive, *module.Count)
 }
 
 var _instance *client

@@ -33,13 +33,13 @@ export default Vue.extend({
   },
   methods: {
     async fethData() {
-      let res: IResp = await api.getReposOwner();
+      let res: IResp = await api.getReposOwner(this.$route.params.domain);
       if (res.data.dir){
         this.dir = res.data.dir.reverse();
       }
     },
-    async deleteAt(id: number) {
-      let res: IResp = await api.delRepo(id);
+    async deleteAt(item:{domain:string,repoName:string}) {
+      let res: IResp = await api.delRepo(item) ;
       window.location.reload();
     }
   },

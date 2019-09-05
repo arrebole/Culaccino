@@ -70,10 +70,8 @@ export default Vue.extend({
       if (res.code == 0) alert("成功");
     },
     async apiUpdate() {
-      const id = this.$route.query.id
-      if (typeof id != "string" || typeof id != "number" ) return;
-      let res: IResp = await api.updateRepo(
-        id,
+      let res: IResp = await api.commitRepo (
+        { domain: this.$route.params.domain , repoName: this.cache.title },
         this.cache
       );
       if (res.code == 0) alert("成功");

@@ -18,12 +18,13 @@ func New() *gin.Engine {
 
 		api.POST("/static/upload", controllers.StaticUpload)
 
-		api.GET("/archive/details/:id", controllers.ArchivesDetails)
-		api.POST("/archive/create", controllers.ArchiveCreate)
-		api.PUT("/archive/update/:id", controllers.ArchiveUpdate)
-		api.DELETE("/archive/delete/:id", controllers.ArchiveDelete)
-		api.GET("/archive/owner", controllers.ArchiveOwner)
-		api.GET("/archive/dashboard/:page", controllers.ArchiveDashboard)
+		api.GET("/search/dashboard", controllers.SearchDashboard)
+
+		api.POST("/new", controllers.RepoNew)
+		api.GET("/repo/:domain", controllers.RepoDomain)
+		api.GET("/repo/:domain/:symbol", controllers.RepoDetails)
+		api.PUT("/repo/:domain/:symbol", controllers.RepoCommit)
+		api.DELETE("/repo/:domain/:symbol", controllers.RepoDelete)
 
 	}
 

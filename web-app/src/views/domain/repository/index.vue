@@ -40,17 +40,14 @@ export default Vue.extend({
     "this.$router": "getData"
   },
   methods: {
-    repoSymble() {
-      if (typeof this.$route.query.id == "number") {
-        return this.$route.query.id
+    repoSymbol() {
+      return {
+        domain:this.$route.params.domain,
+        repoName:this.$route.params.repo,
       }
-      if(typeof this.$route.query.id == "string"){
-        return parseInt(this.$route.query.id)
-      }
-      return -1;
     },
     async getData() {
-      const res: IResp = await api.getRepo(this.repoSymble());
+      const res: IResp = await api.getRepo(this.repoSymbol());
       if (res.code >= 0 && res.data.archive != null) {
         this.repo = res.data.archive;
       }

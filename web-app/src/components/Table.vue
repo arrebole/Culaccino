@@ -1,9 +1,8 @@
 <template>
   <section>
     <div class="table-grid table-header">
-      <div class="table-item">ID</div>
+      <div class="table-item">仓库</div>
       <div class="table-item">时间</div>
-      <div class="table-item">标题</div>
       <div class="table-item">浏量</div>
       <div class="contrl">操作</div>
     </div>
@@ -12,17 +11,16 @@
       <div
         class="table-grid table-contents"
         v-for="item in data"
-        :key="item.ID"
+        :key="item.title"
       >
-        <div class="table-item">{{ item.ID }}</div>
-        <div class="table-item">{{ new Date(item.CreatedAt).toLocaleString() }}</div>
         <div class="table-item">{{ item.title }}</div>
+        <div class="table-item">{{ new Date(item.CreatedAt).toLocaleString() }}</div>
         <div class="table-item">{{ item.views }}</div>
         <div class="contrl-contents">
-          <router-link :to="{ name: 'Commit', params: { domain: item.author,repo: item.title },query:{id:item.ID} }"
+          <router-link :to="{ name: 'Commit', params: { domain: item.author,repo: item.title } }"
             >修改</router-link
           >/
-          <span @click="deleteAt(item.ID)">删除</span>
+          <span @click="deleteAt({ domain:item.author, repoName:item.title })">删除</span>
         </div>
       </div>
     </transition-group>

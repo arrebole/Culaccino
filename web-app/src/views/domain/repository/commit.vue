@@ -34,17 +34,11 @@ export default Vue.extend({
     this.getData();
   },
   methods: {
-    repoSymble() {
-      if (typeof this.$route.query.id == "number") {
-        return this.$route.query.id;
-      }
-      if (typeof this.$route.query.id == "string") {
-        return parseInt(this.$route.query.id);
-      }
-      return -1;
-    },
     async getData() {
-      let res: IResp = await api.getRepo(this.repoSymble());
+      let res: IResp = await api.getRepo({
+        domain: this.$route.params.domain,
+        repoName: this.$route.params.repo,
+      });
       this.archive = res.data.archive;
     }
   },
