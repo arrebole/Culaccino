@@ -45,10 +45,9 @@ func (p *client) remain(curr int, per int) *module.Count {
 }
 
 // NewRepo 添加文章
-func (p *client) NewRepo(Archive *module.PostArchive, session *session.User) {
+func (p *client) NewRepo(Archive *module.PostArchive, session *session.Body) {
 	aArchive := module.ToArchive(Archive)
-	aArchive.Author = session.Uname
-	aArchive.AuthorID = session.UID
+	aArchive.Author = session.Secret
 	p.db.Create(aArchive)
 }
 

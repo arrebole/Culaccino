@@ -15,8 +15,8 @@ func Export() gin.HandlerFunc {
 		switch ctx.Query("tag") {
 		case "dashboard":
 			dashboard(ctx)
-		case "domain":
-			repoDomain(ctx)
+		case "storage":
+			repoStorage(ctx)
 		case "repo":
 			repoDetails(ctx)
 		default:
@@ -27,25 +27,25 @@ func Export() gin.HandlerFunc {
 
 // repoDetails 具体内容
 func repoDetails(ctx *gin.Context) {
-	domain, repo := ctx.Query("domain"), ctx.Query("repo")
+	domain, repo := ctx.Query("storage"), ctx.Query("repo")
 	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepo(domain, repo)))
 }
 
-// repoDomain 所有者所有
-func repoDomain(ctx *gin.Context) {
+// repoStorage 所有者所有
+func repoStorage(ctx *gin.Context) {
 	cookie, err := ctx.Cookie("user_session")
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	aSession, err := session.New().Get(cookie)
+	aSession, err := session.NewStore().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepos(aSession.Uname)))
+	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepos(aSession.Secret)))
 }
 
 // dashboard 目录索引api

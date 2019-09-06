@@ -11,7 +11,7 @@ type Response struct {
 
 // Data ...
 type Data struct {
-	User  session.User `json:"user"`
+	User  session.Body `json:"user"`
 	Repo  *Archive     `json:"repo"`
 	Repos []Archive    `json:"repos"`
 	Count *Count       `json:"count"`

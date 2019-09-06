@@ -5,16 +5,15 @@ import (
 	"github.com/arrebole/culaccino/service/session"
 )
 
-func (p *client) UserBaseInfo(username string, password string) *session.User {
+func (p *client) UserBaseInfo(username string, password string) *session.Body {
 	var user = &module.User{}
 	p.db.Where("username = ?", username).First(&user)
 
 	if user.Password != PassWord(password) {
 		return nil
 	}
-	return &session.User{
-		UID:        user.ID,
-		Uname:      user.Username,
+	return &session.Body{
+		Secret:     user.Username,
 		Permission: user.Permission,
 	}
 }

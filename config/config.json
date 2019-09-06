@@ -1,6 +1,6 @@
 {
     "port": ":3000",
-    "dbname": "./database/culaccino.db",
+    "dbAddr": "127.0.0.1:6379",
     "root_dir":"./wwwroot",
     "upload_dir":"./wwwroot/static"
     

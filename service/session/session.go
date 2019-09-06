@@ -2,17 +2,16 @@ package session
 
 import "time"
 
-// User ...
-type User struct {
-	UID        uint   `json:"uid"`
-	Uname      string `json:"domain"`
-	Token      string `json:"token"`
+// Body ...
+type Body struct {
+	Secret     string `json:"secret"`
+	SessionID  string `json:"cookie"`
 	Permission int    `json:"permission"`
 }
 
 // Session 储存会话
 type Session struct {
-	User
+	Body
 
 	CreateAt time.Time
 	Options  string

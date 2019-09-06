@@ -63,7 +63,7 @@ function getRepo(item:{domain: string, repoName: string}): Promise<IResp> {
 }
 
 function commitRepo(item:{domain:string,repoName:string}, data: IArchiveBase): Promise<IResp> {
-    return createFetch("PUT", `/api/commit?domain=${item.domain}&repo=${item.repoName}`, { data: JSON.stringify(data) });
+    return createFetch("PUT", `/api/commit?storage=${item.domain}&storage=${item.repoName}`, { data: JSON.stringify(data) });
 }
 
 function delRepo(item:{domain:string,repoName:string}): Promise<IResp> {

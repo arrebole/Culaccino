@@ -29,7 +29,7 @@ func repoNew(ctx *gin.Context) {
 		return
 	}
 
-	aSession, err := session.New().Get(cookie)
+	aSession, err := session.NewStore().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return

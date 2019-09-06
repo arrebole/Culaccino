@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
-
 	"github.com/arrebole/culaccino/service/config"
 	"github.com/arrebole/culaccino/service/route"
 )

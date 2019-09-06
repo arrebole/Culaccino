@@ -29,7 +29,7 @@ func sessionExist(ctx *gin.Context) {
 		return
 	}
 
-	aSession, err := session.New().Get(cookie)
+	aSession, err := session.NewStore().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
@@ -51,5 +51,5 @@ func sessionLogin(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(session.New().Set(user)))
+	ctx.JSON(200, module.ResponseSuccess(session.NewStore().Set(user)))
 }

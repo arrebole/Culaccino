@@ -1,15 +1,15 @@
 import store from "./store"
 
 // 异步获取vuex的登录状态
-export async function localUserStatus(): Promise<{ islogin: boolean, domain: string }> {
+export async function localUserStatus(): Promise<{ islogin: boolean, secret: string }> {
     await store.dispatch("fetchUserInfoBycookie");
     if (getCookie() != "" && store.getters.islogin ) {
         return {
             islogin: true,
-            domain: store.state.user.domain
+            secret: store.state.user.secret
         }
     }
-    return { islogin: false, domain: "" }
+    return { islogin: false, secret: "" }
 }
 
 export function setCookie(cookie: string) {

@@ -17,7 +17,7 @@ func Commit() gin.HandlerFunc {
 
 // RepoCommit 更新数据api
 func repoCommit(ctx *gin.Context) {
-	domain, repo := ctx.Query("domain"), ctx.Query("repo")
+	domain, repo := ctx.Query("storage"), ctx.Query("repo")
 	if domain == "" || repo == "" {
 		ctx.JSON(200, module.ResponseFail())
 	}
@@ -34,14 +34,14 @@ func repoCommit(ctx *gin.Context) {
 		return
 	}
 
-	aSession, err := session.New().Get(cookie)
+	aSession, err := session.NewStore().Get(cookie)
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
 	oldData := sql.New().GetRepo(domain, repo)
-	if oldData.Author == "" || aSession.UID != oldData.AuthorID {
+	if aSession.Secret != oldData.Author {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}

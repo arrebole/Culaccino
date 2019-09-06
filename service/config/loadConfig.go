@@ -9,7 +9,7 @@ import (
 
 // 导出的配置文件
 var (
-	DBName     string
+	DBAddr     string
 	RootDir    string
 	UploadDir  string
 	ListenPort string
@@ -24,7 +24,7 @@ func init() {
 
 func export(config *Config) {
 
-	DBName, _ = filepath.Abs(config.DBName)
+	DBAddr, _ = filepath.Abs(config.DBAddr)
 	RootDir, _ = filepath.Abs(config.RootDir)
 	UploadDir, _ = filepath.Abs(config.UploadDir)
 	ListenPort = config.ListenPort

@@ -24,7 +24,7 @@ func initDB(db *gorm.DB) *gorm.DB {
 
 // 生成数据库链接对象
 func connSQL() *gorm.DB {
-	db, err := gorm.Open("sqlite3", config.DBName)
+	db, err := gorm.Open("sqlite3", config.DBAddr)
 	if err != nil {
 		panic("failed to connect database")
 	}

@@ -12,9 +12,8 @@ export const types = {
 export default new Vuex.Store({
   state: {
     user: {
-      uid: -1,
-      domain: "",
-      token: "",
+      secret: "",
+      cookie: "",
       permission: 0
     }
   },
@@ -24,14 +23,13 @@ export default new Vuex.Store({
       return state.user
     },
     islogin(state) {
-      return (state.user.uid > 0)
+      return (state.user.cookie == "")
     }
   },
   mutations: {
     [types.SET_USER_INFO](state, payload) {
-      state.user.domain = payload.domain
-      state.user.uid = payload.uid
-      state.user.token = payload.token
+      state.user.cookie = payload.cookie
+      state.user.secret = payload.secret
       state.user.permission = payload.permission
     }
   },
@@ -45,7 +43,7 @@ export default new Vuex.Store({
     async fetchLogin(context, payload) {
       const res = await api.sessionLogin(payload)
       if (res.code < 0) return false
-      setCookie(res.data.user.token);
+      setCookie(res.data.user.cookie);
       context.commit(types.SET_USER_INFO, res.data.user)
       return true
     }

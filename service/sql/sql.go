@@ -8,8 +8,8 @@ import (
 
 // SQL ...
 type SQL interface {
-	UserBaseInfo(username string, password string) *session.User
-	NewRepo(*module.PostArchive, *session.User)
+	UserBaseInfo(username string, password string) *session.Body
+	NewRepo(*module.PostArchive, *session.Body)
 	GetRepo(domain string, symbol string) *module.Archive
 	CountRepos() *module.Count
 	DelRepo(domain string, symbol string) bool
@@ -34,5 +34,3 @@ type client struct {
 func New() SQL {
 	return _instance
 }
-
-//-------------------------------------------------------------------------

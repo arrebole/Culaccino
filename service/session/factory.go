@@ -7,7 +7,7 @@ var _instance = &Manager{
 	maxAge:  time.Hour * 3,
 }
 
-// New ...
-func New() Store {
+// NewStore ...
+func NewStore() Store {
 	return _instance
 }

@@ -5,9 +5,9 @@ export default interface IResp {
         repo: IArchive
         repos: IArchive[]
         user: {
-            uid: number
-            domain: string
-            token: string
+            cookie: string
+            secret: string
+            permission:string
         },
         file: {
             hash: string

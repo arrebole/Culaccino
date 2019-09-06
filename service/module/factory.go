@@ -27,8 +27,8 @@ func setResponseData(data ...interface{}) *Response {
 		case *Count:
 			result.Count = value.(*Count)
 
-		case session.User:
-			result.User = value.(session.User)
+		case session.Body:
+			result.User = value.(session.Body)
 
 		case *FileStatus:
 			result.File = value.(*FileStatus)
