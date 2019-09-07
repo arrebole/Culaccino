@@ -1,7 +1,7 @@
 <template>
   <div class="repo-content">
     <div class="repo-summary">
-      <div>{{ repo.summary }}</div>
+      <div>{{ chapter.summary }}</div>
     </div>
 
     <div class="Box">
@@ -25,7 +25,7 @@ import marked from "marked";
 import hljs from "highlight.js";
 
 export default Vue.extend({
-  props: ["repo"],
+  props: ["repo","chapter"],
   computed: {
     markdown() {
       marked.setOptions({

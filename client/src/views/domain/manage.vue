@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import IResp, { IArchive } from "../../types/resp";
+import IResp, { Repo } from "../../types/resp";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import Table from "../../components/Table.vue";
 import api from "../../api/index";
 
 interface Data {
-  repos: IArchive[];
+  repos: Repo[];
 }
 
 export default Vue.extend({

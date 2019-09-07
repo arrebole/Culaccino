@@ -31,12 +31,12 @@ import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import Reveal from "../../components/Reveal.vue";
 import api from "../../api/index";
-import IResp, { IArchive } from "../../types/resp";
+import IResp, { Repo } from "../../types/resp";
 
 interface Data {
   total: number;
   per_page: number; //每页显示数量
-  dir: IArchive[];
+  dir: Repo[];
 }
 
 export default Vue.extend({

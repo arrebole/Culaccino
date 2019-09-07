@@ -38,13 +38,13 @@ export default new Vuex.Store({
     async fetchUserInfoBycookie(context) {
       if (getCookie() == "" || context.getters.islogin) return
       const res = await api.sessionExist(getCookie())
-      context.commit(types.SET_USER_INFO, res.data.user)
+      context.commit(types.SET_USER_INFO, res.data.session)
     },
     async fetchLogin(context, payload) {
       const res = await api.sessionLogin(payload)
       if (res.code < 0) return false
-      setCookie(res.data.user.cookie);
-      context.commit(types.SET_USER_INFO, res.data.user)
+      setCookie(res.data.session.cookie);
+      context.commit(types.SET_USER_INFO, res.data.session)
       return true
     }
   }

@@ -17,10 +17,10 @@ import Header from "../../../components/Header.vue";
 import Editor from "../../../components/Editor.vue";
 import Footer from "../../../components/Footer.vue";
 import api from "../../../api/index";
-import IResp, { IArchive, IArchiveBase } from "../../../types/resp";
+import IResp, { Repo } from "../../../types/resp";
 
 interface Idata {
-  repo: IArchive | null;
+  repo: Repo | null;
 }
 
 export default Vue.extend({

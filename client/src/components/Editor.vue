@@ -39,19 +39,18 @@
 import Vue from "vue";
 import api from "../api/index";
 import IResp, {
-  IArchiveBase,
-  IArchive,
-  Archive,
-  ArchiveBase
+  Repo,
+  Chapter
 } from "../types/resp";
 import { types } from "../store";
 
 export default Vue.extend({
-  props: ["handle", "archive"],
-  data(): { cache: IArchiveBase; imageBlobUrl: string } {
+  props: ["handle", "repo", "chapter"],
+  data(): { repo:Repo, chapter: Chapter; imageBlobUrl: string } {
     return {
-      imageBlobUrl: "",
-      cache: new ArchiveBase()
+      repo: new Repo(),
+      chapter: new Chapter(),
+      imageBlobUrl: ""
     };
   },
   created() {},

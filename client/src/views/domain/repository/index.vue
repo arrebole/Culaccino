@@ -8,7 +8,7 @@
       
       
       <section class="repository-content">
-        <RepoContents :repo="repo"></RepoContents>
+        <RepoContents :repo="chapter"></RepoContents>
       </section>
     </article>
     <Footer />
@@ -23,13 +23,14 @@ import Footer from "../../../components/Footer.vue";
 import RepoContents from "../../../components/RepoContents.vue";
 import RepoHeader from "../../../components/RepoHeader.vue";
 import api from "../../../api/index";
-import IResp, { IArchive, Archive } from "../../../types/resp";
+import IResp, { Repo, Chapter } from "../../../types/resp";
 
 export default Vue.extend({
   name: "repository",
-  data(): { repo: IArchive; loading: boolean } {
+  data(): { repo: Repo;chapter:Chapter, loading: boolean } {
     return {
-      repo: new Archive(),
+      repo: new Repo(),
+      chapter: new Chapter(),
       loading: true
     };
   },

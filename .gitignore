@@ -1,5 +1,5 @@
 .DS_Store
-/web-app/node_modules
+/client/node_modules
 /dist
 /bin
 /bin/service.exe

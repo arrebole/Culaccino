@@ -24,10 +24,10 @@ func init() {
 
 func export(config *Config) {
 
-	DBAddr, _ = filepath.Abs(config.DBAddr)
+	DBAddr = config.DBAddr
+	ListenPort = config.ListenPort
 	RootDir, _ = filepath.Abs(config.RootDir)
 	UploadDir, _ = filepath.Abs(config.UploadDir)
-	ListenPort = config.ListenPort
 }
 
 // 初始化上传文件夹

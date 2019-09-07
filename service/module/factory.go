@@ -18,17 +18,20 @@ func setResponseData(data ...interface{}) *Response {
 
 	for _, value := range data {
 		switch value.(type) {
-		case *Archive:
-			result.Repo = value.(*Archive)
+		case *Storage:
+			result.Storage = value.(*Storage)
 
-		case []Archive:
-			result.Repos = value.([]Archive)
+		case []Repo:
+			result.Repos = value.([]Repo)
+
+		case *Repo:
+			result.Repo = value.(*Repo)
 
 		case *Count:
 			result.Count = value.(*Count)
 
 		case session.Body:
-			result.User = value.(session.Body)
+			result.Session = value.(session.Body)
 
 		case *FileStatus:
 			result.File = value.(*FileStatus)
@@ -36,15 +39,6 @@ func setResponseData(data ...interface{}) *Response {
 		default:
 			panic("data error\n")
 		}
-	}
-	return result
-}
-
-// ToArchive 将用户提交的article 转化成数据库的article格式
-func ToArchive(data *PostArchive) *Archive {
-	var result = &Archive{
-		PostArchive: *data,
-		Views:       0,
 	}
 	return result
 }
