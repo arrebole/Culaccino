@@ -10,6 +10,8 @@ import (
 func main() {
 	TestSet()
 	TestGet()
+	TestExists()
+	TestDel()
 }
 
 // TestGet ...
@@ -29,15 +31,30 @@ func TestGet() {
 
 // TestSet ...
 func TestSet() {
-	if err := sql.Set(&module.Storage{Name: "arch", Password: "123"}); err != nil {
+	if err := sql.Set(&module.Storage{Name: "root", Password: "123"}); err != nil {
 		panic(err.Error())
 	}
 
 	if err := sql.Set(module.NewRepo("arch", "dev")); err != nil {
 		panic(err.Error())
 	}
+	if err := sql.Set(module.NewRepo("arch", "master")); err != nil {
+		panic(err.Error())
+	}
 
 	if err := sql.Set(module.NewChapter("arch", "dev", "index")); err != nil {
 		panic(err.Error())
 	}
+}
+
+// TestExists ...
+func TestExists() {
+	fmt.Println(sql.Exists("root"))
+	fmt.Println(sql.Exists("arch", "dev"))
+	fmt.Println(sql.Exists("arch", "master"))
+	fmt.Println(sql.Exists("arch", "dev", "index"))
+}
+
+func TestDel() {
+	sql.Delete(module.NewRepo("arch", "dev"))
 }
