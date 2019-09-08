@@ -21,7 +21,7 @@ type Repo struct {
 
 // Parents 指向父名
 func (p *Repo) Parents() string {
-	array := strings.Split(p.Symbol, "/")
+	array := strings.Split(p.Symbol, ":")
 	return fmt.Sprintf("%s", array[0])
 }
 
@@ -31,7 +31,7 @@ func NewRepo(arg ...string) *Repo {
 		panic("new Repo arg need 2")
 	}
 	return &Repo{
-		Symbol: fmt.Sprintf("%s/%s", arg[0], arg[1]),
+		Symbol: fmt.Sprintf("%s:%s", arg[0], arg[1]),
 		Name:   arg[1],
 	}
 }

@@ -34,6 +34,9 @@ func deleteRepo(arg *module.Repo) error {
 	// 4、移除 rpeo-> chapter 的表
 	MapChapterDB.Del(arg.Symbol)
 
+	//5、移除首页
+	delDashboard(arg.Symbol)
+
 	return nil
 }
 

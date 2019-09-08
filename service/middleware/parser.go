@@ -9,30 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Parser 解析器
-type Parser struct {
-	ctx *gin.Context
-}
-
-// Parsers 解析器构造器
-func Parsers(ctx *gin.Context) *Parser {
-	return &Parser{ctx: ctx}
-}
-
-// BodyArchive ...
-func (p *Parser) BodyArchive() (*module.PostArchive, error) {
-	var article = &module.PostArchive{}
-	if err := p.ctx.BindJSON(article); err != nil {
-		return nil, errors.New("[Pareser]: pares post article fail")
-	}
-	return article, nil
-}
-
 // FileFromBody ...
-func (p *Parser) FileFromBody() (*module.File, error) {
+func FileFromBody(ctx *gin.Context) (*module.File, error) {
 
 	// 读取上传的文件
-	fileHeader, err := p.ctx.FormFile("file")
+	fileHeader, err := ctx.FormFile("file")
 	if err != nil {
 		return nil, errors.New("FormFile() fail")
 	}

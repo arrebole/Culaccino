@@ -16,7 +16,7 @@ func Delete() gin.HandlerFunc {
 
 // RepoDelete 删除内容api
 func repoDelete(ctx *gin.Context) {
-	domain, repo := ctx.Query("storage"), ctx.Query("repo")
+	storage, repo := ctx.Query("storage"), ctx.Query("repo")
 
 	cookie, err := ctx.Cookie("user_session")
 	if err != nil {
@@ -30,13 +30,14 @@ func repoDelete(ctx *gin.Context) {
 		return
 	}
 
-	data := sql.New().GetRepo(domain, repo)
-	if aSession.Secret != data.Author {
+	var result = module.Repo{}
+	sql.Get(&result, storage+":"+repo)
+	if aSession.Secret != result.Parents() {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	sql.New().DelRepo(domain, repo)
+	sql.Delete(&result)
 	ctx.JSON(200, module.ResponseSuccess())
 	return
 }

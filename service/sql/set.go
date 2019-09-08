@@ -27,6 +27,7 @@ func setStorage(arg *module.Storage) error {
 
 func setRepo(arg *module.Repo) error {
 	addmap(MapRepoDB, arg.Parents(), arg.Symbol)
+	addDashboard(arg.Symbol) //作用于首页数据库统计
 	return RepoDB.HMSet(arg.Symbol, adapter(arg)).Err()
 }
 

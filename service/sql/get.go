@@ -9,35 +9,35 @@ import (
 )
 
 // Get 查询多个
-func Get(out interface{}, query ...string) error {
+func Get(out interface{}, query string) error {
 	switch out.(type) {
 
 	case *module.Storage:
-		return getStorage(out, query...)
+		return getStorage(out, query)
 
 	case *module.Repo:
-		return getRepo(out, query...)
+		return getRepo(out, query)
 
 	case *module.Chapter:
-		return getChapter(out, query...)
+		return getChapter(out, query)
 
 	default:
 		return errors.New("")
 	}
 }
 
-func getStorage(arg interface{}, query ...string) error {
-	reflectSet(arg, StorageDB.HGetAll(query[0]).Val())
+func getStorage(arg interface{}, query string) error {
+	reflectSet(arg, StorageDB.HGetAll(query).Val())
 	return nil
 }
 
-func getRepo(arg interface{}, query ...string) error {
-	reflectSet(arg, RepoDB.HGetAll(query[0]+"/"+query[1]).Val())
+func getRepo(arg interface{}, query string) error {
+	reflectSet(arg, RepoDB.HGetAll(query).Val())
 	return errors.New("")
 }
 
-func getChapter(arg interface{}, query ...string) error {
-	reflectSet(arg, ChapterDB.HGetAll(query[0]+"/"+query[1]+"/"+query[2]).Val())
+func getChapter(arg interface{}, query string) error {
+	reflectSet(arg, ChapterDB.HGetAll(query).Val())
 	return errors.New("")
 }
 

@@ -18,7 +18,7 @@ func Upload() gin.HandlerFunc {
 
 // StaticUpload 处理静态文件
 func staticUpload(ctx *gin.Context) {
-	file, err := middleware.Parsers(ctx).FileFromBody()
+	file, err := middleware.FileFromBody(ctx)
 	if err != nil {
 		ctx.JSON(400, module.ResponseFail())
 		return

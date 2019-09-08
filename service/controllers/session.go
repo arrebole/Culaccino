@@ -45,11 +45,13 @@ func sessionLogin(ctx *gin.Context) {
 		return
 	}
 
-	user := sql.New().UserBaseInfo(userName, password)
-	if user == nil {
+	var user = &module.Storage{}
+	sql.Get(user, userName)
+	if user.Name != userName {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(session.NewStore().Set(user)))
+	aSession := session.NewStore().Set(&session.Body{Secret: userName})
+	ctx.JSON(200, module.ResponseSuccess(aSession))
 }

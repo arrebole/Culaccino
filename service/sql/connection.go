@@ -12,6 +12,7 @@ var (
 	RepoDB       *redis.Client
 	MapChapterDB *redis.Client
 	ChapterDB    *redis.Client
+	ExportDB     *redis.Client
 )
 
 func init() {
@@ -40,5 +41,9 @@ func init() {
 		Password: "", // no password set
 		DB:       4,  // use default DB
 	})
-
+	ExportDB = redis.NewClient(&redis.Options{
+		Addr:     config.DBAddr,
+		Password: "", // no password set
+		DB:       5,  // use default DB
+	})
 }

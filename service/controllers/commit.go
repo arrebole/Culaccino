@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/arrebole/culaccino/service/session"
 	"github.com/arrebole/culaccino/service/sql"
@@ -17,13 +16,13 @@ func Commit() gin.HandlerFunc {
 
 // RepoCommit 更新数据api
 func repoCommit(ctx *gin.Context) {
-	domain, repo := ctx.Query("storage"), ctx.Query("repo")
-	if domain == "" || repo == "" {
+	storage, repo := ctx.Query("storage"), ctx.Query("repo")
+	if storage == "" || repo == "" {
 		ctx.JSON(200, module.ResponseFail())
 	}
 
-	postArchive, err := middleware.Parsers(ctx).BodyArchive()
-	if err != nil {
+	data := module.Repo{}
+	if err := ctx.BindJSON(&data); err != nil {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
@@ -40,12 +39,13 @@ func repoCommit(ctx *gin.Context) {
 		return
 	}
 
-	oldData := sql.New().GetRepo(domain, repo)
-	if aSession.Secret != oldData.Author {
+	oldData := module.Repo{}
+	sql.Get(&oldData, storage+":"+repo)
+	if aSession.Secret != oldData.Parents() {
 		ctx.JSON(200, module.ResponseFail())
 		return
 	}
 
-	sql.New().CommitRepo(domain, repo, module.ToArchive(postArchive))
+	sql.Set(&data)
 	ctx.JSON(200, module.ResponseSuccess())
 }

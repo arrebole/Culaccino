@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"strconv"
+	"fmt"
 
 	"github.com/arrebole/culaccino/service/module"
 	"github.com/arrebole/culaccino/service/session"
@@ -16,9 +16,11 @@ func Export() gin.HandlerFunc {
 		case "dashboard":
 			dashboard(ctx)
 		case "storage":
-			repoStorage(ctx)
+			getStorage(ctx)
 		case "repo":
-			repoDetails(ctx)
+			getRepo(ctx)
+		case "chapter":
+			getChapter(ctx)
 		default:
 			ctx.JSON(200, module.ResponseFail())
 		}
@@ -26,13 +28,35 @@ func Export() gin.HandlerFunc {
 }
 
 // repoDetails 具体内容
-func repoDetails(ctx *gin.Context) {
-	domain, repo := ctx.Query("storage"), ctx.Query("repo")
-	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepo(domain, repo)))
+func getRepo(ctx *gin.Context) {
+	storage, repo := ctx.Query("storage"), ctx.Query("repo")
+	if storage == "" || repo == "" {
+		ctx.JSON(200, module.ResponseFail())
+		return
+	}
+
+	var result = &module.Repo{}
+	sql.Get(result, storage+":"+repo)
+	ctx.JSON(200, module.ResponseSuccess(result))
+}
+
+func getChapter(ctx *gin.Context) {
+	var (
+		storage = ctx.Query("storage")
+		repo    = ctx.Query("repo")
+		chapter = ctx.Query("chapter")
+	)
+	if storage == "" || repo == "" || chapter == "" {
+		ctx.JSON(200, module.ResponseFail())
+		return
+	}
+	var result = &module.Chapter{}
+	sql.Get(result, fmt.Sprintf("%s:%s:%s", storage, repo, chapter))
+	ctx.JSON(200, module.ResponseSuccess(result))
 }
 
 // repoStorage 所有者所有
-func repoStorage(ctx *gin.Context) {
+func getStorage(ctx *gin.Context) {
 	cookie, err := ctx.Cookie("user_session")
 	if err != nil {
 		ctx.JSON(200, module.ResponseFail())
@@ -45,17 +69,26 @@ func repoStorage(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(200, module.ResponseSuccess(sql.New().GetRepos(aSession.Secret)))
+	var result = &module.Storage{}
+	sql.Get(result, aSession.Secret)
+
+	ctx.JSON(200, module.ResponseSuccess(result))
 }
 
 // dashboard 目录索引api
 func dashboard(ctx *gin.Context) {
-	page := ctx.DefaultQuery("page", "0")
-	p, err := strconv.Atoi(page)
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
+	///page := ctx.DefaultQuery("page", "0")
+	//p, err := strconv.Atoi(page)
+	// if err != nil {
+	// 	ctx.JSON(200, module.ResponseFail())
+	// 	return
+	// }
 
-	ctx.JSON(200, module.ResponseSuccess(sql.New().Dashboard(p, 5)))
+	var result []module.Repo
+	for _, v := range sql.Explore() {
+		var item = module.Repo{}
+		sql.Get(item, v)
+		result = append(result, item)
+	}
+	ctx.JSON(200, module.ResponseSuccess(result))
 }

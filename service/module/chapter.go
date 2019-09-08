@@ -18,8 +18,8 @@ type Chapter struct {
 
 // Parents 指向父名
 func (p *Chapter) Parents() string {
-	array := strings.Split(p.Symbol, "/")
-	return fmt.Sprintf("%s/%s", array[0], array[1])
+	array := strings.Split(p.Symbol, ":")
+	return fmt.Sprintf("%s:%s", array[0], array[1])
 }
 
 // NewChapter 唯一标识
@@ -28,7 +28,7 @@ func NewChapter(arg ...string) *Chapter {
 		panic("new chapter arg need 3")
 	}
 	return &Chapter{
-		Symbol: fmt.Sprintf("%s/%s/%s", arg[0], arg[1], arg[2]),
+		Symbol: fmt.Sprintf("%s:%s:%s", arg[0], arg[1], arg[2]),
 		Name:   arg[2],
 	}
 }
