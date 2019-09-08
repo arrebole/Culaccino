@@ -22,21 +22,17 @@ func Set(arg interface{}) error {
 }
 
 func setStorage(arg *module.Storage) error {
-	return hmset(StorageDB, arg.Name, adapter(arg))
+	return StorageDB.HMSet(arg.Name, adapter(arg)).Err()
 }
 
 func setRepo(arg *module.Repo) error {
-	addmap(MapRepoDB, arg.Parents, arg.Name)
-	return hmset(RepoDB, arg.Name, adapter(arg))
+	addmap(MapRepoDB, arg.Parents(), arg.Symbol)
+	return RepoDB.HMSet(arg.Symbol, adapter(arg)).Err()
 }
 
 func setChapter(arg *module.Chapter) error {
-	addmap(MapChapterDB, arg.Parents, arg.Name)
-	return hmset(ChapterDB, arg.Name, adapter(arg))
-}
-
-func hmset(db *redis.Client, key string, data map[string]interface{}) error {
-	return db.HMSet(key, data).Err()
+	addmap(MapChapterDB, arg.Parents(), arg.Symbol)
+	return ChapterDB.HMSet(arg.Symbol, adapter(arg)).Err()
 }
 
 // 增加映射数据库
