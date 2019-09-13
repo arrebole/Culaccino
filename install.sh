@@ -31,12 +31,17 @@ DockerBuild(){
 Run(){
     echo -n "请输入root密码 ->"
     read PASSWD
+   # 运行redis
+    docker run \
+        --net culaccino \
+        --name redis-master \
+        -v $(pwd)/database:/data \
+        -d redis
     # 运行博客
     docker run \
         --net culaccino \
         --name blog \
         -e PASSWORD=$PASSWD \
-        -v $(pwd)/database:/var/www/culaccino/database \
         -v $(pwd)/wwwroot/static:/var/www/culaccino/wwwroot/static \
         -d arrebole/culaccino
     # 运行nginx

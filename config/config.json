@@ -1,6 +1,6 @@
 {
     "port": ":3000",
-    "dbAddr": "localhost:6379",
+    "dbAddr": "redis-master:6379",
     "root_dir":"./wwwroot",
     "upload_dir":"./wwwroot/static"
     
