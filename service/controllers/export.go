@@ -2,93 +2,84 @@ package controllers
 
 import (
 	"fmt"
+	"strconv"
 
-	"github.com/arrebole/culaccino/service/module"
-	"github.com/arrebole/culaccino/service/session"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-// Export 输出内容
-func Export() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		switch ctx.Query("tag") {
-		case "dashboard":
-			dashboard(ctx)
-		case "storage":
-			getStorage(ctx)
-		case "repo":
-			getRepo(ctx)
-		case "chapter":
-			getChapter(ctx)
-		default:
-			ctx.JSON(200, module.ResponseFail())
-		}
-	}
-}
 
-// repoDetails 具体内容
-func getRepo(ctx *gin.Context) {
+// GetRepo 具体内容
+func GetRepo(ctx *gin.Context) {
 	storage, repo := ctx.Query("storage"), ctx.Query("repo")
 	if storage == "" || repo == "" {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail())
 		return
 	}
 
-	var result = &module.Repo{}
-	sql.Get(result, storage+":"+repo)
-	ctx.JSON(200, module.ResponseSuccess(result))
+	result := sql.New().GetRepo(fmt.Sprintf("%s:%s", storage, repo))
+	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-func getChapter(ctx *gin.Context) {
+// GetChapter ...
+func GetChapter(ctx *gin.Context) {
 	var (
 		storage = ctx.Query("storage")
 		repo    = ctx.Query("repo")
 		chapter = ctx.Query("chapter")
 	)
 	if storage == "" || repo == "" || chapter == "" {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail())
 		return
 	}
-	var result = &module.Chapter{}
-	sql.Get(result, fmt.Sprintf("%s:%s:%s", storage, repo, chapter))
-	ctx.JSON(200, module.ResponseSuccess(result))
+	result := sql.New().GetChapter(fmt.Sprintf("%s:%s:%s", storage, repo, chapter))
+	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-// repoStorage 所有者所有
-func getStorage(ctx *gin.Context) {
-	cookie, err := ctx.Cookie("user_session")
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+// GetStorage 所有者所有用户信息
+func GetStorage(ctx *gin.Context) {
+	storage := ctx.Query("storage")
+	if storage == "" {
+		ctx.JSON(200, model.ResponseFail())
 		return
 	}
 
-	aSession, err := session.NewStore().Get(cookie)
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	var result = &module.Storage{}
-	sql.Get(result, aSession.Secret)
-
-	ctx.JSON(200, module.ResponseSuccess(result))
+	result := sql.New().GetStorage(storage)
+	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-// dashboard 目录索引api
-func dashboard(ctx *gin.Context) {
-	///page := ctx.DefaultQuery("page", "0")
-	//p, err := strconv.Atoi(page)
-	// if err != nil {
-	// 	ctx.JSON(200, module.ResponseFail())
-	// 	return
-	// }
+// GetDashboard 目录索引api
+func GetDashboard(ctx *gin.Context) {
+	var (
+		pageString = ctx.DefaultQuery("page", "0")
+		perpageString = ctx.DefaultQuery("per_page", "0")
+	)
 
-	var result []module.Repo
-	for _, v := range sql.Explore() {
-		var item = module.Repo{}
-		sql.Get(item, v)
-		result = append(result, item)
+	page, err := strconv.ParseInt(pageString, 10, 64)
+	if err != nil {
+		ctx.JSON(200, model.ResponseFail())
+		return
 	}
-	ctx.JSON(200, module.ResponseSuccess(result))
+
+	perpage, err := strconv.ParseInt(perpageString, 10, 64)
+	if err != nil {
+		ctx.JSON(200, model.ResponseFail())
+		return
+	}
+
+	data := sql.New().GetRepos(sql.New().Explore(page, perpage)...)
+	ctx.JSON(200, model.ResponseSuccess(data))
+}
+
+// GetReposOfStorage ...
+func GetReposOfStorage(ctx *gin.Context) {
+	var storage = ctx.Query("storage")
+
+	if storage == "" {
+		ctx.JSON(200, model.ResponseFail())
+		return
+	}
+	data := sql.New().GetRepos(storage)
+	ctx.JSON(200, model.ResponseSuccess(data))
 }

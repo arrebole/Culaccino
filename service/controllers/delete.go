@@ -1,43 +1,30 @@
 package controllers
 
 import (
-	"github.com/arrebole/culaccino/service/module"
-	"github.com/arrebole/culaccino/service/session"
+	"fmt"
+	"github.com/arrebole/culaccino/service/middleware"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-// Delete 删除仓库
-func Delete() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		repoDelete(ctx)
-	}
-}
 
-// RepoDelete 删除内容api
-func repoDelete(ctx *gin.Context) {
+// DelRepo 删除内容api
+func DelRepo(ctx *gin.Context) {
 	storage, repo := ctx.Query("storage"), ctx.Query("repo")
 
-	cookie, err := ctx.Cookie("user_session")
+	aSession, err := middleware.Session(ctx)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail("没有登录"))
 		return
 	}
 
-	aSession, err := session.NewStore().Get(cookie)
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+	if aSession.Secret != storage {
+		ctx.JSON(200, model.ResponseFail("权限不足"))
 		return
 	}
 
-	var result = module.Repo{}
-	sql.Get(&result, storage+":"+repo)
-	if aSession.Secret != result.Parents() {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	sql.Delete(&result)
-	ctx.JSON(200, module.ResponseSuccess())
+	sql.New().DelRepo(fmt.Sprintf("%s:%s", storage, repo))
+	ctx.JSON(200, model.ResponseSuccess())
 	return
 }

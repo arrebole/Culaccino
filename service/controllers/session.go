@@ -1,57 +1,44 @@
 package controllers
 
 import (
-	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/middleware"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/session"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-// Session 处理session相关api
-func Session() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		switch ctx.Query("tag") {
-		case "exist":
-			sessionExist(ctx)
-		case "login":
-			sessionLogin(ctx)
-		default:
-			ctx.JSON(200, module.ResponseFail())
-		}
-	}
-}
 
 // SessionExist 验证session是否存在
-func sessionExist(ctx *gin.Context) {
-	cookie, err := ctx.Cookie("user_session")
+func SessionExists(ctx *gin.Context) {
+	aSession, err := middleware.Session(ctx)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail("没有登录"))
 		return
 	}
-
-	aSession, err := session.NewStore().Get(cookie)
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-	ctx.JSON(200, module.ResponseSuccess(aSession))
+	ctx.JSON(200, model.ResponseSuccess(aSession))
 }
 
 // SessionLogin 登录验证
-func sessionLogin(ctx *gin.Context) {
+// 💀存在多次登录漏洞
+func SessionLogin(ctx *gin.Context) {
 	userName, password := ctx.Query("userName"), ctx.Query("passWord")
 	if userName == "" || password == "" {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail())
 		return
 	}
 
-	var user = &module.Storage{}
-	sql.Get(user, userName)
-	if user.Name != userName {
-		ctx.JSON(200, module.ResponseFail())
+	var user = sql.New().GetStorage(userName)
+	if user.Name != userName || user.Password != sql.PassWord(password) {
+		ctx.JSON(200, model.ResponseFail())
 		return
 	}
 
-	aSession := session.NewStore().Set(&session.Body{Secret: userName})
-	ctx.JSON(200, module.ResponseSuccess(aSession))
+	sessionBody := &session.Body{
+		Secret: user.Name, 
+		Permission: user.Permission,
+	}
+
+	aSession := session.NewStore().Set(sessionBody)
+	ctx.JSON(200, model.ResponseSuccess(aSession))
 }

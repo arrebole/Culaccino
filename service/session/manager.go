@@ -38,13 +38,11 @@ func (p *Manager) Get(token string) (Body, error) {
 
 // Set 从store从存放session，返回user_session
 func (p *Manager) Set(body *Body) Body {
-	sessionID := share.RandString()
-
-	body.SessionID = sessionID
+	body.SessionID = share.RandString()
 	item := &Session{
 		Body:     *body,
 		CreateAt: time.Now(),
 	}
-	p.storage[sessionID] = item
+	p.storage[body.SessionID] = item
 	return item.Body
 }

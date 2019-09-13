@@ -1,51 +1,61 @@
 package controllers
 
 import (
-	"github.com/arrebole/culaccino/service/module"
-	"github.com/arrebole/culaccino/service/session"
+	"time"
+
+	"github.com/arrebole/culaccino/service/middleware"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-// Commit 提交内容
-func Commit() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		repoCommit(ctx)
+// RepoCommit 更新数据api
+func CommitRepo(ctx *gin.Context) {
+	data := model.Repo{}
+	if err := ctx.BindJSON(&data); err != nil {
+		ctx.JSON(200, model.ResponseFail())
+		return
 	}
+
+	aSession, err := middleware.Session(ctx)
+	if err != nil {
+		ctx.JSON(200, model.ResponseFail("没有登录"))
+		return
+	}
+
+	data.Storage = aSession.Secret
+	oldData := sql.New().GetRepo(data.Symbol())
+	if aSession.Secret != oldData.Storage {
+		ctx.JSON(200, model.ResponseFail("名称不匹配"))
+		return
+	}
+
+	sql.New().SetRepo(&data)
+	ctx.JSON(200, model.ResponseSuccess())
 }
 
-// RepoCommit 更新数据api
-func repoCommit(ctx *gin.Context) {
-	storage, repo := ctx.Query("storage"), ctx.Query("repo")
-	if storage == "" || repo == "" {
-		ctx.JSON(200, module.ResponseFail())
-	}
+func CommitChapter(ctx *gin.Context) {
 
-	data := module.Repo{}
+	data := model.Chapter{}
 	if err := ctx.BindJSON(&data); err != nil {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail("格式错误"))
 		return
 	}
 
-	cookie, err := ctx.Cookie("user_session")
+	aSession, err := middleware.Session(ctx)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail("没有登录"))
 		return
 	}
 
-	aSession, err := session.NewStore().Get(cookie)
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+	oldData := sql.New().GetChapter(data.Symbol())
+	if aSession.Secret != oldData.Storage {
+		ctx.JSON(200, model.ResponseFail("名称不匹配"))
 		return
 	}
 
-	oldData := module.Repo{}
-	sql.Get(&oldData, storage+":"+repo)
-	if aSession.Secret != oldData.Parents() {
-		ctx.JSON(200, module.ResponseFail())
-		return
-	}
-
-	sql.Set(&data)
-	ctx.JSON(200, module.ResponseSuccess())
+	data.UpdateAt = time.Now()
+	
+	sql.New().SetChapter(&data)
+	ctx.JSON(200, model.ResponseSuccess())
 }

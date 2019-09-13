@@ -22,7 +22,7 @@
         - run: 
             name: Build web-app
             command: |
-              bash scripts/build_webapp.sh
+              bash scripts/build_client.sh
         - run:
             name: Build service
             command: |

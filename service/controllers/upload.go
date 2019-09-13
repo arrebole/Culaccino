@@ -5,22 +5,16 @@ import (
 
 	"github.com/arrebole/culaccino/service/config"
 	"github.com/arrebole/culaccino/service/middleware"
-	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/gin-gonic/gin"
 )
 
-// Upload 创建一个新仓库
-func Upload() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		staticUpload(ctx)
-	}
-}
 
 // StaticUpload 处理静态文件
-func staticUpload(ctx *gin.Context) {
+func StaticUpload(ctx *gin.Context) {
 	file, err := middleware.FileFromBody(ctx)
 	if err != nil {
-		ctx.JSON(400, module.ResponseFail())
+		ctx.JSON(400, model.ResponseFail())
 		return
 	}
 
@@ -28,8 +22,8 @@ func staticUpload(ctx *gin.Context) {
 	status, err := file.SaveFile()
 	if err != nil {
 		fmt.Println(err.Error())
-		ctx.JSON(400, module.ResponseFail())
+		ctx.JSON(400, model.ResponseFail())
 		return
 	}
-	ctx.JSON(200, module.ResponseSuccess(status))
+	ctx.JSON(200, model.ResponseSuccess(status))
 }

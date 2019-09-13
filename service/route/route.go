@@ -14,12 +14,23 @@ func New() *gin.Engine {
 	api := router.Group("/api")
 	{
 
-		api.POST("/new", controllers.Create())
-		api.POST("/upload", controllers.Upload())
-		api.PUT("/commit", controllers.Commit())
-		api.GET("/session", controllers.Session())
-		api.GET("/export", controllers.Export())
-		api.DELETE("/delete", controllers.Delete())
+		api.POST("/new/repo", controllers.NewRepo)
+		api.POST("/new/chapter", controllers.NewChapter)
+		
+		api.PUT("/commit/repo", controllers.CommitRepo)
+		api.PUT("/commit/chapter", controllers.CommitChapter)
+
+		api.GET("/export/repo", controllers.GetRepo)
+		api.GET("/export/repos", controllers.GetReposOfStorage)
+		api.GET("/export/chapter", controllers.GetChapter)
+		api.GET("/export/storage", controllers.GetStorage)
+		api.GET("/export/dashboard", controllers.GetDashboard)
+		
+		api.DELETE("/delete/repo", controllers.DelRepo)
+
+		api.GET("/session/exists", controllers.SessionExists)
+		api.GET("/session/login", controllers.SessionLogin)
+		api.POST("/upload", controllers.StaticUpload)
 
 	}
 

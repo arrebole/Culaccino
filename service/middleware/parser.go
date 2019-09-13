@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 	"regexp"
 
-	"github.com/arrebole/culaccino/service/module"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/gin-gonic/gin"
 )
 
 // FileFromBody ...
-func FileFromBody(ctx *gin.Context) (*module.File, error) {
+func FileFromBody(ctx *gin.Context) (*model.File, error) {
 
 	// 读取上传的文件
 	fileHeader, err := ctx.FormFile("file")
@@ -34,7 +34,7 @@ func FileFromBody(ctx *gin.Context) (*module.File, error) {
 		return nil, errors.New("read file fail")
 	}
 	//重命名文件名称
-	result := &module.File{
+	result := &model.File{
 		Suffix: fileSuffix,
 		Data:   fileByte,
 	}

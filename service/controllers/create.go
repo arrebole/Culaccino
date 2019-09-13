@@ -1,39 +1,65 @@
 package controllers
 
 import (
-	"github.com/arrebole/culaccino/service/module"
-	"github.com/arrebole/culaccino/service/session"
+	"time"
+
+	"github.com/arrebole/culaccino/service/middleware"
+	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-// Create 创建一个新仓库
-func Create() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		repoNew(ctx)
+// repoNew 添加内容api
+func NewRepo(ctx *gin.Context) {
+	data := model.Repo{}
+	if err := ctx.BindJSON(&data); err != nil || data.Name == "" {
+		ctx.JSON(200, model.ResponseFail("格式错误"))
+		return
 	}
+
+	aSession, err := middleware.Session(ctx)
+	if err != nil {
+		ctx.JSON(200, model.ResponseFail("没有登录"))
+		return
+	}
+
+	data.Storage = aSession.Secret
+	if sql.New().ExistsRepo(data.Symbol()) {
+		ctx.JSON(200, model.ResponseFail("已存在"))
+		return
+	}
+
+	sql.New().SetRepo(&data)
+	ctx.JSON(200, model.ResponseSuccess())
 }
 
-// repoNew 添加内容api
-func repoNew(ctx *gin.Context) {
-	repo := &module.Repo{}
-	if err := ctx.BindJSON(repo); err != nil {
-		ctx.JSON(200, module.ResponseFail())
+func NewChapter(ctx *gin.Context) {
+	data := model.Chapter{}
+	if err := ctx.BindJSON(&data); err != nil {
+		ctx.JSON(200, model.ResponseFail("格式错误"))
 		return
 	}
 
-	cookie, err := ctx.Cookie("user_session")
-	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+	if data.Name == "" || data.Repo == "" {
+		ctx.JSON(200, model.ResponseFail("信息不完全"))
 		return
 	}
 
-	aSession, err := session.NewStore().Get(cookie)
+	aSession, err := middleware.Session(ctx)
 	if err != nil {
-		ctx.JSON(200, module.ResponseFail())
+		ctx.JSON(200, model.ResponseFail("没有登录"))
 		return
 	}
-	repo.Symbol = aSession.Secret + ":" + repo.Name
-	sql.Set(repo)
-	ctx.JSON(200, module.ResponseSuccess())
+
+	data.Storage = aSession.Secret
+	if sql.New().ExistsChapter(data.Symbol()) {
+		ctx.JSON(200, model.ResponseFail("已存在"))
+		return
+	}
+
+	data.CreateAt = time.Now()
+	data.UpdateAt = data.CreateAt
+
+	sql.New().SetChapter(&data)
+	ctx.JSON(200, model.ResponseSuccess())
 }
