@@ -42,6 +42,7 @@ Run(){
         --net culaccino \
         --name blog \
         -e PASSWORD=$PASSWD \
+        -e DB_ADDR=redis-master:6379 \
         -v $(pwd)/wwwroot/static:/var/www/culaccino/wwwroot/static \
         -d arrebole/culaccino
     # 运行nginx

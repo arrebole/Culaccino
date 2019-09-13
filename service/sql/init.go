@@ -59,7 +59,7 @@ func defaultDB(db Interface) {
 	if !db.ExistsStorage("root") {
 		db.SetStorage(&model.Storage{
 			Name:     "root",
-			Password: PassWord("dev"),
+			Password: config.PassWord,
 		})
 	}
 }

@@ -9,6 +9,11 @@ import (
 
 var letters = []byte("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
+// PassWord 两次hash计算产生密码
+func PassWord(passwd string) string {
+	return HashHexStr(HashHexStr(passwd))
+}
+
 // HashHexStr 计算字符串hash,16进制编码
 func HashHexStr(data string) string {
 	h := sha256.New()

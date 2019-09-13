@@ -2,11 +2,8 @@ package sql
 
 import (
 	"encoding/json"
-	"os"
 	"reflect"
 	"strconv"
-
-	"github.com/arrebole/culaccino/service/share"
 	"github.com/go-redis/redis"
 )
 
@@ -24,20 +21,6 @@ func min(a int64, b int64) int64 {
 		return a
 	}
 	return b
-}
-
-// 获取环境变量中的默认密码
-func defaultPassWord() string {
-	passwd := os.Getenv("PASSWORD")
-	if passwd == "" {
-		passwd = "root@culaccino"
-	}
-	return PassWord(passwd)
-}
-
-// PassWord 两次hash计算产生密码
-func PassWord(passwd string) string {
-	return share.HashHexStr(share.HashHexStr(passwd))
 }
 
 // adapter 将结构体转化为 map

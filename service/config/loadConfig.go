@@ -1,10 +1,7 @@
 package config
 
-import (
-	"encoding/json"
-	"io/ioutil"
+import(
 	"os"
-	"path/filepath"
 )
 
 // 导出的配置文件
@@ -13,42 +10,25 @@ var (
 	RootDir    string
 	UploadDir  string
 	ListenPort string
+	PassWord   string
 )
 
 func init() {
-	var config = &Config{}
-	json.Unmarshal(loadConfig(), config)
+	config := envConfig()
 	export(config)
-	mkDir(UploadDir)
+	mkDir(config.UploadDir)
 }
 
-func export(config *Config) {
-
+func export(config Config) {
 	DBAddr = config.DBAddr
 	ListenPort = config.ListenPort
-	RootDir, _ = filepath.Abs(config.RootDir)
-	UploadDir, _ = filepath.Abs(config.UploadDir)
+	RootDir = config.RootDir
+	UploadDir = config.UploadDir
 }
 
 // 初始化上传文件夹
 func mkDir(path string) {
-	uploadPath, _ := filepath.Abs(path)
-	if err := os.Mkdir(uploadPath, os.ModePerm); err != nil && !os.IsExist(err) {
+	if err := os.Mkdir(path, os.ModePerm); err != nil && !os.IsExist(err) {
 		panic(err.Error())
 	}
-}
-
-// 从文件中读取配置文件
-func loadConfig() []byte {
-	content, err := ioutil.ReadFile(configPath())
-	if err != nil {
-		panic(err.Error())
-	}
-	return content
-}
-
-// 返回配置文件路径
-func configPath() string {
-	currentPath, _ := filepath.Abs("./")
-	return filepath.Join(currentPath, "config/config.json")
 }

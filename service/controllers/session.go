@@ -5,6 +5,7 @@ import (
 	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/session"
 	"github.com/arrebole/culaccino/service/sql"
+	"github.com/arrebole/culaccino/service/share"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +30,7 @@ func SessionLogin(ctx *gin.Context) {
 	}
 
 	var user = sql.New().GetStorage(userName)
-	if user.Name != userName || user.Password != sql.PassWord(password) {
+	if user.Name != userName || user.Password != share.PassWord(password) {
 		ctx.JSON(200, model.ResponseFail())
 		return
 	}
