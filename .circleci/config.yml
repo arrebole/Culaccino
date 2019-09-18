@@ -20,7 +20,7 @@
             command: |
               bash scripts/yarn_install.sh
         - run: 
-            name: Build web-app
+            name: Build client
             command: |
               bash scripts/build_client.sh
         - run:
