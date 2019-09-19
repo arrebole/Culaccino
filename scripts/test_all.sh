@@ -1,2 +1,2 @@
 echo "test all"
-node test/t.js
+go test ./service/...
