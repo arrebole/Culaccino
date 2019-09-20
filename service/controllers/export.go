@@ -72,7 +72,7 @@ func GetDashboard(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess(data))
 }
 
-// GetReposOfStorage ...
+// GetReposOfStorage 获取一个Storage中的所有repo
 func GetReposOfStorage(ctx *gin.Context) {
 	var storage = ctx.Query("storage")
 

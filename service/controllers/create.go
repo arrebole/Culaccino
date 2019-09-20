@@ -33,6 +33,7 @@ func NewRepo(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess())
 }
 
+// NewChapter 在repo中创建Chapter
 func NewChapter(ctx *gin.Context) {
 	data := model.Chapter{}
 	if err := ctx.BindJSON(&data); err != nil {

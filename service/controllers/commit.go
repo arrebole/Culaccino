@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RepoCommit 更新数据api
+// RepoCommit 更新Repo数据
 func CommitRepo(ctx *gin.Context) {
 	data := model.Repo{}
 	if err := ctx.BindJSON(&data); err != nil {
@@ -34,6 +34,7 @@ func CommitRepo(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess())
 }
 
+// CommitChapter 更新Chapter数据
 func CommitChapter(ctx *gin.Context) {
 
 	data := model.Chapter{}
