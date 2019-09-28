@@ -16,21 +16,18 @@ func New() *gin.Engine {
 
 		api.POST("/new/repo", controllers.NewRepo)
 		api.POST("/new/chapter", controllers.NewChapter)
-		
+
+		api.GET("/dashboard", controllers.GetDashboard)
+		api.GET("/search", controllers.Search)
+		api.POST("/upload", controllers.StaticUpload)
+
 		api.PUT("/commit/repo", controllers.CommitRepo)
 		api.PUT("/commit/chapter", controllers.CommitChapter)
 
-		api.GET("/export/repo", controllers.GetRepo)
-		api.GET("/export/repos", controllers.GetReposOfStorage)
-		api.GET("/export/chapter", controllers.GetChapter)
-		api.GET("/export/storage", controllers.GetStorage)
-		api.GET("/export/dashboard", controllers.GetDashboard)
-		
 		api.DELETE("/delete/repo", controllers.DelRepo)
 
 		api.GET("/session/exists", controllers.SessionExists)
 		api.GET("/session/login", controllers.SessionLogin)
-		api.POST("/upload", controllers.StaticUpload)
 
 	}
 

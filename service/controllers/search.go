@@ -2,16 +2,30 @@ package controllers
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
+// Search ...
+func Search(ctx *gin.Context) {
+	switch ctx.Query("tag") {
+	case "reop":
+		SearchRepo(ctx)
+	case "repos":
+		SearchRepos(ctx)
+	case "storage":
+		SearchStorage(ctx)
+	case "chapter":
+		SearchChapter(ctx)
+	default:
+		ctx.JSON(200, model.ResponseFail())
+	}
+}
 
-// GetRepo 具体内容
-func GetRepo(ctx *gin.Context) {
+// SearchRepo 具体内容
+func SearchRepo(ctx *gin.Context) {
 	storage, repo := ctx.Query("storage"), ctx.Query("repo")
 	if storage == "" || repo == "" {
 		ctx.JSON(200, model.ResponseFail())
@@ -22,8 +36,8 @@ func GetRepo(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-// GetChapter ...
-func GetChapter(ctx *gin.Context) {
+// SearchChapter ...
+func SearchChapter(ctx *gin.Context) {
 	var (
 		storage = ctx.Query("storage")
 		repo    = ctx.Query("repo")
@@ -37,8 +51,8 @@ func GetChapter(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-// GetStorage 所有者所有用户信息
-func GetStorage(ctx *gin.Context) {
+// SearchStorage 所有者所有用户信息
+func SearchStorage(ctx *gin.Context) {
 	storage := ctx.Query("storage")
 	if storage == "" {
 		ctx.JSON(200, model.ResponseFail())
@@ -49,31 +63,8 @@ func GetStorage(ctx *gin.Context) {
 	ctx.JSON(200, model.ResponseSuccess(result))
 }
 
-// GetDashboard 目录索引api
-func GetDashboard(ctx *gin.Context) {
-	var (
-		pageString = ctx.DefaultQuery("page", "0")
-		perpageString = ctx.DefaultQuery("per_page", "0")
-	)
-
-	page, err := strconv.ParseInt(pageString, 10, 64)
-	if err != nil {
-		ctx.JSON(200, model.ResponseFail())
-		return
-	}
-
-	perpage, err := strconv.ParseInt(perpageString, 10, 64)
-	if err != nil {
-		ctx.JSON(200, model.ResponseFail())
-		return
-	}
-
-	data := sql.New().GetRepos(sql.New().Explore(page, perpage)...)
-	ctx.JSON(200, model.ResponseSuccess(data))
-}
-
-// GetReposOfStorage 获取一个Storage中的所有repo
-func GetReposOfStorage(ctx *gin.Context) {
+// SearchRepos 获取一个Storage中的所有repo
+func SearchRepos(ctx *gin.Context) {
 	var storage = ctx.Query("storage")
 
 	if storage == "" {

@@ -1,8 +1,9 @@
 package config
 
-import(
-	"path/filepath"
+import (
 	"os"
+	"path/filepath"
+
 	"github.com/arrebole/culaccino/service/share"
 )
 
@@ -15,14 +16,14 @@ type Config struct {
 	PassWord   string `json:"password"`
 }
 
-func envConfig() Config{
+func envConfig() Config {
 	var config = &Config{}
 	config.setPassWord().setDBAddr().setRootDir().setUploadDir().setListenPort()
 	return *config
 }
 
 // 获取环境变量中的默认密码
-func (p *Config)setPassWord() *Config {
+func (p *Config) setPassWord() *Config {
 	v := os.Getenv("PASSWORD")
 	if v == "" {
 		v = "root@culaccino"
@@ -32,7 +33,7 @@ func (p *Config)setPassWord() *Config {
 }
 
 // 获取环境变量中的DBAddr
-func (p *Config)setDBAddr() *Config {
+func (p *Config) setDBAddr() *Config {
 	v := os.Getenv("DB_ADDR")
 	if v == "" {
 		v = "localhost:6379"
@@ -42,29 +43,29 @@ func (p *Config)setDBAddr() *Config {
 }
 
 // 获取环境变量中的DBAddr
-func (p *Config)setRootDir() *Config {
+func (p *Config) setRootDir() *Config {
 	v := os.Getenv("DB_ADDR")
 	if v == "" {
 		v = "./wwwwroot"
 	}
-	path,_ := filepath.Abs(v)
+	path, _ := filepath.Abs(v)
 	p.RootDir = path
 	return p
 }
 
 // 获取环境变量中的DBAddr
-func (p *Config)setUploadDir() *Config {
+func (p *Config) setUploadDir() *Config {
 	v := os.Getenv("UPLOAD_DIR")
 	if v == "" {
-		v = "./wwwwroot/static"
+		v = "./wwwroot/static"
 	}
-	path,_ := filepath.Abs(v)
+	path, _ := filepath.Abs(v)
 	p.UploadDir = path
 	return p
 }
 
 // 获取环境变量中的DBAddr
-func (p *Config)setListenPort() *Config {
+func (p *Config) setListenPort() *Config {
 	v := os.Getenv("PORT")
 	if v == "" {
 		v = ":3000"
@@ -72,4 +73,3 @@ func (p *Config)setListenPort() *Config {
 	p.ListenPort = v
 	return p
 }
-

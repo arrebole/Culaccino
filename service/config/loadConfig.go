@@ -1,6 +1,6 @@
 package config
 
-import(
+import (
 	"os"
 )
 
@@ -28,7 +28,7 @@ func export(config Config) {
 
 // 初始化上传文件夹
 func mkDir(path string) {
-	if err := os.Mkdir(path, os.ModePerm); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(path, os.ModePerm); err != nil && !os.IsExist(err) {
 		panic(err.Error())
 	}
 }
