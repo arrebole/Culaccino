@@ -4,13 +4,12 @@ import (
 	"github.com/arrebole/culaccino/service/middleware"
 	"github.com/arrebole/culaccino/service/model"
 	"github.com/arrebole/culaccino/service/session"
-	"github.com/arrebole/culaccino/service/sql"
 	"github.com/arrebole/culaccino/service/share"
+	"github.com/arrebole/culaccino/service/sql"
 	"github.com/gin-gonic/gin"
 )
 
-
-// SessionExist 验证session是否存在
+// SessionExists 验证session是否存在
 func SessionExists(ctx *gin.Context) {
 	aSession, err := middleware.Session(ctx)
 	if err != nil {
@@ -36,7 +35,7 @@ func SessionLogin(ctx *gin.Context) {
 	}
 
 	sessionBody := &session.Body{
-		Secret: user.Name, 
+		Secret:     user.Name,
 		Permission: user.Permission,
 	}
 

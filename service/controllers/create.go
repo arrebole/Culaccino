@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// repoNew 添加内容api
+// NewRepo 添加内容api
 func NewRepo(ctx *gin.Context) {
 	data := model.Repo{}
 	if err := ctx.BindJSON(&data); err != nil || data.Name == "" {

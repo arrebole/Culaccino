@@ -10,7 +10,7 @@ import (
 
 // Search ...
 func Search(ctx *gin.Context) {
-	switch ctx.Query("tag") {
+	switch ctx.Query("type") {
 	case "reop":
 		SearchRepo(ctx)
 	case "repos":
