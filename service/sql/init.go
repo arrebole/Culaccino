@@ -8,44 +8,40 @@ import (
 
 var instance *SQL
 
+// SQL 操作客户端
 type SQL struct {
-	StorageDB    *redis.Client
-	MapRepoDB    *redis.Client
-	RepoDB       *redis.Client
-	MapChapterDB *redis.Client
-	ChapterDB    *redis.Client
-	ExploreDB    *redis.Client
+	StorageDB *redis.Client
+	RepoDB    *redis.Client
+	ChapterDB *redis.Client
+	ExploreDB *redis.Client
 }
 
 func init() {
 	instance = &SQL{
-		StorageDB:    connectDB(0),
-		MapRepoDB:    connectDB(1),
-		RepoDB:       connectDB(2),
-		MapChapterDB: connectDB(3),
-		ChapterDB:    connectDB(4),
-		ExploreDB:    connectDB(5),
+		StorageDB: connectDB(0),
+		RepoDB:    connectDB(1),
+		ChapterDB: connectDB(2),
+		ExploreDB: connectDB(3),
 	}
 
 	testConnectDB(instance.StorageDB)
-	testConnectDB(instance.MapRepoDB)
 	testConnectDB(instance.RepoDB)
-	testConnectDB(instance.MapChapterDB)
 	testConnectDB(instance.ChapterDB)
 	testConnectDB(instance.ExploreDB)
 
 	defaultDB(instance)
 }
 
+// New sql构造函数
 func New() Interface {
 	return instance
 }
 
-func connectDB(index int)*redis.Client {
+func connectDB(index int) *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:     config.DBAddr,
-		Password: "",     // no password set
-		DB:       index,  // use default DB
+		Password: "",    // no password set
+		DB:       index, // use default DB
 	})
 }
 
