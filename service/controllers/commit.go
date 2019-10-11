@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Commit 修改内容
+func Commit(ctx *gin.Context) {
+	switch ctx.Query("type") {
+	case "repo":
+		CommitRepo(ctx)
+	case "chapter":
+		CommitChapter(ctx)
+	default:
+		ctx.JSON(200, model.ResponseFail())
+	}
+}
+
 // CommitRepo 更新Repo数据
 func CommitRepo(ctx *gin.Context) {
 	data := model.Repo{}

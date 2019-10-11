@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Create 创建
+func Create(ctx *gin.Context) {
+	switch ctx.Query("type") {
+	case "repo":
+		NewRepo(ctx)
+	case "chapter":
+		NewChapter(ctx)
+	default:
+		ctx.JSON(200, model.ResponseFail())
+	}
+}
+
 // NewRepo 添加内容api
 func NewRepo(ctx *gin.Context) {
 	data := model.Repo{}

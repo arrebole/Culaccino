@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Session 登录会话
+func Session(ctx *gin.Context) {
+	switch ctx.Query("type") {
+	case "exists":
+		SessionExists(ctx)
+	case "login":
+		SessionLogin(ctx)
+	default:
+		ctx.JSON(200, model.ResponseFail())
+	}
+}
+
 // SessionExists 验证session是否存在
 func SessionExists(ctx *gin.Context) {
 	aSession, err := middleware.Session(ctx)
