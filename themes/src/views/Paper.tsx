@@ -13,11 +13,11 @@ function createMarkup(data: string) {
 
 function Main() {
     const [data, setData] = useState<string>("Load...");
-    if(data === "Load...") api.getDetail(window.location.pathname).then(res => { setData(res.data)});
+    if(data === "Load...") api.getDetail(window.location.pathname.substring(1)).then(res => { setData(res.data)});
     return (
         <article style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <section style={{  maxWidth:"1200px", width:"95%", padding: "20px 10px" }}>
-                <div dangerouslySetInnerHTML={createMarkup(data)} ></div>
+            <section style={{  maxWidth:"980px", width:"95%", padding: "30px 10px" }}>
+                <div className="markdown-body" dangerouslySetInnerHTML={createMarkup(data)} ></div>
             </section>
         </article>
     )

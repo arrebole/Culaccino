@@ -1,11 +1,14 @@
 package main
 
 import (
-	"github.com/arrebole/culaccino/service/config"
-	"github.com/arrebole/culaccino/service/route"
+	"net/http"
+
+	"github.com/arrebole/culaccino/service/controllers"
 )
 
 func main() {
-	server := route.New()
-	server.Run(config.ListenPort)
+	http.HandleFunc("/api/directory", controllers.DirectoryCtl)
+	http.HandleFunc("/api/source", controllers.SourceCtl)
+	http.Handle("/", http.FileServer(http.Dir("./themes/build")))
+	http.ListenAndServe(":3000", nil)
 }

@@ -18,11 +18,11 @@ export interface Detail{
 
 
 function getDashboard():Promise<Dashboard> {
-    return fetch("http://www.mocky.io/v2/5e01dc192f00003788dcd365").then(response => response.json())
+    return fetch("/api/directory").then(response => response.json())
 }
 
 function getDetail(symbol?: string):Promise<Detail>{
-    return fetch("http://www.mocky.io/v2/5e01e97d2f00001d88dcd3fc").then(response => response.json())
+    return fetch(`/api/source?symbol=${symbol}`).then(response => response.json())
 }
 
 

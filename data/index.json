@@ -1,8 +1,10 @@
-[{
-    "symbol": "code/sample",
-    "description": "描述...."
-},
-{
-    "symbol": "code/sample2",
-    "description": "描述...."
-}]
+[
+    {
+        "symbol": "code/test",
+        "description": "描述...."
+    },
+    {
+        "symbol": "code/sample",
+        "description": "描述...."
+    }
+]
