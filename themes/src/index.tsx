@@ -4,7 +4,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import "normalize.css"
 import "github-markdown-css"
+import "highlight.js/styles/tomorrow.css";
 import "./styles/index.scss"
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
