@@ -6,12 +6,10 @@
 
 ### This use
 
-+ golang、 react.js
++ golang、 react.js、 redis
 + github-markdown-css + marked + highlight.js
 
-### API
-
-| method | url                                           | 功能          |
-| ------ | -----------------                             | -----------  |
-| GET    | /api/directory                                | 目录          |
-| GET    | /api/source?symbol=code/sample                | 详细内容       |
+### how to use
+```bash
+    go build && ./culaccino
+```
