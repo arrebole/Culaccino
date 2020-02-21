@@ -8,7 +8,7 @@ import (
 
 // FileServer ...
 func FileServer() http.HandlerFunc {
-	var StaticRoot, _ = filepath.Abs("themes/build")
+	var StaticRoot, _ = filepath.Abs("./theme/build")
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		if fileExist(filepath.Join(StaticRoot, r.RequestURI)) {

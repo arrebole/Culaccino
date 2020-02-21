@@ -13,7 +13,7 @@ function createMarkup(data: string) {
 
 function Main() {
     const [data, setData] = useState<string>("Load...");
-    if(data === "Load...") api.getDetail(window.location.pathname.substring(1)).then(res => { setData(res.data)});
+    if(data === "Load...") api.getDetail(window.location.pathname.substring(1)).then(res => { setData(res.data.content)});
     return (
         <article style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <section style={{  maxWidth:"980px", width:"95%", padding: "30px 10px" }}>

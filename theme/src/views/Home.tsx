@@ -12,7 +12,7 @@ function Main() {
             {MuiPaperList.map(item =>
                 <section
                     style={{ width: "95%", maxWidth: "1200px", padding: "10px" }}
-                    key={item.symbol}>
+                    key={item.title}>
                     <MuiPaper {...item}></MuiPaper>
                 </section>
             )}

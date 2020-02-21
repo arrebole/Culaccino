@@ -7,11 +7,11 @@ import (
 	"github.com/arrebole/culaccino/service"
 )
 
-// Explore 首页文章索引
-func Explore() http.HandlerFunc {
+// Dashboard 首页文章索引
+func Dashboard() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		result := &model.Response{}
-		w.Write(result.Build(0, "success", service.New().Explore(10)))
+		w.Write(result.Build(0, "success", service.New().Dashboard(10)))
 	}
 }

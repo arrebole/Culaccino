@@ -8,10 +8,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/"><Home /></Route>
-        <Route path="/code/:name"><Paper /></Route>
-        <Route path="/alive/:name"><Paper /></Route>
-        <Route path="/spirit/:name"><Paper /></Route>
-        <Route path="/zero/:name"><Paper /></Route>
+        <Route path="/:name"><Paper /></Route>
         <Route path="*"><Redirect to={{ pathname: "/" }}/></Route>
       </Switch>
     </BrowserRouter>
