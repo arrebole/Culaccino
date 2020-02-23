@@ -4,7 +4,7 @@
 预览: https://gkdark.xyz
 
 ### Screen shot
-![home.png](https://i.loli.net/2020/02/23/LsyNxmzQUDwKeJS.png)
+![home.png](/screenshot/sample.png)
 
 
 ### This use
