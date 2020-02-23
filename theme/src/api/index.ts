@@ -2,12 +2,16 @@
 export interface DashboardData {
     title: string,
     type: string,
+    cover: string,
+    create_at: string,
+    update_at: string,
     summary: string,
 }
 
 export interface DetailData{
     title: string,
     type: string,
+    cover: string,
     create_at: string,
     update_at: string,
     summary: string,

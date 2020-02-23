@@ -8,22 +8,20 @@ function Main() {
     const [MuiPaperList, setMuiPaperList] = useState<DashboardData[]>([]);
     if( MuiPaperList.length === 0) api.getDashboard().then(res => { setMuiPaperList(res.data)})
     return (
-        <article style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             {MuiPaperList.map(item =>
-                <section
-                    style={{ width: "95%", maxWidth: "1200px", padding: "10px" }}
-                    key={item.title}>
+                <article style={{ width: "95%", maxWidth: "900px", padding: "10px" }} key={item.title}>
                     <MuiPaper {...item}></MuiPaper>
-                </section>
+                </article>
             )}
-        </article>
+        </main>
     )
 }
 
 export default class Home extends React.Component {
     render() {
         return (
-            <div id="home"><Header /><Main /> </div>
+            <div id="home" style={{backgroundColor: "#eee"}}><Header /><Main /> </div>
         )
     }
 }
