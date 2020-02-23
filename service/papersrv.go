@@ -23,16 +23,10 @@ func (p PaperSrv) Get(title string) *model.Paper {
 
 // Set ...
 func (p PaperSrv) Set(paper *model.Paper) error {
-	paper.CreateAt = timeNow()
-	paper.UpdateAt = paper.CreateAt
-	// 如果已经存在 则把创建日期改为原始日期
 	if p.Exists(paper.Title) {
-		if createAt, err := client.HGet(paper.Title, "create_at").Result(); err == nil {
-			paper.CreateAt = createAt
-		}
+		return p.update(paper)
 	}
-
-	return client.HMSet(paper.Title, paper.ToMap()).Err()
+	return p.create(paper)
 }
 
 // Del ...
@@ -53,4 +47,31 @@ func (p PaperSrv) Exists(key string) bool {
 
 func timeNow() string {
 	return time.Now().Format("2006-01-02 15:04:05")
+}
+
+func (p PaperSrv) create(paper *model.Paper) error {
+	return client.HMSet(paper.Title, paper.ToMap()).Err()
+}
+
+func (p PaperSrv) update(paper *model.Paper) error {
+	var oldPaper = p.Get(paper.Title)
+	paper.CreateAt = oldPaper.CreateAt
+	paper.UpdateAt = timeNow()
+
+	if paper.Content == "" {
+		paper.Content = oldPaper.Content
+	}
+	if paper.Cover == "" {
+		paper.Cover = oldPaper.Cover
+	}
+	if paper.Summary == "" {
+		paper.Summary = oldPaper.Summary
+	}
+	if paper.Title == "" {
+		paper.Title = oldPaper.Title
+	}
+	if paper.Type == "" {
+		paper.Type = oldPaper.Type
+	}
+	return client.HMSet(paper.Title, paper.ToMap()).Err()
 }
