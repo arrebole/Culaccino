@@ -1,8 +1,6 @@
 .DS_Store
-/client/node_models
-/dist
-/bin
-/bin/service.exe
+go.sum
+
 # sqlite database
 *.db
 
@@ -26,3 +24,4 @@ yarn-error.log*
 *.sln
 *.sw?
 *.exe
+
