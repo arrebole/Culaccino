@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Unit: React.FC<Paper> = (props) => {
     return (
-        <div className="d-flex m-0 p-4 box-shadow bg-white flex-column">
+        <div className="d-flex m-0 p-4 box-shadow-medium rounded-2 bg-white flex-column">
             <div className="text-align-center">
                 <div className="my-1">
                     <Link className="h4 text-decoration-none text-blue" to={props.title}>{ props.title }</Link>
