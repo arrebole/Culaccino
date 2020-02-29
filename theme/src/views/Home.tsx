@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../components/Header'
-import MuiPaper from '../components/MuiPaper'
-import api, { DashboardData } from "../api"
+import Unit from '../components/Unit'
+import api, { Paper } from "../api"
 
 
-function Main() {
-    const [MuiPaperList, setMuiPaperList] = useState<DashboardData[]>([]);
-    if( MuiPaperList.length === 0) api.getDashboard().then(res => { setMuiPaperList(res.data)})
-    return (
-        <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            {MuiPaperList.map(item =>
-                <article style={{ width: "95%", maxWidth: "900px", padding: "10px" }} key={item.title}>
-                    <MuiPaper {...item}></MuiPaper>
+class PaperList extends React.Component<{},{ papers: Paper[] }> {
+    constructor(props: {}){
+        super(props)
+        this.state = {
+            papers: []
+        }
+    }
+    componentDidMount(){
+        api.fetchPapers().then(res=>{
+            this.setState({ papers: res.data})
+        })
+    }
+    render() {
+        return (
+            this.state.papers.map(item =>
+                <article className="p-2" style={{ width: "95%", maxWidth: "900px" }} key={item.title}>
+                    <Unit {...item}></Unit>
                 </article>
-            )}
-        </main>
-    )
-}
+            )
+        )
+    }
 
+}
 export default class Home extends React.Component {
     render() {
         return (
-            <div id="home" style={{backgroundColor: "#eee"}}><Header /><Main /> </div>
+            <div id="home" className="bg-gray-light">
+                <Header />
+                <main className="d-flex flex-column flex-items-center">
+                    <PaperList />
+                </main>
+            </div>
         )
     }
 }

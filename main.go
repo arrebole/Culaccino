@@ -12,6 +12,6 @@ func main() {
 	http.HandleFunc("/api/update", controller.Update())
 	http.HandleFunc("/api/delete", controller.Del())
 	http.HandleFunc("/api/paper", controller.Get())
-	http.HandleFunc("/api/dashboard", controller.Dashboard())
+	http.HandleFunc("/api/papers", controller.Papers())
 	http.ListenAndServe("127.0.0.1:3000", nil)
 }

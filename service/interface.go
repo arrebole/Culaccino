@@ -8,7 +8,7 @@ type Interface interface {
 	Set(*model.Paper) error
 	Del(string) error
 	Exists(string) bool
-	Dashboard(int64) []*model.Paper
+	Table(int64) []*model.Paper
 }
 
 // New 创建数据库操作对象

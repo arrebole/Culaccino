@@ -2,8 +2,8 @@ package service
 
 import "github.com/arrebole/culaccino/model"
 
-// Dashboard ...
-func (p PaperSrv) Dashboard(limit int64) []*model.Paper {
+// Table ...
+func (p PaperSrv) Table(limit int64) []*model.Paper {
 	keys := client.Keys("*").Val()
 	return pipeline(keys)
 }

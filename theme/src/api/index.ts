@@ -1,14 +1,4 @@
-
-export interface DashboardData {
-    title: string,
-    type: string,
-    cover: string,
-    create_at: string,
-    update_at: string,
-    summary: string,
-}
-
-export interface DetailData{
+export interface Paper{
     title: string,
     type: string,
     cover: string,
@@ -18,29 +8,28 @@ export interface DetailData{
     content: string,
 }
 
-export interface Dashboard {
+export interface PapersResponse {
     code: number,
     message: string,
-    data: DashboardData[]
+    data: Paper[]
 }
 
-export interface Detail {
+export interface PaperResponse {
     code: number,
     message: string,
-    data: DetailData,
+    data: Paper,
+}
+
+class API{
+    // fetchPapers 获取所有文章列表
+    fetchPapers(limit:number = 10): Promise<PapersResponse> {
+        return fetch(`/api/papers`).then(response => response.json())
+    }
+    // fetchPaper 通过title获取文章的详细内容
+    fetchPaper(key?: string): Promise<PaperResponse> {
+        return fetch(`/api/paper?key=${key}`).then(response => response.json())
+    }
 }
 
 
-function getDashboard(): Promise<Dashboard> {
-    return fetch("/api/dashboard").then(response => response.json())
-}
-
-function getDetail(title?: string): Promise<Detail> {
-    return fetch(`/api/paper?title=${title}`).then(response => response.json())
-}
-
-
-export default {
-    getDashboard,
-    getDetail,
-}
+export default new API()

@@ -64,15 +64,15 @@ func Update() http.HandlerFunc {
 func Get() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response, title := &model.Response{}, r.FormValue("title")
+		response, title := &model.Response{}, r.FormValue("key")
 		if title == "" {
-			w.Write(response.Build(-1, "miss query title", nil))
+			w.Write(response.Build(-1, "miss query key", nil))
 			return
 		}
 
 		// 文章不存在
 		if !service.New().Exists(title) {
-			w.Write(response.Build(-1, "not find paper", nil))
+			w.Write(response.Build(-1, "not find key", nil))
 			return
 		}
 		w.Write(response.Build(0, "success", service.New().Get(title)))
@@ -83,18 +83,18 @@ func Get() http.HandlerFunc {
 func Del() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response, title := &model.Response{}, r.FormValue("title")
-		if title == "" {
-			w.Write(response.Build(-1, "miss query title", nil))
+		response, key := &model.Response{}, r.FormValue("key")
+		if key == "" {
+			w.Write(response.Build(-1, "miss query key", nil))
 			return
 		}
 
 		// 文章不存在
-		if !service.New().Exists(title) {
-			w.Write(response.Build(-1, "not find paper", nil))
+		if !service.New().Exists(key) {
+			w.Write(response.Build(-1, "not find key", nil))
 			return
 		}
-		w.Write(response.Build(0, "success", service.New().Del(title)))
+		w.Write(response.Build(0, "success", service.New().Del(key)))
 	}
 }
 func getPostData(r *http.Request) (*model.Paper, error) {
