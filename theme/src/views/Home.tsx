@@ -19,7 +19,7 @@ class PaperList extends React.Component<{},{ papers: Paper[] }> {
     render() {
         return (
             this.state.papers.map(item =>
-                <article className="p-3 m-3" style={{ width: "95%", maxWidth: "900px" }} key={item.title}>
+                <article className="m-3" style={{ width: "95%", maxWidth: "900px" }} key={item.title}>
                     <Unit {...item}></Unit>
                 </article>
             )
