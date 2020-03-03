@@ -20,5 +20,4 @@ jobs:
       
       - name: Go build
         run: |
-          ls
           go build
