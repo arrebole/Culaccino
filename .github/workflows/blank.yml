@@ -3,10 +3,19 @@ name: CI
 on: [push]
 
 jobs:
-    build_server:
-      name: build_server
-      runs-on: golang
+    build:
+      name: build
+      runs-on: ubuntu-latest
       steps:
+
+        - name: Get dependencies
+          run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+          fi
+
         - name: go build
           run: |
             go build
