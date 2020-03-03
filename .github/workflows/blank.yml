@@ -1,17 +1,19 @@
+language: go
+
 name: CI
 
-on: [push]
+# 仓库的分支
+branches:
+  only:
+    - dev
 
-jobs:
-  build:
+# 用于下载依赖前配置
+before_install:
+  - echo "before_install"
 
-    runs-on: ubuntu-latest
+# 用于下载依赖
+install:
+  - echo "install"
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+script:
+  - go build
