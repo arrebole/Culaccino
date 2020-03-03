@@ -2,7 +2,7 @@ import React from 'react';
 import marked from 'marked';
 import hljs from 'highlight.js'
 import Header from '../components/Header'
-import api from "../api"
+import api,{Paper} from "../api"
 
 // marked use highlight Plugin
 marked.setOptions({ highlight: (code, lang) => hljs.highlight(lang, code).value });
@@ -11,34 +11,48 @@ function createMarkup(data: string) {
     return { __html: marked(data) };
 }
 
-class PaperDetail extends React.Component<{},{content:string}> {
-    constructor(props:{}){
+export default class PaperPage extends React.Component<{}, {paper: Paper}> {
+    constructor(props: {}) {
         super(props)
         this.state = {
-            content: ""
+            paper: {
+                title: "Load...",
+                type: "",
+                cover: "",
+                create_at: "Load...",
+                update_at: "Load...",
+                summary: "",
+                content: ""
+            }
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         const key = window.location.pathname.substring(1);
-        api.fetchPaper(key).then(res => { 
-            this.setState({ content: res.data.content}) 
+        api.fetchPaper(key).then(res => {
+            this.setState({ paper: res.data })
         });
     }
     render() {
         return (
-            <article className="d-flex flex-column flex-items-center">
-                <section className="py-2 px-4" style={{ maxWidth: "980px", width: "95%"}}>
-                    <div className="markdown-body" dangerouslySetInnerHTML={createMarkup(this.state.content)} ></div>
-                </section>
-            </article>
-        )
-    }
-}
+            <div id="paper">
+                <Header />
 
-export default class Paper extends React.Component {
-    render() {
-        return (
-            <div id="paper"><Header /><PaperDetail /> </div>
+                <div className="box-shadow-large m-4 py-3 border rounded-2 m-conter" style={{ maxWidth: "980px" }}>
+                    <div className="text-align-center h4"> { this.state.paper.title } </div>
+
+                    <div className="f6 d-flex flex-justify-center text-gray-light m-1">
+                        <div className="px-1" >Create on: </div> <time>{this.state.paper.create_at.split(" ")[0]}</time>
+                        <div className="px-1" >|</div> 
+                        <div className="px-1" >Update on: </div> <time>{this.state.paper.create_at.split(" ")[0]}</time>
+                    </div>
+                </div>
+
+                <article className="box-shadow-large m-4 border rounded-2 m-conter" style={{ maxWidth: "980px" }}>
+                    <section className="py-2 px-4" style={{ minHeight: "500px" }}>
+                        <div className="markdown-body" dangerouslySetInnerHTML={createMarkup(this.state.paper.content)} ></div>
+                    </section>
+                </article>
+            </div>
         )
     }
 }
