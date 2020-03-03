@@ -1,6 +1,7 @@
 language: go
 
 name: CI
+on: [push]
 
 # 仓库的分支
 branches:
