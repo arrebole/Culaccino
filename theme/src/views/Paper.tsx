@@ -37,8 +37,8 @@ export default class PaperPage extends React.Component<{}, {paper: Paper}> {
             <div id="paper">
                 <Header />
 
-                <div className="box-shadow-large m-4 py-3 border rounded-2 m-conter" style={{ maxWidth: "980px" }}>
-                    <div className="text-align-center h4"> { this.state.paper.title } </div>
+                <div className="box-shadow-large m-4 py-3 border rounded-2 m-conter" style={{ maxWidth: "980px",height: '60px' }}>
+                    <div className="text-align-center h5"> { this.state.paper.title } </div>
 
                     <div className="f6 d-flex flex-justify-center text-gray-light m-1">
                         <div className="px-1" >Create on: </div> <time>{this.state.paper.create_at.split(" ")[0]}</time>
