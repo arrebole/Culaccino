@@ -1,20 +1,12 @@
-language: go
 
 name: CI
 on: [push]
 
-# 仓库的分支
-branches:
-  only:
-    - dev
-
-# 用于下载依赖前配置
-before_install:
-  - echo "before_install"
-
-# 用于下载依赖
-install:
-  - echo "install"
-
-script:
-  - go build
+jobs:
+    build_server:
+      name: build_server
+      runs-on: golang
+      steps:
+        name: go build
+        run: |
+          go build
