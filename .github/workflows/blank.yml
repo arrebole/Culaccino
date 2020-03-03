@@ -7,6 +7,6 @@ jobs:
       name: build_server
       runs-on: golang
       steps:
-        name: go build
-        run: |
-          go build
+        - name: go build
+          run: |
+            go build
