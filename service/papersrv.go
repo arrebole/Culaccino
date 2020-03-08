@@ -50,6 +50,8 @@ func timeNow() string {
 }
 
 func (p PaperSrv) create(paper *model.Paper) error {
+	paper.CreateAt = timeNow()
+	paper.UpdateAt = paper.CreateAt
 	return client.HMSet(paper.Title, paper.ToMap()).Err()
 }
 

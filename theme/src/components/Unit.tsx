@@ -12,7 +12,7 @@ const Unit: React.FC<Paper> = (props) => {
                 <div className="f6 d-flex flex-justify-center text-gray-light">
                     <div className="px-1" >Create on: </div> <time>{props.create_at.split(" ")[0]}</time>
                     <div className="px-1" >|</div> 
-                    <div className="px-1" >Update on: </div> <time>{props.create_at.split(" ")[0]}</time>
+                    <div className="px-1" >Update on: </div> <time>{props.update_at.split(" ")[0]}</time>
                 </div>
             </div>
             <div className="p-2">

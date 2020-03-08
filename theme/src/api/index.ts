@@ -1,4 +1,4 @@
-export interface Paper{
+export interface Paper {
     title: string,
     type: string,
     cover: string,
@@ -20,14 +20,22 @@ export interface PaperResponse {
     data: Paper,
 }
 
-class API{
+class API {
     // fetchPapers 获取所有文章列表
-    fetchPapers(limit:number = 10): Promise<PapersResponse> {
+    fetchPapers(limit: number = 10): Promise<PapersResponse> {
         return fetch(`/api/papers`).then(response => response.json())
     }
     // fetchPaper 通过title获取文章的详细内容
     fetchPaper(key?: string): Promise<PaperResponse> {
         return fetch(`/api/paper?key=${key}`).then(response => response.json())
+    }
+    // newPaper 创建新的文章
+    newPaper(data: Paper): Promise<PaperResponse> {
+        return fetch(`/api/new`, { method: "POST", body: JSON.stringify(data) }).then(response => response.json())
+    }
+    // updatePaper 更新的文章
+    updatePaper(data: Paper): Promise<PaperResponse> {
+        return fetch(`/api/update`, { method: "POST", body: JSON.stringify(data) }).then(response => response.json())
     }
 }
 
