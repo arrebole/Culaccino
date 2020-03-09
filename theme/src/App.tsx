@@ -3,15 +3,17 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import HomePage from './views/Home';
 import PaperPage from './views/Paper';
 import EditorPage from './views/Editor';
+import AdminPage from './views/Admin';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"><HomePage /></Route>
-        <Route path="/editor"><EditorPage /></Route>
-        <Route path="/:name"><PaperPage /></Route>
-        <Route path="*"><Redirect to={{ pathname: "/" }}/></Route>
+        <Route exact path="/"> <HomePage />    </Route>
+        <Route path="/admin">  <AdminPage />   </Route>
+        <Route path="/editor"> <EditorPage />  </Route>
+        <Route path="/:name">  <PaperPage />   </Route>
+        <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
       </Switch>
     </BrowserRouter>
   );

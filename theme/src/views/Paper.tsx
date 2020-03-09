@@ -43,7 +43,7 @@ export default class PaperPage extends React.Component<{}, {paper: Paper}> {
                     <div className="f6 d-flex flex-justify-center text-gray-light m-1">
                         <div className="px-1" >Create on: </div> <time>{this.state.paper.create_at.split(" ")[0]}</time>
                         <div className="px-1" >|</div> 
-                        <div className="px-1" >Update on: </div> <time>{this.state.paper.create_at.split(" ")[0]}</time>
+                        <div className="px-1" >Update on: </div> <time>{this.state.paper.update_at.split(" ")[0]}</time>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 import React from "react"
 import Header from "../components/Header"
-import Editable from "../components/Editable"
+import ContentEditable from "../components/ContentEditable"
 import api from "../api"
 
 interface State {
@@ -49,7 +49,7 @@ export default class EditorPage extends React.Component<{}, State> {
     handleChange(e: any, target?: string) {
         switch (target) {
             case "content":
-                this.setState({ content: e.currentTarget.innerText })
+                this.setState({ content: e })
                 break;
             case "summary":
                 this.setState({ "summary": e.target.value })
@@ -102,12 +102,14 @@ export default class EditorPage extends React.Component<{}, State> {
                     <div className="py-2" style={{ width: '100%', maxWidth: '980px' }}>
                         <input onChange={e => this.handleChange(e, "title")} value={this.state.title} className="border p-2" placeholder="Title" type="text" style={{ height: '16px' }} />
                     </div>
-                    <Editable value={this.state.content} handleChange={this.handleChange} />
+
+                    <ContentEditable content={this.state.content} handleChange={this.handleChange} />
                     <div className="bg-white border m-2 d-flex flex-column p-3" style={{ width: '100%', maxWidth: '980px', boxSizing: 'border-box' }}>
                         <h3 className="f3 m-2">Commit changes</h3>
                         <input value={this.state.cover} onChange ={e => this.handleChange(e, "cover")} className="m-2 border p-2 bg-gray-light box-shadow rounded-2 f5" type="text" style={{ outline: 'none' }} placeholder="Cover URL" />
                         <textarea value={this.state.summary} onChange={e => this.handleChange(e, "summary")} className="m-2 border p-2 bg-gray-light box-shadow rounded-2 f5" style={{ minHeight: '100px', outline: 'none' }} placeholder="Add an optional extended description…" />
                     </div>
+                    
                     <div>
                         <button className="btn-primary f5 p-2 m-1 rounded-2 border" onClick={this.handleCommit}>Commit changes</button>
                         <button className="btn-danger f5 p-2 m-1 rounded-2 border" onClick={this.handeCancel}>Cancel</button>
