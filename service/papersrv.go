@@ -12,11 +12,9 @@ type PaperSrv struct{}
 // Get ...
 func (p PaperSrv) Get(title string) *model.Paper {
 	if p.Exists(title) {
-		var result = &model.Paper{}
 		if data, err := client.HGetAll(title).Result(); err == nil {
-			result.BuildFromMap(data)
+			return model.PaperBuilder(data, []string{})
 		}
-		return result
 	}
 	return nil
 }

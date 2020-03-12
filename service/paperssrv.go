@@ -11,9 +11,9 @@ func (p PaperSrv) Table(limit int64) []*model.Paper {
 func pipeline(keys []string) []*model.Paper {
 	var result = []*model.Paper{}
 	for _, key := range keys {
-		paper := &model.Paper{}
-		data := client.HMGet(key, "title", "type", "summary", "create_at", "update_at", "cover").Val()
-		result = append(result, paper.BuildFromSlice(data))
+		if data, err := client.HGetAll(key).Result(); err == nil {
+			result = append(result, model.PaperBuilder(data, []string{"content"}))
+		}
 	}
 	return result
 }

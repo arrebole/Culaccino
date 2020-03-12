@@ -29,6 +29,7 @@ export default class PaperPage extends React.Component<{}, {paper: Paper}> {
     componentDidMount() {
         const key = window.location.pathname.substring(1);
         api.fetchPaper(key).then(res => {
+            if(res.code < 0) return;
             this.setState({ paper: res.data })
         });
     }

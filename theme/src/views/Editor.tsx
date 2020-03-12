@@ -83,6 +83,7 @@ export default class EditorPage extends React.Component<{}, State> {
     componentDidMount() {
         if (queryString("title") !== "") {
             api.fetchPaper(queryString("title")).then(res => {
+                if (res.code < 0) return;
                 this.setState({
                     title: res.data.title,
                     type: res.data.type,
@@ -106,10 +107,10 @@ export default class EditorPage extends React.Component<{}, State> {
                     <ContentEditable content={this.state.content} handleChange={this.handleChange} />
                     <div className="bg-white border m-2 d-flex flex-column p-3" style={{ width: '100%', maxWidth: '980px', boxSizing: 'border-box' }}>
                         <h3 className="f3 m-2">Commit changes</h3>
-                        <input value={this.state.cover} onChange ={e => this.handleChange(e, "cover")} className="m-2 border p-2 bg-gray-light box-shadow rounded-2 f5" type="text" style={{ outline: 'none' }} placeholder="Cover URL" />
+                        <input value={this.state.cover} onChange={e => this.handleChange(e, "cover")} className="m-2 border p-2 bg-gray-light box-shadow rounded-2 f5" type="text" style={{ outline: 'none' }} placeholder="Cover URL" />
                         <textarea value={this.state.summary} onChange={e => this.handleChange(e, "summary")} className="m-2 border p-2 bg-gray-light box-shadow rounded-2 f5" style={{ minHeight: '100px', outline: 'none' }} placeholder="Add an optional extended description…" />
                     </div>
-                    
+
                     <div>
                         <button className="btn-primary f5 p-2 m-1 rounded-2 border" onClick={this.handleCommit}>Commit changes</button>
                         <button className="btn-danger f5 p-2 m-1 rounded-2 border" onClick={this.handeCancel}>Cancel</button>

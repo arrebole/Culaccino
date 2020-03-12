@@ -1,5 +1,9 @@
 package model
 
+import (
+	"encoding/json"
+)
+
 // Paper 一篇文章
 type Paper struct {
 	Title    string `json:"title"`
@@ -24,30 +28,22 @@ func (p *Paper) ToMap() map[string]interface{} {
 	}
 }
 
-// BuildFromMap ...
-func (p *Paper) BuildFromMap(data map[string]string) *Paper {
-	p.Title = data["title"]
-	p.Type = data["type"]
-	p.CreateAt = data["create_at"]
-	p.UpdateAt = data["update_at"]
-	p.Summary = data["summary"]
-	p.Content = data["content"]
-	p.Cover = data["cover"]
-	return p
+// PaperBuilder ...
+func PaperBuilder(data map[string]string, excludes []string) *Paper {
+	var result = &Paper{}
+
+	// 移除排除数据
+	for _, v := range excludes {
+		data[v] = ""
+	}
+
+	// 序列化为结构体
+	jsonStr, _ := json.Marshal(data)
+	json.Unmarshal(jsonStr, result)
+	return result
 }
 
-// BuildFromSlice ...
-func (p *Paper) BuildFromSlice(data []interface{}) *Paper {
-	var tData = itos(data)
-	p.Title = tData[0]
-	p.Type = tData[1]
-	p.Summary = tData[2]
-	p.CreateAt = tData[3]
-	p.UpdateAt = tData[4]
-	p.Cover = tData[5]
-	return p
-}
-
+// itos 接口类型数组转string数组
 func itos(data []interface{}) []string {
 	var result []string
 	for _, v := range data {
