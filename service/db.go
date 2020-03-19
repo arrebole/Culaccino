@@ -10,13 +10,14 @@ func conn() *redis.Client {
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
-	testRedis(result)
+
+	// test conn
+	if err := testConn(result); err != nil {
+		panic(err.Error())
+	}
 	return result
 }
 
-func testRedis(client *redis.Client) {
-	pong, err := client.Ping().Result()
-	if pong != "PONG" || err != nil {
-		panic("redis conn fail!")
-	}
+func testConn(client *redis.Client) error {
+	return client.Ping().Err()
 }

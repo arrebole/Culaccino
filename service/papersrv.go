@@ -9,7 +9,7 @@ import (
 // PaperSrv 执行者
 type PaperSrv struct{}
 
-// Get ...
+// Get 获取文章
 func (p PaperSrv) Get(title string) *model.Paper {
 	if p.Exists(title) {
 		if data, err := client.HGetAll(title).Result(); err == nil {
@@ -19,7 +19,7 @@ func (p PaperSrv) Get(title string) *model.Paper {
 	return nil
 }
 
-// Set ...
+// Set 如果已存在则修改文章内容，如果不存在则创建
 func (p PaperSrv) Set(paper *model.Paper) error {
 	if p.Exists(paper.Title) {
 		return p.update(paper)
@@ -27,7 +27,7 @@ func (p PaperSrv) Set(paper *model.Paper) error {
 	return p.create(paper)
 }
 
-// Del ...
+// Del 删除文章
 func (p PaperSrv) Del(paperTitle string) error {
 	if p.Exists(paperTitle) {
 		return client.Del(paperTitle).Err()
@@ -35,7 +35,7 @@ func (p PaperSrv) Del(paperTitle string) error {
 	return nil
 }
 
-// Exists ...
+// Exists 判断文章是否存在
 func (p PaperSrv) Exists(key string) bool {
 	if count, _ := client.Exists(key).Result(); count == 1 {
 		return true
