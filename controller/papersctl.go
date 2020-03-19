@@ -11,7 +11,7 @@ import (
 func Papers() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		result := &model.Response{}
-		w.Write(result.Build(0, "success", service.New().Table(10)))
+		w.Write(model.CreateResponse(0, "success", service.New().Table(10)).ToBytes())
+		return
 	}
 }

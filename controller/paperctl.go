@@ -12,25 +12,25 @@ import (
 func New() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response := &model.Response{}
-		paper, err := getPostData(r)
 
-		// 提交数据错误
+		// 处理post提交的数据
+		paper, err := bodyparser(r)
 		if err != nil {
-			w.Write(response.Build(-1, "fail post", nil))
+			w.Write(model.CreateResponse(-1, "fail post", nil).ToBytes())
 			return
 		}
+
 		// 文章已存在
 		if service.New().Exists(paper.Title) {
-			w.Write(response.Build(-1, "paper Exists", nil))
+			w.Write(model.CreateResponse(-1, "paper Exists", nil).ToBytes())
 			return
 		}
 		// 数据库写入错误
 		if err = service.New().Set(paper); err != nil {
-			w.Write(response.Build(-1, err.Error(), nil))
+			w.Write(model.CreateResponse(-1, err.Error(), nil).ToBytes())
 			return
 		}
-		w.Write(response.Build(0, "success", nil))
+		w.Write(model.CreateResponse(0, "success", nil).ToBytes())
 	}
 }
 
@@ -38,25 +38,24 @@ func New() http.HandlerFunc {
 func Update() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response := &model.Response{}
-		paper, err := getPostData(r)
 
-		// 提交数据错误
+		// 处理post提交的数据
+		paper, err := bodyparser(r)
 		if err != nil {
-			w.Write(response.Build(-1, "fail post", nil))
+			w.Write(model.CreateResponse(-1, "fail post", nil).ToBytes())
 			return
 		}
 		// 文章不存在
 		if !service.New().Exists(paper.Title) {
-			w.Write(response.Build(-1, "not find", nil))
+			w.Write(model.CreateResponse(-1, "not find", nil).ToBytes())
 			return
 		}
 		// 数据库写入错误
 		if err = service.New().Set(paper); err != nil {
-			w.Write(response.Build(-1, err.Error(), nil))
+			w.Write(model.CreateResponse(-1, err.Error(), nil).ToBytes())
 			return
 		}
-		w.Write(response.Build(0, "success", nil))
+		w.Write(model.CreateResponse(0, "success", nil).ToBytes())
 	}
 }
 
@@ -64,18 +63,19 @@ func Update() http.HandlerFunc {
 func Get() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response, title := &model.Response{}, r.FormValue("key")
+
+		title := r.FormValue("key")
 		if title == "" {
-			w.Write(response.Build(-1, "miss query key", nil))
+			w.Write(model.CreateResponse(-1, "miss query key", nil).ToBytes())
 			return
 		}
 
 		// 文章不存在
 		if !service.New().Exists(title) {
-			w.Write(response.Build(-1, "not find key", nil))
+			w.Write(model.CreateResponse(-1, "not find key", nil).ToBytes())
 			return
 		}
-		w.Write(response.Build(0, "success", service.New().Get(title)))
+		w.Write(model.CreateResponse(0, "success", service.New().Get(title)).ToBytes())
 	}
 }
 
@@ -83,21 +83,24 @@ func Get() http.HandlerFunc {
 func Del() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response, key := &model.Response{}, r.FormValue("key")
+
+		key := r.FormValue("key")
 		if key == "" {
-			w.Write(response.Build(-1, "miss query key", nil))
+			w.Write(model.CreateResponse(-1, "miss query key", nil).ToBytes())
 			return
 		}
 
 		// 文章不存在
 		if !service.New().Exists(key) {
-			w.Write(response.Build(-1, "not find key", nil))
+			w.Write(model.CreateResponse(-1, "not find key", nil).ToBytes())
 			return
 		}
-		w.Write(response.Build(0, "success", service.New().Del(key)))
+		w.Write(model.CreateResponse(0, "success", service.New().Del(key)).ToBytes())
 	}
 }
-func getPostData(r *http.Request) (*model.Paper, error) {
+
+// bodyparser 解析post内容
+func bodyparser(r *http.Request) (*model.Paper, error) {
 	var result = &model.Paper{}
 	err := json.NewDecoder(r.Body).Decode(result)
 	return result, err
