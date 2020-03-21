@@ -58,20 +58,23 @@ func (p PaperSrv) update(paper *model.Paper) error {
 	paper.CreateAt = oldPaper.CreateAt
 	paper.UpdateAt = timeNow()
 
-	if paper.Content == "" {
-		paper.Content = oldPaper.Content
-	}
-	if paper.Cover == "" {
-		paper.Cover = oldPaper.Cover
-	}
-	if paper.Summary == "" {
-		paper.Summary = oldPaper.Summary
-	}
-	if paper.Title == "" {
-		paper.Title = oldPaper.Title
-	}
-	if paper.Type == "" {
-		paper.Type = oldPaper.Type
-	}
+	// 空字段使用旧数据替换
+	paper.Content = fillerStr(paper.Content, oldPaper.Content)
+	paper.Summary = fillerStr(paper.Summary, oldPaper.Summary)
+	paper.Cover = fillerStr(paper.Cover, oldPaper.Cover)
+	paper.Title = fillerStr(paper.Title, oldPaper.Title)
+	paper.Type = fillerStr(paper.Type, oldPaper.Type)
+
 	return client.HMSet(paper.Title, paper.ToMap()).Err()
+}
+
+// fillerStr 返回一个长度不为0,的字符产,
+// sample f( "", "", "samp" ) -> "samp"
+func fillerStr(strs ...string) string {
+	for _, v := range strs {
+		if len(v) > 0 {
+			return v
+		}
+	}
+	return strs[len(strs)-1]
 }
