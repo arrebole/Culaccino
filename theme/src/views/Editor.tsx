@@ -12,12 +12,8 @@ interface State {
 }
 
 function queryString(name: string) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) {
-        return unescape(r[2]);
-    }
-    return "";
+    const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
 function createPaper(data: State) {
@@ -81,18 +77,19 @@ export default class EditorPage extends React.Component<{}, State> {
     }
 
     componentDidMount() {
-        if (queryString("title") !== "") {
-            api.fetchPaper(queryString("title")).then(res => {
-                if (res.code < 0) return;
-                this.setState({
-                    title: res.data.title,
-                    type: res.data.type,
-                    cover: res.data.cover,
-                    summary: res.data.summary,
-                    content: res.data.content,
-                })
+        const title = queryString("title");
+        if (title == null) return;
+        api.fetchPaper(title).then(res => {
+            if (res.code < 0) return;
+            this.setState({
+                title: res.data.title,
+                type: res.data.type,
+                cover: res.data.cover,
+                summary: res.data.summary,
+                content: res.data.content,
             })
-        }
+        })
+
     }
 
     render() {

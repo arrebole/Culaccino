@@ -7,7 +7,7 @@ const Unit: React.FC<Paper> = (props) => {
         <div className="d-flex m-0 p-4 box-shadow-large rounded-2 bg-white flex-column">
             <div className="text-align-center">
                 <div className="my-1">
-                    <Link className="h4 text-decoration-none text-blue" to={props.title}>{ props.title }</Link>
+                    <Link className="h4 text-decoration-none text-blue" to={ "/papers/" + props.title }>{ props.title }</Link>
                 </div>
                 <div className="f6 d-flex flex-justify-center text-gray-light">
                     <div className="px-1" >Create on: </div> <time>{props.create_at.split(" ")[0]}</time>

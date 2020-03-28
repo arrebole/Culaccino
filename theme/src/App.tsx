@@ -9,10 +9,10 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"> <HomePage />    </Route>
-        <Route path="/admin">  <AdminPage />   </Route>
-        <Route path="/editor"> <EditorPage />  </Route>
-        <Route path="/:name">  <PaperPage />   </Route>
+        <Route exact path="/"> <HomePage /> </Route>
+        <Route path="/admin">  <AdminPage /></Route>
+        <Route path="/editor"> <EditorPage /> </Route>
+        <Route path="/papers/:title">  <PaperPage /> </Route>
         <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
       </Switch>
     </BrowserRouter>

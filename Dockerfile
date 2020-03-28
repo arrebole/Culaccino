@@ -2,10 +2,9 @@ FROM golang
 
 LABEL authorMail "concurrent.exec@gmail.com"
 
-RUN mkdir -p /srv/culaccino
+WORKDIR /srv/culaccino
 
 COPY ./ /srv/culaccino
-WORKDIR /srv/culaccino
 
 RUN go build
 

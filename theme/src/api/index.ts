@@ -25,17 +25,20 @@ class API {
     fetchPapers(limit: number = 10): Promise<PapersResponse> {
         return fetch(`/api/papers`).then(response => response.json())
     }
-    // fetchPaper 通过title获取文章的详细内容
-    fetchPaper(key?: string): Promise<PaperResponse> {
-        return fetch(`/api/paper?key=${key}`).then(response => response.json())
-    }
+
     // newPaper 创建新的文章
     newPaper(data: Paper): Promise<PaperResponse> {
-        return fetch(`/api/new`, { method: "POST", body: JSON.stringify(data) }).then(response => response.json())
+        return fetch(`/api/papers`, { method: "POST", body: JSON.stringify(data) }).then(response => response.json())
     }
+
+    // fetchPaper 通过title获取文章的详细内容
+    fetchPaper(key: string): Promise<PaperResponse> {
+        return fetch(`/api/papers/${key}`).then(response => response.json())
+    }
+
     // updatePaper 更新的文章
     updatePaper(data: Paper): Promise<PaperResponse> {
-        return fetch(`/api/update`, { method: "POST", body: JSON.stringify(data) }).then(response => response.json())
+        return fetch(`/api/papers/${data.title}`, { method: "PATCH", body: JSON.stringify(data) }).then(response => response.json())
     }
 }
 
