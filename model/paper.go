@@ -6,6 +6,7 @@ import (
 
 // Paper 一篇文章
 type Paper struct {
+	ID       string `json:"id"`
 	Title    string `json:"title"`
 	Type     string `json:"type"`
 	Cover    string `json:"cover"`
@@ -18,6 +19,7 @@ type Paper struct {
 // ToMap ...
 func (p *Paper) ToMap() map[string]interface{} {
 	return map[string]interface{}{
+		"id":        p.ID,
 		"title":     p.Title,
 		"type":      p.Type,
 		"cover":     p.Cover,

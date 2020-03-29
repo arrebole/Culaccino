@@ -32,7 +32,7 @@ export default class AdminPage extends React.Component<{}, { papers: Paper[] }>{
 
     componentDidMount() {
         api.fetchPapers().then(res => {
-            this.setState({ papers: res.data })
+            this.setState({ papers: res })
         })
     }
 

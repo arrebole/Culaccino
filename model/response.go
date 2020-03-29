@@ -2,29 +2,28 @@ package model
 
 import "encoding/json"
 
-// IResponse 抽象接口
+// IResponse ...
 type IResponse interface {
-	ToBytes() []byte
+	Code() int
+	Data() []byte
 }
 
-// Response ...
+// Response 实现
 type Response struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	StatusCode int
+	Body       interface{}
 }
 
-// ToBytes 将数据转换为[]byte
-func (p Response) ToBytes() []byte {
-	result, _ := json.Marshal(p)
-	return result
+// Code ...
+func (p Response) Code() int {
+	return p.StatusCode
 }
 
-// CreateResponse Responsego的工厂方法
-func CreateResponse(code int, msg string, data interface{}) IResponse {
-	return Response{
-		Code:    code,
-		Message: msg,
-		Data:    data,
+// Data ...
+func (p Response) Data() []byte {
+	data, err := json.Marshal(p.Body)
+	if err != nil {
+		return nil
 	}
+	return data
 }

@@ -30,8 +30,7 @@ export default class PaperPage extends React.Component<{}, {paper: Paper}> {
         const pathSplit = window.location.pathname.split("/");
         const key = pathSplit[pathSplit.length-1];
         api.fetchPaper(key).then(res => {
-            if(res.code < 0) return;
-            this.setState({ paper: res.data })
+            this.setState({ paper: res })
         });
     }
     render() {

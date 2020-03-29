@@ -67,11 +67,11 @@ export default class EditorPage extends React.Component<{}, State> {
         switch (queryString("tab")) {
             case "":
             case "new":
-                api.newPaper(createPaper(this.state)).then(res => alert(res.message))
+                api.newPaper(createPaper(this.state)).then(res => alert("以请求"))
                 break;
 
             case "update":
-                api.updatePaper(createPaper(this.state)).then(res => alert(res.message))
+                api.updatePaper(createPaper(this.state)).then(res => alert("以请求"))
                 break;
         }
     }
@@ -80,13 +80,12 @@ export default class EditorPage extends React.Component<{}, State> {
         const title = queryString("title");
         if (title == null) return;
         api.fetchPaper(title).then(res => {
-            if (res.code < 0) return;
             this.setState({
-                title: res.data.title,
-                type: res.data.type,
-                cover: res.data.cover,
-                summary: res.data.summary,
-                content: res.data.content,
+                title: res.title,
+                type: res.type,
+                cover: res.cover,
+                summary: res.summary,
+                content: res.content,
             })
         })
 

@@ -5,7 +5,8 @@ import "github.com/arrebole/culaccino/model"
 // Interface 数据库操作接口
 type Interface interface {
 	Get(string) *model.Paper
-	Set(*model.Paper) error
+	Create(*model.Paper) (*model.Paper, error)
+	Update(string, *model.Paper) (*model.Paper, error)
 	Del(string) error
 	Exists(string) bool
 	Table(int64) []*model.Paper

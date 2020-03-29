@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/arrebole/culaccino/controller/transfer"
 	"github.com/arrebole/culaccino/model"
 	"github.com/arrebole/culaccino/service"
 )
@@ -23,56 +24,63 @@ func Paper(w http.ResponseWriter, r *http.Request) {
 
 // Update 更新一篇文章
 func paperUpdate(w http.ResponseWriter, r *http.Request) {
-	// 处理post提交的数据
-	paper, err := bodyparser(r)
-	if err != nil {
-		w.Write(model.CreateResponse(-1, "fail post", nil).ToBytes())
+	// 判断文章是否存在
+	id := urlLastParser(r.RequestURI)
+	if !service.New().Exists(id) {
+		transfer.Send(w, model.Conflict)
 		return
 	}
-	// 文章不存在
-	if !service.New().Exists(paper.Title) {
-		w.Write(model.CreateResponse(-1, "not find", nil).ToBytes())
-		return
-	}
-	// 数据库写入错误
-	if err = service.New().Set(paper); err != nil {
-		w.Write(model.CreateResponse(-1, err.Error(), nil).ToBytes())
-		return
-	}
-	w.Write(model.CreateResponse(0, "success", nil).ToBytes())
 
+	receive, err := bodyparser(r)
+	if err != nil {
+		transfer.Send(w, model.UnsupportedMediaType)
+		return
+	}
+
+	// 数据库写入错误
+	paper, err := service.New().Update(id, receive)
+	if err != nil {
+		transfer.Send(w, model.DBFail)
+	}
+
+	transfer.Send(w, model.OnePaper(paper))
 }
 
 // Get 查看文章详细内容
 func paperRead(w http.ResponseWriter, r *http.Request) {
-	title := urlLastParser(r.RequestURI)
-	if title == "" {
-		w.Write(model.CreateResponse(-1, "miss query key", nil).ToBytes())
+	id := urlLastParser(r.RequestURI)
+	if id == "" {
+		transfer.Send(w, model.NotFound)
 		return
 	}
 
 	// 文章不存在
-	if !service.New().Exists(title) {
-		w.Write(model.CreateResponse(-1, "not find key", nil).ToBytes())
+	if !service.New().Exists(id) {
+		transfer.Send(w, model.NotFound)
 		return
 	}
-	w.Write(model.CreateResponse(0, "success", service.New().Get(title)).ToBytes())
+	transfer.Send(w, model.OnePaper(service.New().Get(id)))
 
 }
 
 // Del ...
 func paperDel(w http.ResponseWriter, r *http.Request) {
-	key := urlLastParser(r.RequestURI)
-	if key == "" {
-		w.Write(model.CreateResponse(-1, "miss query key", nil).ToBytes())
+	id := urlLastParser(r.RequestURI)
+	if id == "" {
+		transfer.Send(w, model.NotFound)
 		return
 	}
 	// 文章不存在
-	if !service.New().Exists(key) {
-		w.Write(model.CreateResponse(-1, "not find key", nil).ToBytes())
+	if !service.New().Exists(id) {
+		transfer.Send(w, model.NotFound)
 		return
 	}
-	w.Write(model.CreateResponse(0, "success", service.New().Del(key)).ToBytes())
+	if err := service.New().Del(id); err != nil {
+		transfer.Send(w, model.DBFail)
+		return
+	}
+
+	transfer.Send(w, model.Sucess())
 
 }
 
