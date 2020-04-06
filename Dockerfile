@@ -6,7 +6,7 @@ WORKDIR /srv/culaccino
 
 COPY ./ /srv/culaccino
 
-RUN go build
+RUN go build -o culaccino ./src/main.go
 
 CMD [ "./culaccino" ]
 

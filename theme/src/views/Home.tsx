@@ -4,17 +4,15 @@ import Unit from '../components/Unit'
 import api, { Paper } from "../api"
 
 
-class PaperList extends React.Component<{},{ papers: Paper[] }> {
-    constructor(props: {}){
+class Catalogue extends React.Component<{}, { papers: Paper[] }> {
+    constructor(props: {}) {
         super(props)
         this.state = {
             papers: []
         }
     }
-    componentDidMount(){
-        api.fetchPapers().then(res=>{
-            this.setState({ papers: res})
-        })
+    componentDidMount() {
+        api.fetchPapers().then(res => this.setState({ papers: res }))
     }
     render() {
         return (
@@ -33,7 +31,7 @@ export default class HomePage extends React.Component {
             <div id="home" className="bg-gray-light">
                 <Header />
                 <main className="d-flex flex-column flex-items-center">
-                    <PaperList />
+                    <Catalogue />
                 </main>
             </div>
         )

@@ -15,13 +15,13 @@
 </div>
 
 ### Screen shot
-![home.png](/screenshot/sample.png)
+![home.png](/docs/screenshot.png)
 
 
 ### This use
 
-+ golang、 react.js、 redis
-+ github-markdown-css + marked + highlight.js
++ golang、gorm、sqlite
++ react.js、github-markdown-css + marked + highlight.js
 
 ### how to use
 
