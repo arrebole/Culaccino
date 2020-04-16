@@ -10,7 +10,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"><Home /></Route>
+        <Route exact path="/"><Home/></Route>
         <Route exact path="/articles/:article"><Articles /></Route>
         <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
       </Switch>
