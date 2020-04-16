@@ -1,17 +1,24 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import "time"
 
 // Section 文章中的一个篇幅
 type Section struct {
-	gorm.Model
-	ArticleID uint    `josn:"article_id"`
-	Article   Article `gorm:"foreignkey:ArticleID"`
-	Name      string  `json:"name"`
-	Content   string  `json:""content`
+	ID uint `json:"-" gorm:"primary_key"`
+
+	ArticleID uint `json:"id"`
+
+	Article Article `json:"article" gorm:"foreignkey:ArticleID"`
+	Name    string  `json:"name" gorm:"unique"`
+	Content string  `json:"content"`
+	URL     string  `json:"url"`
+
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"-" sql:"index"`
 }
 
-// URL ...
-func (p Section) URL() string {
-	return "/api/articles/" + p.Article.Name + "/" + p.Name
+// Link ...
+func (p Section) Link() Link {
+	return Link{Name: p.Name, URL: p.URL}
 }

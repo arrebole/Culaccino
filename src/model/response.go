@@ -1,32 +1,31 @@
 package model
 
-// Pagination 分页
-type Pagination struct {
-	Total   int // 数据总量
-	Pages   int // 页数总量
-	Current int //当前页
+// FullArticles 用于返回给用户的数据格式
+type FullArticles struct {
+	Articles   []FullArticle `json:"articles"`
+	Pagination *Pagination   `json:"pagination"`
 }
 
-// HetoasSectionLink ...
-type HetoasSectionLink struct {
+// FullArticle 用于返回给用户的数据格式
+type FullArticle struct {
+	Article
+	Sections []Link `json:"sections"`
+}
+
+// Link ...
+type Link struct {
 	Name string `json:"name"`
 	URL  string `json:"url"`
 }
 
-// ArticlesResponse 文章列表返回的数据
-type ArticlesResponse struct {
-	Articles   []ArticleResponse `json:"articles"`
-	Pagination Pagination        `json:"pagination"`
+// Pagination 分页
+type Pagination struct {
+	TotalSize  int `json:"total_size"`  // 数据总量
+	RemainSize int `json:"remain_size"` // 剩余总量
 }
 
-// ArticleResponse 单个文章返回的数据
-type ArticleResponse struct {
-	Article      Article             `json:"article"`
-	ArticleURL   string              `josn:"url"`
-	SectionLinks []HetoasSectionLink `json:"section_links"`
-}
-
-// SectionResponse 文章返回数据
-type SectionResponse struct {
-	Section Section `json:"section"`
+// Error ...
+type Error struct {
+	Code  int    `json:"code"`
+	Error string `json:"error"`
 }

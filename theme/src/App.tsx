@@ -1,22 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import HomePage from './views/Home';
-import PaperPage from './views/Paper';
-import EditorPage from './views/Editor';
-import AdminPage from './views/Admin';
 
-const App: React.FC = () => {
+// <--
+import Home from "./views/Home";
+import Articles from "./views/Articles";
+// -->
+
+export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"> <HomePage /> </Route>
-        <Route path="/admin">  <AdminPage /></Route>
-        <Route path="/editor"> <EditorPage /> </Route>
-        <Route path="/papers/:title">  <PaperPage /> </Route>
+        <Route exact path="/"><Home /></Route>
+        <Route exact path="/articles/:article"><Articles /></Route>
         <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
       </Switch>
     </BrowserRouter>
   );
 }
-
-export default App;

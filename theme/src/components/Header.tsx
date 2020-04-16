@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react"
 
-const Header: React.FC = () => {
+export default function Header() {
     return (
-        <header className="box-shadow-super bg-blue p-3" > 
-            <nav>
-                <h1 className="m-0 f3"> <a className="text-white text-decoration-none" href="/">Culaccino</a></h1>
+        <header className="bg-gray-900 shadow-lg p-2">
+            <nav> 
+                <a href="/" className="font-sans font-semibold text-xl text-gray-200 mx-8 hover:text-gray-400">Culaccino</a>
             </nav>
         </header>
     )
 }
-
-export default Header
