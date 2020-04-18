@@ -13,17 +13,12 @@ class Api {
 
     getArticle(name: string) {
         return this.httpStrategy
-            .GET<types.FullArticle>(`/api/articles/${name}`)
+            .GET<types.Article>(`/api/articles/${name}`)
     }
 
-    listArticles() {
+    listArticles(offset = 0, limit = 10) {
         return this.httpStrategy
-            .GET<types.FullArticles>(`/api/articles`)
-    }
-
-    getSection(articleName: string, sectionName: string) {
-        return this.httpStrategy
-            .GET<types.FullSection>(`/api/articles/${articleName}/${sectionName}`)
+            .GET<types.Articles>(`/api/articles?offset=${offset}&limit=${limit}`)
     }
 }
 

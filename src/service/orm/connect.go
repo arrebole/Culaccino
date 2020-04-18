@@ -15,7 +15,7 @@ func dbName() string {
 	if len(os.Getenv("DB_NAME")) == 0 {
 		return "culaccino.db"
 	}
-	return os.Getenv("DBName")
+	return os.Getenv("DB_NAME")
 }
 
 // Connect gorm 连接数据库
@@ -32,9 +32,6 @@ func Connect() *gorm.DB {
 func initTable(db *gorm.DB) *gorm.DB {
 	if !db.HasTable(&model.Article{}) {
 		db.CreateTable(&model.Article{})
-	}
-	if !db.HasTable(&model.Section{}) {
-		db.CreateTable(&model.Section{})
 	}
 	return db
 }

@@ -4,42 +4,36 @@ export interface Pagination {
     remain_size: number;
 }
 
-export interface SectionsLink {
-    name: string;
-    url: string;
-}
-
 export interface Article {
     id: number;
     name: string;
     cover: string;
     summary: string;
+    contents: string;
     tag: string;
     url: string;
     created_at: string;
     updated_at: string;
 }
 
-export interface FullArticle extends Article {
-    sections_link: SectionsLink[];
-}
-
-export interface FullArticles {
-    articles: FullArticle[];
+export interface Articles {
+    articles:  Article[];
     pagination: Pagination;
 }
 
-export interface FullSection {
-    id: number;
-    article: Article;
-    name: string;
-    content: string;
-    url: string;
-    created_at: string;
-    updated_at: string;
+export function defatultArticle():Article{
+    return {
+        id: 0,
+        name: "loading",
+        cover: "loading",
+        summary: "loading",
+        contents: "loading",
+        tag: "loading",
+        url: "loading",
+        created_at: "",
+        updated_at: "",
+    }
 }
-
-
 
 
 

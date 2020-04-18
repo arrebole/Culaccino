@@ -1,37 +1,43 @@
 import React from 'react';
 import api from "../api";
-import * as types from "../types";
+import * as types from '../types';
 import Header from '../components/Header';
+import SubNav from "../components/SubNav";
+import Stage from '../components/Stage';
 
-
+// State Home组件状态类型，文章列表和分页
 interface State {
-    fullArticle: types.FullArticle[] | null
-    pagination: types.Pagination | null
+    articles: types.Articles | null
 }
 
 export default class Home extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props)
         this.state = {
-            fullArticle: null,
-            pagination: null,
+            articles: null
         }
     }
 
+    // fetchData 获取首页数据
+    fetchData() {
+        return api.listArticles()
+    }
+
     componentDidMount() {
-        api.listArticles().then(res => {
-            const data = {
-                fullArticle: res.articles,
-                pagination: res.pagination
-            }
-            this.setState(data)
-        })
+        this.fetchData().then(res => this.setState({ articles: res }));
     }
 
     render() {
         return (
-            <div>
+            <div style={{ "backgroundColor": "#fcfdfd" }}>
                 <Header />
+                <SubNav />
+                <main >
+                    {/* articles 列表 */}
+                    <div className="flex flex-col max-w-screen-md mx-auto px-2">
+                        {this.state.articles?.articles.map(article => Stage(article))}
+                    </div>
+                </main>
             </div>
         )
     }

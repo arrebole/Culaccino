@@ -14,7 +14,7 @@ func ListArticles(w http.ResponseWriter, r *http.Request) {
 	offset := URLQueryInt(r.URL, "offset", 0)
 	limit := URLQueryInt(r.URL, "page_size", 10)
 
-	response := service.ArticlesRepo.Finds(offset, limit)
+	response := service.ArticlesRepo.FindAll(offset, limit)
 
 	w.Header().Add("Content-type", "application/json")
 	w.Write(JSON(response))

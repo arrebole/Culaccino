@@ -1,21 +1,9 @@
 package model
 
-// FullArticles 用于返回给用户的数据格式
-type FullArticles struct {
-	Articles   []FullArticle `json:"articles"`
-	Pagination *Pagination   `json:"pagination"`
-}
-
-// FullArticle 用于返回给用户的数据格式
-type FullArticle struct {
-	Article
-	Sections []Link `json:"sections"`
-}
-
-// Link ...
-type Link struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
+// Articles 用于返回给用户的数据格式
+type Articles struct {
+	Articles   []Article   `json:"articles"`
+	Pagination *Pagination `json:"pagination"`
 }
 
 // Pagination 分页

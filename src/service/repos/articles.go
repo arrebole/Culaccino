@@ -8,22 +8,27 @@ import (
 type ArticlesRepository struct{}
 
 // Find ...
-func (p ArticlesRepository) Find(name string) *model.FullArticle {
-	var article = model.Article{}
-	db.Where("name = ?", name).First(&article)
-	return article.Full(p.findSectionLinks(&article))
+func (p ArticlesRepository) Find(name string) *model.Article {
+	var article = &model.Article{}
+	db.Where("name = ?", name).First(article)
+	return article
 }
 
-// Finds ...
-func (p ArticlesRepository) Finds(offset int, limit int) *model.FullArticles {
-
+// FindAll ...
+func (p ArticlesRepository) FindAll(offset int, limit int) *model.Articles {
 	var articles []model.Article
-	db.Offset(offset).Limit(limit).Find(&articles)
 
-	var fullArticles = []model.FullArticle{}
-	for _, v := range articles {
-		fullArticles = append(fullArticles, *v.Full(p.findSectionLinks(&v)))
+	selectData := []string{
+		"id",
+		"name",
+		"cover",
+		"summary",
+		"tag",
+		"url",
+		"created_at",
+		"updated_at",
 	}
+	db.Offset(offset).Select(selectData).Limit(limit).Find(&articles)
 
 	var total = 0
 	db.Model(&model.Article{}).Count(&total)
@@ -33,38 +38,23 @@ func (p ArticlesRepository) Finds(offset int, limit int) *model.FullArticles {
 		RemainSize: total - offset - len(articles),
 	}
 
-	result := &model.FullArticles{
-		Articles:   fullArticles,
+	return &model.Articles{
+		Articles:   articles,
 		Pagination: pagination,
 	}
-
-	return result
 }
 
 // Create ...
-func (p ArticlesRepository) Create(article *model.Article) (*model.FullArticle, error) {
-	article.URL = "/api/aeticles/" + article.Name
+func (p ArticlesRepository) Create(article *model.Article) (*model.Article, error) {
+	article.URL = "/api/articles/" + article.Name
 	if err := db.Omit("id").Create(article).Error; err != nil {
 		return nil, err
 	}
-	return article.Full([]model.Link{}), nil
+	return article, nil
 }
 
 // Update ...
-func (p ArticlesRepository) Update(article *model.Article) *model.FullArticle {
+func (p ArticlesRepository) Update(article *model.Article) *model.Article {
 	db.Model(article).Where("name = ?", article.Name).Omit("name", "url").Updates(article)
-	return article.Full(p.findSectionLinks(article))
-}
-
-// FindSectionLinks for article
-func (p ArticlesRepository) findSectionLinks(article *model.Article) []model.Link {
-	// 找到section列表
-	var sections []model.Section
-	db.Where("article_id = ?", article.ID).Find(&sections)
-
-	var result = []model.Link{}
-	for _, v := range sections {
-		result = append(result, v.Link())
-	}
-	return result
+	return p.Find(article.Name)
 }

@@ -35,13 +35,6 @@ func BodyPaserArticle(body io.ReadCloser) (*model.Article, error) {
 	return result, decoder.Decode(result)
 }
 
-// BodyPaserSection ...
-func BodyPaserSection(body io.ReadCloser) (*model.Section, error) {
-	var result = &model.Section{}
-	decoder := json.NewDecoder(body)
-	return result, decoder.Decode(result)
-}
-
 // ErrorHandle 处理错误的返回
 func ErrorHandle(w http.ResponseWriter, r *http.Request) {
 	data := model.Error{

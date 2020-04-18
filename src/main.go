@@ -18,12 +18,6 @@ func main() {
 	router.HandlerFunc(http.MethodGet, "/api/articles/:article", controller.GetArticle)
 	router.HandlerFunc(http.MethodPatch, "/api/articles/:article", controller.UpdateArticle)
 
-	router.HandlerFunc(http.MethodPost, "/api/articles/:article", controller.CreateSection)
-
-	// section
-	router.HandlerFunc(http.MethodGet, "/api/articles/:article/:section", controller.GetSection)
-	router.HandlerFunc(http.MethodPatch, "/api/articles/:article/:section", controller.UpdateSection)
-
 	// Serve static files
 	router.NotFound = http.FileServer(http.Dir("theme/build"))
 
