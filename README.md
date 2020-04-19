@@ -22,9 +22,3 @@
 
 + golang、gorm、sqlite
 + react.js、github-markdown-css + marked + highlight.js
-
-### how to use
-
-```bash
-    go build && ./culaccino
-```
