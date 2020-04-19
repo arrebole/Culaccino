@@ -2,14 +2,19 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./views/Home";
 import Articles from "./views/Articles";
+import Admin from "./views/Admin";
+import Edit from "./views/Edit";
+import Creator from "./views/Creator";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"><Home/></Route>
+        <Route exact path="/"><Home /></Route>
+        <Route exact path="/admin"><Admin /></Route>
+        <Route exact path="/new"><Creator /></Route>
+        <Route exact path="/articles/:article/edit"><Edit /></Route>
         <Route exact path="/articles/:article"><Articles /></Route>
-        <Route exact path="/articles/:article/:section"><Articles /></Route>
         <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
       </Switch>
     </BrowserRouter>

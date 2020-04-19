@@ -5,15 +5,13 @@ import Banner from "../components/banner";
 import Markdown from "../components/Markdown";
 import api from "../api";
 
-interface State {
-    article: types.Article
-}
-
+// mathArticleName 匹配url的article名字
+// 如/api/articles/test -> test
 function mathArticleName() {
     return window.location.pathname.split("/")[2];
 }
 
-export default class Articles extends React.Component<{}, State> {
+export default class Articles extends React.Component<{}, { article: types.Article }> {
     constructor(props: {}) {
         super(props)
         this.state = {
