@@ -20,4 +20,4 @@ jobs:
       
       - name: Go build
         run: |
-          go build
+          go build -o culaccino.out ./src/main.go
