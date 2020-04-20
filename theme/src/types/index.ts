@@ -17,19 +17,19 @@ export interface Article {
 }
 
 export interface Articles {
-    articles:  Article[];
+    articles: Article[];
     pagination: Pagination;
 }
 
-export function defatultArticle():Article{
+export function defatultArticle(): Article {
     return {
         id: 0,
-        name: "loading",
-        cover: "loading",
-        summary: "loading",
-        contents: "loading",
-        tag: "loading",
-        url: "loading",
+        name: "",
+        cover: "",
+        summary: "",
+        contents: "",
+        tag: "",
+        url: "",
         created_at: "",
         updated_at: "",
     }

@@ -20,6 +20,27 @@ class Api {
         return this.httpStrategy
             .GET<types.Articles>(`/api/articles?offset=${offset}&limit=${limit}`)
     }
+
+    createArticle(article: types.Article) {
+        return this.httpStrategy
+            .POST<types.Articles>(`/api/articles`, JSON.stringify({
+                name: article.name,
+                tag: article.tag,
+                cover: article.cover,
+                summary: article.summary,
+                contents: article.contents
+            }))
+    }
+
+    updateArticle(article: types.Article) {
+        return this.httpStrategy
+            .PATCH<types.Articles>(`/api/articles/${article.name}`, JSON.stringify({
+                tag: article.tag,
+                cover: article.cover,
+                summary: article.summary,
+                contents: article.contents
+            }))
+    }
 }
 
 export default new Api(new Fetcher());

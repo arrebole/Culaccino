@@ -1,6 +1,3 @@
-.DS_Store
-go.sum
-
 # sqlite database
 *.db
 
@@ -25,3 +22,10 @@ yarn-error.log*
 *.sw?
 *.exe
 
+# static file
+/theme/build
+/theme/node_modules
+
+# config
+go.sum
+yarn.lock
