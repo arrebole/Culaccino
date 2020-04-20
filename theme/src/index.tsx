@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import 'github-markdown-css';
+import 'highlight.js/styles/github.css';
 import 'tailwindcss/dist/tailwind.css';
 
 ReactDOM.render(
