@@ -23,9 +23,8 @@ export default class Home extends React.Component<{}, { articles: types.Articles
                 <Header />
                 <SubNav />
                 <main >
-                    {/* articles 列表 */}
                     <div className="flex flex-col max-w-screen-md mx-auto px-2">
-                        {this.state.articles?.articles.map(article => <Stage {...article}/>)}
+                        {this.state.articles?.articles.map(article => <Stage {...article} key={article.name} />)}
                     </div>
                 </main>
             </div>

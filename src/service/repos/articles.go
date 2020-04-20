@@ -58,3 +58,10 @@ func (p ArticlesRepository) Update(article *model.Article) *model.Article {
 	db.Model(article).Where("name = ?", article.Name).Omit("name", "url").Updates(article)
 	return p.Find(article.Name)
 }
+
+// Delete ...
+func (p ArticlesRepository) Delete(name string) *model.Article {
+	var article = &model.Article{}
+	db.Where("name = ?", name).Delete(article)
+	return article
+}

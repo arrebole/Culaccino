@@ -43,3 +43,18 @@ func UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-type", "application/json")
 	w.Write(JSON(resopnse))
 }
+
+// DeleteArticle ...
+func DeleteArticle(w http.ResponseWriter, r *http.Request) {
+
+	// 将URL中的article名设置为需要更新的article名，限制名称
+	// 阻止用户提交的json中带有Name名，跨名称更新
+	articleName := Params(r.Context(), "article")
+
+	// 将提交的数据更新到对应数据库中的 article
+	resopnse := service.ArticlesRepo.Delete(articleName)
+
+	// 返回响应
+	w.Header().Add("Content-type", "application/json")
+	w.Write(JSON(resopnse))
+}

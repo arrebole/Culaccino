@@ -17,6 +17,7 @@ func main() {
 	// article
 	router.HandlerFunc(http.MethodGet, "/api/articles/:article", controller.GetArticle)
 	router.HandlerFunc(http.MethodPatch, "/api/articles/:article", controller.UpdateArticle)
+	router.HandlerFunc(http.MethodDelete, "/api/articles/:article", controller.DeleteArticle)
 
 	// Serve static files
 	router.NotFound = http.FileServer(http.Dir("theme/build"))

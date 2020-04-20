@@ -19,6 +19,13 @@ const Table: React.FC<{ data: types.Article[] }> = (props) => {
         </td>
         <td className="border border-gray-400 px-4 py-2 text-gray-800">
             <a className="text-blue-700" href={`articles/${item.name}/edit`}>修改</a>
+
+            <button
+                className="bg-white hover:text-orange-600 text-purple-600 font-semibold py-1 px-2"
+                onClick={e => api.deleteArticle(item.name).then(res => window.location.reload())}
+            >
+                删除
+            </button>
         </td>
     </tr>
 

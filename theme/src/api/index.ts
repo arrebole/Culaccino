@@ -16,6 +16,11 @@ class Api {
             .GET<types.Article>(`/api/articles/${name}`)
     }
 
+    deleteArticle(name: string) {
+        return this.httpStrategy
+            .DELETE<types.Article>(`/api/articles/${name}`)
+    }
+
     listArticles(offset = 0, limit = 10) {
         return this.httpStrategy
             .GET<types.Articles>(`/api/articles?offset=${offset}&limit=${limit}`)

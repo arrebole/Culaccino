@@ -3,7 +3,7 @@ import * as types from "../types";
 
 export default function Stage(props: types.Article) {
     return (
-        <article className="w-auto bg-white border border-gray-400 shadow-lg rounded-sm my-3" key={props.name}>
+        <article className="w-auto bg-white border border-gray-400 shadow-lg rounded-sm my-3">
             <div className="text-center pt-3">
                 <div className="text-2xl text-indigo-700"><a href={`/articles/${props.name}`}>{props.name}</a></div>
                 <div className="text-xs text-gray-600">
