@@ -20,7 +20,7 @@ func main() {
 	router.HandlerFunc(http.MethodDelete, "/api/articles/:article", controller.DeleteArticle)
 
 	// Serve static files
-	router.NotFound = http.FileServer(http.Dir("theme/build"))
+	router.NotFound = controller.CreateServerFiles("./theme/build")
 
 	http.ListenAndServe("127.0.0.1:3000", router)
 }
