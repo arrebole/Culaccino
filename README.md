@@ -22,3 +22,9 @@
 
 + golang、gorm、sqlite
 + react.js、github-markdown-css + marked + highlight.js
+
+## How to Use
+```bash
+docker build -t culaccino:latest .
+docker run -p 8080:80 -d culaccino
+```

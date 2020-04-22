@@ -1,6 +1,3 @@
-# sqlite database
-*.db
-
 # local env files
 .env.local
 .env.*.local
@@ -20,7 +17,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-*.exe
+culaccino*
 
 # static file
 /theme/build
