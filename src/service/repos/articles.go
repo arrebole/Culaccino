@@ -28,7 +28,7 @@ func (p ArticlesRepository) FindAll(offset int, limit int) *model.Articles {
 		"created_at",
 		"updated_at",
 	}
-	db.Offset(offset).Select(selectData).Limit(limit).Find(&articles)
+	db.Order("updated_at desc").Offset(offset).Select(selectData).Limit(limit).Find(&articles)
 
 	var total = 0
 	db.Model(&model.Article{}).Count(&total)

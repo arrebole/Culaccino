@@ -122,7 +122,7 @@ export default class Edit extends React.Component<{}, { article: types.Article }
                                     type="button"
                                     onClick={e => this.handleSubmit()}
                                 >
-                                    Create
+                                    Update
                             </button>
                             </div>
                         </div>
