@@ -21,9 +21,9 @@ class Api {
             .DELETE<types.Article>(`/api/articles/${name}`)
     }
 
-    listArticles(offset = 0, limit = 10) {
+    listArticles(offset = 0, page_size = 5) {
         return this.httpStrategy
-            .GET<types.Articles>(`/api/articles?offset=${offset}&limit=${limit}`)
+            .GET<types.Articles>(`/api/articles?offset=${offset}&page_size=${page_size}`)
     }
 
     createArticle(article: types.Article) {

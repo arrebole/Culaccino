@@ -2,7 +2,7 @@ import React from 'react';
 import * as types from "../types";
 import * as utils from "../utils";
 import Header from '../components/Header';
-import Banner from "../components/banner";
+import Banner from "../components/Banner";
 import Markdown from "../components/Markdown";
 import api from "../api";
 

@@ -12,7 +12,7 @@ func ListArticles(w http.ResponseWriter, r *http.Request) {
 	// 获取	URL 中的offset和page_size参数，进行分页处理
 	// f("api/articles?limit=80")-> { offset: 0, limit: 10 }
 	offset := URLQueryInt(r.URL, "offset", 0)
-	limit := URLQueryInt(r.URL, "page_size", 10)
+	limit := URLQueryInt(r.URL, "page_size", 5)
 
 	response := service.ArticlesRepo.FindAll(offset, limit)
 

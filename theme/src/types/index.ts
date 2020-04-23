@@ -35,6 +35,14 @@ export function defatultArticle(): Article {
     }
 }
 
-
+export function defatultArticles(): Articles {
+    return {
+        articles: new Array<Article>(),
+        pagination: {
+            total_size: 0,
+            remain_size: 0,
+        }
+    }
+}
 
 

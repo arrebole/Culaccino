@@ -51,6 +51,7 @@ export default class Edit extends React.Component<{}, { article: types.Article }
                                     id="article-name"
                                     type="text"
                                     placeholder="Name"
+                                    readOnly={true}
                                     value={this.state.article.name}
                                     onChange={e => this.handleChange("name", e)}
                                 />
