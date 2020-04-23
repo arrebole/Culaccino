@@ -12,7 +12,20 @@ RUN cd theme \
 
 # ----------------------------------------------->
 
-FROM golang:latest
+FROM golang:latest as goBuilder
+
+LABEL authorMail "concurrent.exec@gmail.com"
+
+ENV CGO_ENABLED=0
+WORKDIR /srv/culaccino
+
+COPY ./ /srv/culaccino
+
+RUN go build -tags netgo -a -o culaccino.out ./src/main.go
+
+# ----------------------------------------------->
+
+FROM alpine:latest
 
 LABEL authorMail "concurrent.exec@gmail.com"
 
@@ -26,9 +39,8 @@ VOLUME ./database
 
 COPY ./ /srv/culaccino
 COPY --from=htmlBuilder /srv/culaccino/theme/build /srv/culaccino/theme/build
+COPY --from=goBuilder /srv/culaccino/culaccino.out /srv/culaccino/culaccino.out
 
-RUN go build -o culaccino.out ./src/main.go
-
-CMD [ "./culaccino.out" ]
+ENTRYPOINT [ "./culaccino.out" ]
 
 EXPOSE 3000 3000
