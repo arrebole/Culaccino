@@ -22,7 +22,7 @@ func dbName() string {
 func Connect() *gorm.DB {
 	result, err := gorm.Open("sqlite3", dbName())
 	if err != nil {
-		panic("failed to connect database")
+		panic(err.Error())
 	}
 
 	return initTable(result)

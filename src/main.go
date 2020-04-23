@@ -22,5 +22,5 @@ func main() {
 	// Serve static files
 	router.NotFound = controller.CreateServerFiles("./theme/build")
 
-	http.ListenAndServe("0.0.0.0:3000", router)
+	http.ListenAndServe("0.0.0.0:80", router)
 }
