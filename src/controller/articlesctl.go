@@ -16,8 +16,7 @@ func ListArticles(w http.ResponseWriter, r *http.Request) {
 
 	response := service.ArticlesRepo.FindAll(offset, limit)
 
-	w.Header().Add("Content-type", "application/json")
-	w.Write(JSON(response))
+	JSONResponse(w, response)
 }
 
 // CreateArticle ...
@@ -26,7 +25,7 @@ func CreateArticle(w http.ResponseWriter, r *http.Request) {
 	// 将 post 请求的的json数据解析为对象
 	// 提交的 json 中，必须包含 name 数据
 	payload, err := BodyPaserArticle(r.Body)
-	if err != nil || payload.Name == "" {
+	if Authorization(r) != nil || err != nil || payload.Name == "" {
 		ErrorHandle(w, r)
 		return
 	}
@@ -37,6 +36,5 @@ func CreateArticle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Add("Content-type", "application/json")
-	w.Write(JSON(response))
+	JSONResponse(w, response)
 }

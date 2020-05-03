@@ -30,8 +30,16 @@ func Connect() *gorm.DB {
 
 // initTable  If it does not exist it will create the table
 func initTable(db *gorm.DB) *gorm.DB {
+	// 初始化 articles 表
 	if !db.HasTable(&model.Article{}) {
 		db.CreateTable(&model.Article{})
 	}
+
+	// 初始化 users 表
+	if !db.HasTable(&model.User{}) {
+		db.CreateTable(&model.User{})
+		db.Create(&model.User{Username: "root", Password: "123456"})
+	}
+
 	return db
 }

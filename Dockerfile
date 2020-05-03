@@ -1,4 +1,4 @@
-#----------------------------------------------->
+#---------------- build assert ----------------->
 
 FROM node:latest as htmlBuilder
 
@@ -10,9 +10,9 @@ RUN cd theme \
     && npm install \
     && npm run build
 
-# ----------------------------------------------->
+# --------------- build server ------------------->
 
-FROM golang:alpine3.11 as goBuilder
+FROM golang:alpine as goBuilder
 
 LABEL authorMail "concurrent.exec@gmail.com"
 
@@ -23,7 +23,7 @@ COPY ./ /srv/culaccino
 RUN apk add --update gcc musl-dev \
     && go build -o culaccino.out ./src/main.go
 
-# ----------------------------------------------->
+# -------------- build docker image -------------->
 
 FROM alpine:latest
 

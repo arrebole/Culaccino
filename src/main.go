@@ -9,6 +9,9 @@ import (
 
 func main() {
 	router := httprouter.New()
+	// auth
+	router.HandlerFunc(http.MethodPost, "/api/auth/token", controller.CreateToken)
+	router.HandlerFunc(http.MethodGet, "/api/auth/token/check", controller.CheckToken)
 
 	// articles
 	router.HandlerFunc(http.MethodGet, "/api/articles", controller.ListArticles)

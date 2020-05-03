@@ -12,8 +12,17 @@ type Pagination struct {
 	RemainSize int `json:"remain_size"` // 剩余总量
 }
 
-// Error ...
-type Error struct {
-	Code  int    `json:"code"`
-	Error string `json:"error"`
+// Status ...
+type Status struct {
+	Code        int    `json:"code"`
+	Description string `json:"description"`
+}
+
+// Token 访问权限控制
+type Token struct {
+	AccessToken string `json:"access_token"`
+	// TokenType: bearer
+	TokenType string `json:"token_type"`
+	ExpiresAt int    `json:"expires_at"`
+	// RefreshToken string `json:"refresh_token"`
 }
