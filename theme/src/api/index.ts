@@ -16,9 +16,9 @@ class Api {
             .GET<types.Article>(`/api/articles/${name}`)
     }
 
-    deleteArticle(name: string) {
+    deleteArticle(name: string, accessToken: string) {
         return this.httpStrategy
-            .DELETE<types.Article>(`/api/articles/${name}`)
+            .DELETE<types.Article>(`/api/articles/${name}`, { Authorization: accessToken })
     }
 
     listArticles(offset = 0, page_size = 5) {
@@ -26,26 +26,43 @@ class Api {
             .GET<types.Articles>(`/api/articles?offset=${offset}&page_size=${page_size}`)
     }
 
-    createArticle(article: types.Article) {
+    createArticle(article: types.Article, accessToken: string) {
         return this.httpStrategy
-            .POST<types.Articles>(`/api/articles`, JSON.stringify({
-                name: article.name,
-                tag: article.tag,
-                cover: article.cover,
-                summary: article.summary,
-                contents: article.contents
-            }))
+            .POST<types.Articles>(`/api/articles`,
+                JSON.stringify({
+                    name: article.name,
+                    tag: article.tag,
+                    cover: article.cover,
+                    summary: article.summary,
+                    contents: article.contents
+                }),
+                { Authorization: accessToken }
+            )
     }
 
-    updateArticle(article: types.Article) {
+    updateArticle(article: types.Article, accessToken: string) {
         return this.httpStrategy
-            .PATCH<types.Articles>(`/api/articles/${article.name}`, JSON.stringify({
-                tag: article.tag,
-                cover: article.cover,
-                summary: article.summary,
-                contents: article.contents
-            }))
+            .PATCH<types.Articles>(`/api/articles/${article.name}`,
+                JSON.stringify({
+                    tag: article.tag,
+                    cover: article.cover,
+                    summary: article.summary,
+                    contents: article.contents
+                }),
+                { Authorization: accessToken }
+            )
     }
+
+    login(user: { username: string, password: string }) {
+        return this.httpStrategy
+            .POST<types.Token>("/api/auth/token", JSON.stringify(user))
+    }
+
+    // checkToken 验证token的正确性
+    checkToken(accessToken: string) {
+        return this.httpStrategy.GET<any>("/api/auth/token/check", { Authorization: accessToken })
+    }
+
 }
 
 export default new Api(new Fetcher());

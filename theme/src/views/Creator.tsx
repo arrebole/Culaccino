@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import * as types from "../types";
+import { getAccessToken } from "../utils";
 import api from "../api";
 
 export default class Creator extends React.Component<{}, { article: types.Article }>{
@@ -12,7 +13,7 @@ export default class Creator extends React.Component<{}, { article: types.Articl
     }
 
     handleSubmit() {
-        api.createArticle(this.state.article).then(res => window.location.reload())
+        api.createArticle(this.state.article, getAccessToken()).then(res => window.location.reload())
     }
 
     handleChange(

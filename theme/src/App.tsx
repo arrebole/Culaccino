@@ -5,17 +5,21 @@ import Articles from "./views/Articles";
 import Admin from "./views/Admin";
 import Edit from "./views/Edit";
 import Creator from "./views/Creator";
+import Login from "./views/Login";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/"><Home /></Route>
-        <Route exact path="/admin"><Admin /></Route>
-        <Route exact path="/new"><Creator /></Route>
-        <Route exact path="/articles/:article/edit"><Edit /></Route>
-        <Route exact path="/articles/:article"><Articles /></Route>
-        <Route path="*"><Redirect to={{ pathname: "/" }} /></Route>
+        <Route exact path="/" render={() => <Home />}></Route>
+        <Route exact path="/login" render={() => <Login />} />
+        <Route exact path="/articles/:article" render={() => <Articles />} />
+
+        <Route exact path="/admin" render={() => <Admin />} />
+        <Route exact path="/new" render={() => <Creator />} />
+        <Route exact path="/articles/:article/edit" render={() => <Edit />} />
+
+        <Route path="*" render={() => <Redirect to="/" />} ></Route>
       </Switch>
     </BrowserRouter>
   );

@@ -1,5 +1,7 @@
+# OSNAME := $(shell uname -o)
+OutName := "culaccino.exe"
 
-OutName = "culaccino.exe"
+all: service
 
-all:
+service:
 	go build -o $(OutName) ./src/main.go

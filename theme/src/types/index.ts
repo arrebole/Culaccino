@@ -1,4 +1,3 @@
-
 export interface Pagination {
     total_size: number;
     remain_size: number;
@@ -19,6 +18,12 @@ export interface Article {
 export interface Articles {
     articles: Article[];
     pagination: Pagination;
+}
+
+export interface Token {
+    access_token: string
+    token_type: string
+    expires_at: string
 }
 
 export function defatultArticle(): Article {

@@ -13,7 +13,7 @@ export default class Edit extends React.Component<{}, { article: types.Article }
     }
 
     handleSubmit() {
-        api.updateArticle(this.state.article).then(res => window.location.reload())
+        api.updateArticle(this.state.article, utils.getAccessToken()).then(res => window.location.reload())
     }
 
     handleChange(

@@ -34,11 +34,11 @@ WORKDIR /srv/culaccino
 # 数据库位置
 ENV DB_NAME="./database/culaccino.db"
 
+RUN mkdir database
+
 COPY ./ /srv/culaccino
 COPY --from=htmlBuilder /srv/culaccino/theme/build /srv/culaccino/theme/build
 COPY --from=goBuilder /srv/culaccino/culaccino.out /srv/culaccino/culaccino.out
-
-RUN mkdir database
 
 CMD [ "./culaccino.out" ]
 

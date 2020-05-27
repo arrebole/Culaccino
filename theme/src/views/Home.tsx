@@ -22,7 +22,7 @@ export default class Home extends React.Component<{}, State> {
 
     // 判断是否有更多内容
     get hasMore() {
-        return this.state.articles.pagination.remain_size > 0
+        return this.state.articles.pagination.remain_size > 0;
     }
 
     // 计算下一页数据的请求
@@ -58,7 +58,7 @@ export default class Home extends React.Component<{}, State> {
                     <div className="flex flex-col max-w-screen-md mx-auto px-2">
                         {this.state.articles.articles.map(article => <Stage {...article} key={article.name} />)}
 
-                        {this.hasMore && <Pager onClick={() => this.loadMore()} />}
+                        {this.hasMore && <Pager onClick={ () => this.loadMore() } />}
                     </div>
 
                 </main>

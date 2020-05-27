@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'github-markdown-css';
 import 'highlight.js/styles/github.css';
 import 'tailwindcss/dist/tailwind.css';
+import './assets/iconfont.css';
 
 ReactDOM.render(
   <React.StrictMode>

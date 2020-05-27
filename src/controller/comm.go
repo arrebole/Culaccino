@@ -52,6 +52,7 @@ func ErrorHandle(w http.ResponseWriter, r *http.Request) {
 		Code:        -1,
 		Description: "Fail",
 	}
+	w.WriteHeader(http.StatusBadRequest)
 	JSONResponse(w, response)
 }
 
