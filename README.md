@@ -10,7 +10,7 @@
   [![](https://img.shields.io/badge/react.js-16.12+-blue)](https://gkdark.xyz)
   [![](https://github.com/arrebole/Culaccino/workflows/CI/badge.svg?branch=dev)](https://github.com/arrebole/Culaccino/workflows)
   
-  简单的个人博客，预览: https://gkdark.xyz
+  简单的个人博客，预览: http://gkdark.xyz
 
 </div>
 
